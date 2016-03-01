@@ -53,6 +53,7 @@ class ViewController: UIViewController {
         timeDisplay?.text = String(format: "%02d : %02d : %02d", hours, minutes, seconds)
         decimalDay?.text = String(format: "%.5f", metricDecimalDay)
         metricTimeDisplay?.text = String(format: "%02d : %02d : %02d", metricHours, metricMinutes, metricSeconds)
+        timeDisplay?.font = UIFont(name: "Calculator", size: 32.0)
     }
     
     func calculateMetricTime() {
@@ -73,12 +74,40 @@ class ViewController: UIViewController {
        
     }
     
+    
+    
+    
+    
+    
+    
+    
+    func loadFont(filePath: String) {
+        
+        //let fontData = NSData(contentsOfFile: filePath)!
+        
+       // let dataProvider = CGDataProviderCreateWithCFData(NSData(contentsOfFile: filePath)!)
+        let cgFont = CGFontCreateWithDataProvider(CGDataProviderCreateWithCFData(NSData(contentsOfFile: filePath)!))!
+        
+        var error: Unmanaged<CFError>?
+        if !CTFontManagerRegisterGraphicsFont(cgFont, &error) {
+            let errorDescription: CFStringRef = CFErrorCopyDescription(error!.takeUnretainedValue())
+            print("Unable to load font: \(errorDescription)", terminator: "") //it says the operation could not be completed yet the font still loads...
+        }
+        
+    }
+    
     override func viewDidLoad() {
+        let fontPath = NSBundle.mainBundle().pathForResource("Calculator", ofType: "ttf")
+        loadFont(fontPath!);
+        
         super.viewDidLoad()
         
         updateTime()
         
         NSTimer.scheduledTimerWithTimeInterval(0.8, target: self, selector: "updateTime", userInfo: nil, repeats: true)
+        
+        
+        
         
         // Do any additional setup after loading the view, typically from a nib.
     }
