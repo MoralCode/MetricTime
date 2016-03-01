@@ -77,28 +77,7 @@ class ViewController: UIViewController {
     
     
     
-    
-    
-    
-    
-    func loadFont(filePath: String) {
-        
-        //let fontData = NSData(contentsOfFile: filePath)!
-        
-       // let dataProvider = CGDataProviderCreateWithCFData(NSData(contentsOfFile: filePath)!)
-        let cgFont = CGFontCreateWithDataProvider(CGDataProviderCreateWithCFData(NSData(contentsOfFile: filePath)!))!
-        
-        var error: Unmanaged<CFError>?
-        if !CTFontManagerRegisterGraphicsFont(cgFont, &error) {
-            let errorDescription: CFStringRef = CFErrorCopyDescription(error!.takeUnretainedValue())
-            print("Unable to load font: \(errorDescription)", terminator: "") //it says the operation could not be completed yet the font still loads...
-        }
-        
-    }
-    
     override func viewDidLoad() {
-        let fontPath = NSBundle.mainBundle().pathForResource("Calculator", ofType: "ttf")
-        loadFont(fontPath!);
         
         super.viewDidLoad()
         
