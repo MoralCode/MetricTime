@@ -54,9 +54,9 @@ class ViewController: UIViewController {
         decimalDay?.text = String(format: "%.5f", metricDecimalDay)
         metricTimeDisplay?.text = String(format: "%02d : %02d : %02d", metricHours, metricMinutes, metricSeconds)
         
-        timeDisplay?.font = UIFont(name: "Calculator", size: 64.0)
-        decimalDay?.font = UIFont(name: "Calculator", size: 64.0)
-        metricTimeDisplay?.font = UIFont(name: "Calculator", size: 58.0)
+        timeDisplay?.font = UIFont(name: "Calculator", size: 52.0)
+        decimalDay?.font = UIFont(name: "Calculator", size: 52.0)
+        metricTimeDisplay?.font = UIFont(name: "Calculator", size: 52.0)
     }
     
     func calculateMetricTime() {
