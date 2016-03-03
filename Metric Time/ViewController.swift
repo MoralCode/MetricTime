@@ -28,16 +28,14 @@ class ViewController: UIViewController {
 //  \/ used for displaying the metric decimal day as a clock would (i.e. 6:83:29 )
     var metricHours = 0
     var metricMinutes = 0
-    var metricSeconds = 0 //metric display seconds
+    var metricSeconds = 0
     
 //  the actual time that normal humans use
     var hours = 0
     var minutes = 0
     var seconds = 0
     
-    
-    
-    
+
     
     
     func updateTime() {
@@ -52,11 +50,9 @@ class ViewController: UIViewController {
         //display updated values
         timeDisplay?.text = String(format: "%02d : %02d : %02d", hours, minutes, seconds)
         decimalDay?.text = String(format: "%.5f", metricDecimalDay)
-        metricTimeDisplay?.text = String(format: "%02d : %02d : %02d", metricHours, metricMinutes, metricSeconds)
+        metricTimeDisplay?.text = String(format: "%01d : %02d : %02d", metricHours, metricMinutes, metricSeconds)
         
-        timeDisplay?.font = UIFont(name: "Calculator", size: 52.0)
-        decimalDay?.font = UIFont(name: "Calculator", size: 52.0)
-        metricTimeDisplay?.font = UIFont(name: "Calculator", size: 52.0)
+        
     }
     
     func calculateMetricTime() {
@@ -84,8 +80,17 @@ class ViewController: UIViewController {
         
         super.viewDidLoad()
         
+        //load the font and color the text boxes
+        timeDisplay?.font = UIFont(name: "Calculator", size: 52.0)
+        decimalDay?.font = UIFont(name: "Calculator", size: 52.0)
+        metricTimeDisplay?.font = UIFont(name: "Calculator", size: 52.0)
+        timeDisplay?.textColor = UIColor.greenColor();
+        decimalDay?.textColor = UIColor.greenColor();
+        metricTimeDisplay?.textColor = UIColor.greenColor();
+        
         updateTime()
         
+        //set timer
         NSTimer.scheduledTimerWithTimeInterval(0.8, target: self, selector: "updateTime", userInfo: nil, repeats: true)
         
         
