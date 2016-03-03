@@ -16,7 +16,7 @@ class ViewController: UIViewController {
 
     
     var components = NSCalendar.currentCalendar().components( [.Hour, .Minute, .Second], fromDate: NSDate())
-
+    var timer = NSTimer();
     
     var metricDecimalDay:Float = 0 //shows how far you are through the day as a decimal (noon is .500000)
     
@@ -91,12 +91,18 @@ class ViewController: UIViewController {
         updateTime()
         
         //set timer
-        NSTimer.scheduledTimerWithTimeInterval(0.8, target: self, selector: "updateTime", userInfo: nil, repeats: true)
-        
-        
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "updateTime", userInfo: nil, repeats: true)
+
         
         
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        timer.invalidate()
+
     }
 
     override func didReceiveMemoryWarning() {
