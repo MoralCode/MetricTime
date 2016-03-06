@@ -18,6 +18,14 @@ class ViewController: UIViewController {
     var components = NSCalendar.currentCalendar().components( [.Hour, .Minute, .Second], fromDate: NSDate())
     var timer = NSTimer();
     
+    
+    let color = UIColor.greenColor();
+    let font = UIFont(name: "Calculator", size: 52.0);
+    
+    
+    
+    
+    
     var metricDecimalDay:Float = 0 //shows how far you are through the day as a decimal (noon is .500000)
     
 //  \/ used to calculate metricDecimalDay
@@ -81,18 +89,18 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         //load the font and color the text boxes
-        timeDisplay?.font = UIFont(name: "Calculator", size: 52.0)
-        decimalDay?.font = UIFont(name: "Calculator", size: 52.0)
-        metricTimeDisplay?.font = UIFont(name: "Calculator", size: 52.0)
-        timeDisplay?.textColor = UIColor.greenColor();
-        decimalDay?.textColor = UIColor.greenColor();
-        metricTimeDisplay?.textColor = UIColor.greenColor();
+        timeDisplay?.font = font
+        decimalDay?.font = font
+        metricTimeDisplay?.font = font
+        timeDisplay?.textColor = color
+        decimalDay?.textColor = color
+        metricTimeDisplay?.textColor = color
         
         updateTime()
         
         //set timer
         timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "updateTime", userInfo: nil, repeats: true)
-
+        timer.tolerance = 0.4
         
         
         // Do any additional setup after loading the view, typically from a nib.
