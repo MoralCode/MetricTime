@@ -18,7 +18,7 @@ class InfoViewController: UIViewController {
         
         
         
-        infoBox?.text = "About App text here"
+        infoBox?.text = "About app text here"
         
         super.viewDidLoad()
         
