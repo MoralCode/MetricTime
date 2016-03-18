@@ -16,6 +16,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        if NSUserDefaults.standardUserDefaults().boolForKey("useSplitDay") != true && NSUserDefaults.standardUserDefaults().boolForKey("useSplitDay") != false {
+            
+            print ("HIIIIII")
+            
+            
+        }
+        
+        
         return true
     }
 

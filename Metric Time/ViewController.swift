@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     @IBOutlet var timeDisplay:UILabel?
     @IBOutlet var decimalDay:UILabel?
     @IBOutlet var metricTimeDisplay:UILabel?
+    @IBOutlet var infoScreenButton:UIButton?
     
     
     var components = NSCalendar.currentCalendar().components( [.Hour, .Minute, .Second], fromDate: NSDate())
@@ -21,14 +22,6 @@ class ViewController: UIViewController {
     
     let color = UIColor.greenColor();
     let font = UIFont(name: "Calculator", size: 52.0);
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -41,22 +34,15 @@ class ViewController: UIViewController {
     
     var metricDecimalDay:Float = 0 //shows how far you are through the day as a decimal (noon is .500000)
     
-    //  \/ used to calculate metricDecimalDay
-    var metricDecimalHours:Double = 0
-    var metricDecimalMinutes:Double = 0
-    var metricDecimalSeconds:Double = 0
-    
-    //  \/ used for displaying the metric decimal day as a clock would (i.e. 6:83:29 )
-    var metricHours = 0
-    var metricMinutes = 0
-    var metricSeconds = 0
-    
     //  the actual time that normal humans use (in millitary time)
     var hours = 0
     var minutes = 0
     var seconds = 0
     
-    
+    //these help calculate metricDecimalDay 
+    var splitDayHours:Double = 0
+    var splitDayMinutes:Double = 0
+    var splitDaySeconds:Double = 0
     
     
     func updateTime() {
@@ -69,48 +55,61 @@ class ViewController: UIViewController {
         calculateMetricTime()
         
         //display updated values
-        timeDisplay?.text = String(format: "%02d : %02d : %02d", hours, minutes, seconds)
-        decimalDay?.text = String(format: "%.5f", metricDecimalDay)
-        metricTimeDisplay?.text = String(format: "%01d : %02d : %02d", metricHours, metricMinutes, metricSeconds)
         
+         decimalDay?.text = String(format: "%.5f", metricDecimalDay)
+        timeDisplay?.text = String(format: "%02d : %02d : %02d", hours, minutes, seconds)
+        
+        if NSUserDefaults.standardUserDefaults().boolForKey("useSplitDay") == true {
+            metricTimeDisplay?.text = String(format: "%01d : %02d : %02d", splitDayHours, splitDayMinutes, splitDaySeconds)
+        }
         
     }
     
     func calculateMetricTime() {
         
-        //update metricDecDay
-        metricDecimalHours = Double(hours)/24
-        metricDecimalMinutes = Double(minutes)/1440
-        metricDecimalSeconds = Double(seconds)/86400
-        
-        
-        
-        metricDecimalDay = Float(metricDecimalHours + metricDecimalMinutes + metricDecimalSeconds)
-        
-        //calculate metric "hours", "minutes", and "seconds"
-        //deciday = (int)(day * 10); milliday = (int)(day * 1000) % 100; msec = (int)(day * 100000) % 100;
-        metricHours = Int(metricDecimalDay * 10)
-        metricMinutes = Int(metricDecimalDay * 1000) % 100
-        metricSeconds = Int(metricDecimalDay * 100000) % 100
-        
-        
-        print("Decimal Day: \(metricDecimalDay)")
-        print("Metric Hours: \(metricDecimalHours)")
-        print("Metric Minutes: \(metricDecimalMinutes)")
-        print("Metric Seconds: \(metricDecimalSeconds)")
-        
-        print("Deciday(2h 24m): \(deciday)")
-        print("Centiday(14m 24s): \(centiday)")
-        print("Milliday(1m 26.4s): \(milliday)")
-        print("Microday(86.4 ms): \(microday)")
-        print(" ")
-        
+        if NSUserDefaults.standardUserDefaults().boolForKey("useSplitDay") == true {
+            //parts of day time here.
+            
+            
+            splitDayHours = Double(hours)/24
+            splitDayMinutes = Double(minutes)/1440
+            splitDaySeconds = Double(seconds)/86400
+            
+            metricDecimalDay = Float(splitDayHours) + Float(splitDayMinutes) + Float(splitDaySeconds)
+            
+            //calculate metric "hours", "minutes", and "seconds"
+            //deciday = (int)(day * 10); milliday = (int)(day * 1000) % 100; msec = (int)(day * 100000) % 100;
+            splitDayHours = Int(metricDecimalDay * 10)
+            splitDayMinutes = Int(metricDecimalDay * 1000) % 100
+            splitDaySeconds = Int(metricDecimalDay * 100000) % 100
+            
+            print(splitDayHours)
+            print(splitDayMinutes)
+            print(splitDaySeconds)
+            print(" ")
+            
+        } else {
+            
+            //100->100 timekeeping here
+            
+            
+        }
     }
     
     
     
     
     override func viewDidLoad() {
+        
+        
+        if NSUserDefaults.standardUserDefaults().boolForKey("hideOnNextLaunch") == true {
+            
+            infoScreenButton?.hidden = true
+            
+        }
+        
+        
+        
         
         super.viewDidLoad()
         
@@ -124,6 +123,10 @@ class ViewController: UIViewController {
         
         
         updateTime()
+        
+        
+       // if NSUserDefaults.standardUserDefaults().boolForKey("useSplitDay") == true { let interval = 0.1; ) else { let interval =  }
+
         
         //set timer
         timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "updateTime", userInfo: nil, repeats: true)

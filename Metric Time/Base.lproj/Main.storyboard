@@ -106,6 +106,24 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wlS-1B-vNT">
+                                <rect key="frame" x="531" y="281" width="51" height="31"/>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use Split Day Timekeeping" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8nY-HZ-M37">
+                                <rect key="frame" x="20" y="285" width="205" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="qSb-hz-NZv">
+                                <rect key="frame" x="531" y="320" width="51" height="31"/>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hide this page on next Launch" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qce-cH-RkW">
+                                <rect key="frame" x="20" y="325" width="232" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter time to convert to metric" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dt7-z0-usw">
                                 <rect key="frame" x="191" y="289" width="219" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -127,16 +145,24 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Kwc-qq-qBi" firstAttribute="top" secondItem="05a-PL-MZx" secondAttribute="bottom" constant="38" id="BMj-Wj-Iuk"/>
+                            <constraint firstItem="wlS-1B-vNT" firstAttribute="trailing" secondItem="bFB-PP-xBF" secondAttribute="trailingMargin" id="Cs0-9e-gqI"/>
+                            <constraint firstItem="wlS-1B-vNT" firstAttribute="top" secondItem="Kwc-qq-qBi" secondAttribute="bottom" constant="8" id="FqP-61-mUn"/>
                             <constraint firstItem="Xoo-MP-Gzb" firstAttribute="centerX" secondItem="bFB-PP-xBF" secondAttribute="centerX" id="NiJ-2l-l4P"/>
                             <constraint firstItem="yPt-OB-bqL" firstAttribute="leading" secondItem="bFB-PP-xBF" secondAttribute="leadingMargin" id="Oui-rB-vEZ"/>
                             <constraint firstItem="K7s-ad-UIB" firstAttribute="centerX" secondItem="bFB-PP-xBF" secondAttribute="centerX" id="QjV-5M-2l1"/>
+                            <constraint firstItem="Qce-cH-RkW" firstAttribute="leading" secondItem="bFB-PP-xBF" secondAttribute="leadingMargin" id="d4P-0h-T9j"/>
+                            <constraint firstItem="qSb-hz-NZv" firstAttribute="trailing" secondItem="bFB-PP-xBF" secondAttribute="trailingMargin" id="ecb-Sa-5eG"/>
+                            <constraint firstItem="qSb-hz-NZv" firstAttribute="centerY" secondItem="Qce-cH-RkW" secondAttribute="centerY" id="fhD-xn-TVp"/>
+                            <constraint firstItem="8nY-HZ-M37" firstAttribute="top" secondItem="Kwc-qq-qBi" secondAttribute="bottom" constant="12" id="fj3-oY-SmZ"/>
                             <constraint firstItem="Kwc-qq-qBi" firstAttribute="leading" secondItem="bFB-PP-xBF" secondAttribute="leadingMargin" id="gR1-OW-u2P"/>
                             <constraint firstItem="Dt7-z0-usw" firstAttribute="centerX" secondItem="bFB-PP-xBF" secondAttribute="centerX" id="hgx-W0-Tqm"/>
                             <constraint firstItem="yPt-OB-bqL" firstAttribute="top" secondItem="05a-PL-MZx" secondAttribute="bottom" id="jjh-Yp-uyE"/>
                             <constraint firstItem="K7s-ad-UIB" firstAttribute="top" secondItem="Dt7-z0-usw" secondAttribute="bottom" constant="12" id="p5m-Lh-bTW"/>
+                            <constraint firstItem="qSb-hz-NZv" firstAttribute="top" secondItem="wlS-1B-vNT" secondAttribute="bottom" constant="8" id="qMQ-hR-GDh"/>
                             <constraint firstItem="Dt7-z0-usw" firstAttribute="top" secondItem="Kwc-qq-qBi" secondAttribute="bottom" constant="16" id="tnb-0F-S6c"/>
                             <constraint firstItem="Kwc-qq-qBi" firstAttribute="trailing" secondItem="bFB-PP-xBF" secondAttribute="trailingMargin" id="xNf-iK-l5T"/>
                             <constraint firstItem="Xoo-MP-Gzb" firstAttribute="top" secondItem="K7s-ad-UIB" secondAttribute="bottom" constant="8" id="xvJ-df-u7B"/>
+                            <constraint firstItem="8nY-HZ-M37" firstAttribute="leading" secondItem="bFB-PP-xBF" secondAttribute="leadingMargin" id="ywd-32-uNV"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
@@ -155,7 +181,9 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="hideOnNextLaunch" destination="qSb-hz-NZv" id="vvA-4s-Zhl"/>
                         <outlet property="infoBox" destination="Kwc-qq-qBi" id="z8D-48-jxN"/>
+                        <outlet property="useSplitDay" destination="wlS-1B-vNT" id="yqS-MB-kBL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aks-RA-GOk" userLabel="First Responder" sceneMemberID="firstResponder"/>

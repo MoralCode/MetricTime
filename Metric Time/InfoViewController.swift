@@ -11,7 +11,9 @@ import UIKit
 
 class InfoViewController: UIViewController {
 
-    @IBOutlet var infoBox:UITextView?;
+    @IBOutlet var infoBox:UITextView?
+    @IBOutlet var useSplitDay:UISwitch?
+    @IBOutlet var hideOnNextLaunch:UISwitch?
     
     
     override func viewDidLoad() {
@@ -25,6 +27,11 @@ class InfoViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        NSUserDefaults.standardUserDefaults().setBool((useSplitDay?.on)!, forKey: "useSplitDay")
+        NSUserDefaults.standardUserDefaults().setBool((hideOnNextLaunch?.on)!, forKey: "hideOnNextLaunch")
+    }
     
     
     override func didReceiveMemoryWarning() {
