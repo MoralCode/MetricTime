@@ -9,11 +9,11 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
     @IBOutlet var timeDisplay:UILabel?
     @IBOutlet var decimalDay:UILabel?
     @IBOutlet var metricTimeDisplay:UILabel?
-
+    
     
     var components = NSCalendar.currentCalendar().components( [.Hour, .Minute, .Second], fromDate: NSDate())
     var timer = NSTimer();
@@ -26,24 +26,37 @@ class ViewController: UIViewController {
     
     
     
+    
+    
+    
+    
+    
+    
+    var deciday = 0; //(2h 24m)
+    var centiday = 0;//(14m 24s)
+    var milliday = 0;//(1m 26.4s)
+    var microday = 0;//(86.4 ms)
+    
+    
+    
     var metricDecimalDay:Float = 0 //shows how far you are through the day as a decimal (noon is .500000)
     
-//  \/ used to calculate metricDecimalDay
+    //  \/ used to calculate metricDecimalDay
     var metricDecimalHours:Double = 0
     var metricDecimalMinutes:Double = 0
     var metricDecimalSeconds:Double = 0
     
-//  \/ used for displaying the metric decimal day as a clock would (i.e. 6:83:29 )
+    //  \/ used for displaying the metric decimal day as a clock would (i.e. 6:83:29 )
     var metricHours = 0
     var metricMinutes = 0
     var metricSeconds = 0
     
-//  the actual time that normal humans use
+    //  the actual time that normal humans use (in millitary time)
     var hours = 0
     var minutes = 0
     var seconds = 0
     
-
+    
     
     
     func updateTime() {
@@ -52,7 +65,7 @@ class ViewController: UIViewController {
         hours = components.hour;
         minutes = components.minute;
         seconds = components.second;
-      
+        
         calculateMetricTime()
         
         //display updated values
@@ -70,6 +83,8 @@ class ViewController: UIViewController {
         metricDecimalMinutes = Double(minutes)/1440
         metricDecimalSeconds = Double(seconds)/86400
         
+        
+        
         metricDecimalDay = Float(metricDecimalHours + metricDecimalMinutes + metricDecimalSeconds)
         
         //calculate metric "hours", "minutes", and "seconds"
@@ -77,8 +92,19 @@ class ViewController: UIViewController {
         metricHours = Int(metricDecimalDay * 10)
         metricMinutes = Int(metricDecimalDay * 1000) % 100
         metricSeconds = Int(metricDecimalDay * 100000) % 100
-    
-       
+        
+        
+        print("Decimal Day: \(metricDecimalDay)")
+        print("Metric Hours: \(metricDecimalHours)")
+        print("Metric Minutes: \(metricDecimalMinutes)")
+        print("Metric Seconds: \(metricDecimalSeconds)")
+        
+        print("Deciday(2h 24m): \(deciday)")
+        print("Centiday(14m 24s): \(centiday)")
+        print("Milliday(1m 26.4s): \(milliday)")
+        print("Microday(86.4 ms): \(microday)")
+        print(" ")
+        
     }
     
     
@@ -96,11 +122,12 @@ class ViewController: UIViewController {
         decimalDay?.textColor = color
         metricTimeDisplay?.textColor = color
         
+        
         updateTime()
         
         //set timer
         timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "updateTime", userInfo: nil, repeats: true)
-        timer.tolerance = 0.4
+        timer.tolerance = 0.4 //allow the timer to be off by up to 0.4 seconds if iOS needs it...
         
         
         // Do any additional setup after loading the view, typically from a nib.
@@ -110,14 +137,14 @@ class ViewController: UIViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         timer.invalidate()
-
+        
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    
 }
 
