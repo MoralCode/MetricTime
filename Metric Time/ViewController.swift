@@ -34,33 +34,30 @@ class ViewController: UIViewController {
     
     var metricDecimalDay:Float = 0 //shows how far you are through the day as a decimal (noon is .500000)
     
-    //  the actual time that normal humans use (in millitary time)
-    var hours = 0
-    var minutes = 0
-    var seconds = 0
+    //  the actual time that normal humans use (in millitary time) (actualTime[0] = hour, actualTime[1] = minute, actualTime[2] = second)
+    var actualTime: [Int] = [0, 0, 0];
     
-    //these help calculate metricDecimalDay 
-    var splitDayHours:Double = 0
-    var splitDayMinutes:Double = 0
-    var splitDaySeconds:Double = 0
+    //the converted "metric time"
+    var metricTime: [Int] = [0, 0, 0];
     
     
     func updateTime() {
         //get current hour, minute and second
         components = NSCalendar.currentCalendar().components([ .Hour, .Minute, .Second], fromDate: NSDate())
-        hours = components.hour;
-        minutes = components.minute;
-        seconds = components.second;
+        
+        actualTime[0] = components.hour;
+        actualTime[1] = components.minute;
+        actualTime[2] = components.second;
         
         calculateMetricTime()
         
         //display updated values
         
-         decimalDay?.text = String(format: "%.5f", metricDecimalDay)
-        timeDisplay?.text = String(format: "%02d : %02d : %02d", hours, minutes, seconds)
+        decimalDay?.text = String(format: "%.5f", metricDecimalDay)
+        timeDisplay?.text = String(format: "%02d : %02d : %02d", actualTime[0], actualTime[1], actualTime[2])
         
         if NSUserDefaults.standardUserDefaults().boolForKey("useSplitDay") == true {
-            metricTimeDisplay?.text = String(format: "%01d : %02d : %02d", splitDayHours, splitDayMinutes, splitDaySeconds)
+            metricTimeDisplay?.text = String(format: "%01d : %02d : %02d", metricTime[0], metricTime[1], metricTime[2])
         }
         
     }
@@ -70,23 +67,18 @@ class ViewController: UIViewController {
         if NSUserDefaults.standardUserDefaults().boolForKey("useSplitDay") == true {
             //parts of day time here.
             
+            metricDecimalDay = Float(Double(actualTime[0])/24) + Float(Double(actualTime[1])/1440) + Float(Double(actualTime[2])/86400)
             
-            splitDayHours = Double(hours)/24
-            splitDayMinutes = Double(minutes)/1440
-            splitDaySeconds = Double(seconds)/86400
             
-            metricDecimalDay = Float(splitDayHours) + Float(splitDayMinutes) + Float(splitDaySeconds)
+            /*calculate metric "hours", "minutes", and "seconds"
+             
+                deciday = (int)(day * 10); milliday = (int)(day * 1000) % 100; msec = (int)(day * 100000) % 100;
+            */
             
-            //calculate metric "hours", "minutes", and "seconds"
-            //deciday = (int)(day * 10); milliday = (int)(day * 1000) % 100; msec = (int)(day * 100000) % 100;
-            splitDayHours = Int(metricDecimalDay * 10)
-            splitDayMinutes = Int(metricDecimalDay * 1000) % 100
-            splitDaySeconds = Int(metricDecimalDay * 100000) % 100
+            metricTime[0] = Int(metricDecimalDay * 10)
+            metricTime[1] = Int(metricDecimalDay * 1000) % 100
+            metricTime[2] = Int(metricDecimalDay * 100000) % 100
             
-            print(splitDayHours)
-            print(splitDayMinutes)
-            print(splitDaySeconds)
-            print(" ")
             
         } else {
             
@@ -129,8 +121,8 @@ class ViewController: UIViewController {
 
         
         //set timer
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "updateTime", userInfo: nil, repeats: true)
-        timer.tolerance = 0.4 //allow the timer to be off by up to 0.4 seconds if iOS needs it...
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.25, target: self, selector: #selector(ViewController.updateTime), userInfo: nil, repeats: true)
+        timer.tolerance = 0.25 //allow the timer to be off by up to 0.4 seconds if iOS needs it...
         
         
         // Do any additional setup after loading the view, typically from a nib.
