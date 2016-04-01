@@ -21,7 +21,6 @@ class InfoViewController: UIViewController {
             useSplitDay?.on = NSUserDefaults.standardUserDefaults().boolForKey("useSplitDay")
             hideOnNextLaunch?.on = NSUserDefaults.standardUserDefaults().boolForKey("hideOnNextLaunch")
         
-            print(NSUserDefaults.standardUserDefaults().boolForKey("hi"))
         
         
         

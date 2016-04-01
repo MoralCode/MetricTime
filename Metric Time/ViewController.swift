@@ -55,11 +55,8 @@ class ViewController: UIViewController {
         
         decimalDay?.text = String(format: "%.5f", metricDecimalDay)
         timeDisplay?.text = String(format: "%02d : %02d : %02d", actualTime[0], actualTime[1], actualTime[2])
-        
-        if NSUserDefaults.standardUserDefaults().boolForKey("useSplitDay") == true {
-            metricTimeDisplay?.text = String(format: "%01d : %02d : %02d", metricTime[0], metricTime[1], metricTime[2])
-        }
-        
+        metricTimeDisplay?.text = String(format: "%01d : %02d : %02d", metricTime[0], metricTime[1], metricTime[2])
+
     }
     
     func calculateMetricTime() {
@@ -83,6 +80,16 @@ class ViewController: UIViewController {
         } else {
             
             //100->100 timekeeping here
+            
+            
+            print("metric2 - \(actualTime[0]):\(actualTime[1]):\(actualTime[2]) : \((actualTime[0] * 3600) + (actualTime[1] * 60) + (actualTime[2]))");
+            
+            
+            
+            //metricTime[0] = Int(metricDecimalDay * 10)
+            //metricTime[1] = Int(metricDecimalDay * 1000) % 100
+            //metricTime[2] = Int(metricDecimalDay * 100000) % 100
+
             
             
         }
