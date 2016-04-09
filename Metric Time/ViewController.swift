@@ -57,23 +57,23 @@ class ViewController: UIViewController {
             //increment seconds
             actualTime[2] += 1
             
-            //if seconds = 100
-             if actualTime[2] == 100 {
+            //if seconds = 60
+             if actualTime[2] == 60 {
                 //increment minutes and reset seconds
                 
                 actualTime[1] += 1
                 actualTime[2] = 0
             }
             
-            //if min = 100
-             if actualTime[1] == 100 {
+            //if min = 60
+             if actualTime[1] == 60 {
                 //increment hours and reset minutes
                 actualTime[0] += 1
                 actualTime[1] = 0
             }
             
-            //if hours = 10
-             if actualTime[0] == 10 {
+            //if hours = 24
+             if actualTime[0] == 24 {
                 //stop timer running.
                 timer.invalidate()
                 
@@ -155,7 +155,7 @@ class ViewController: UIViewController {
         }
         if stressTestMode {
             
-          interval = 0.025;
+          interval = 0.00001;
         }
         
         
