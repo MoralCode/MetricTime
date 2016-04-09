@@ -23,6 +23,8 @@ class ViewController: UIViewController {
     let color = UIColor.greenColor();
     let font = UIFont(name: "Calculator", size: 52.0);
     
+    var stressTestMode = false;
+    var interval = 0.25;
     
     
     var deciday = 0; //(2h 24m)
@@ -43,11 +45,46 @@ class ViewController: UIViewController {
     
     func updateTime() {
         //get current hour, minute and second
+        if !stressTestMode {
         components = NSCalendar.currentCalendar().components([ .Hour, .Minute, .Second], fromDate: NSDate())
         
         actualTime[0] = components.hour;
         actualTime[1] = components.minute;
         actualTime[2] = components.second;
+            
+        } else {
+            
+            //increment seconds
+            actualTime[2] += 1
+            
+            //if seconds = 100
+             if actualTime[2] == 100 {
+                //increment minutes and reset seconds
+                
+                actualTime[1] += 1
+                actualTime[2] = 0
+            }
+            
+            //if min = 100
+             if actualTime[1] == 100 {
+                //increment hours and reset minutes
+                actualTime[0] += 1
+                actualTime[1] = 0
+            }
+            
+            //if hours = 10
+             if actualTime[0] == 10 {
+                //stop timer running.
+                timer.invalidate()
+                
+            }
+            
+            
+            
+            
+            
+            
+        }
         
         calculateMetricTime()
         
@@ -56,6 +93,16 @@ class ViewController: UIViewController {
         decimalDay?.text = String(format: "%.5f", metricDecimalDay)
         timeDisplay?.text = String(format: "%02d : %02d : %02d", actualTime[0], actualTime[1], actualTime[2])
         metricTimeDisplay?.text = String(format: "%01d : %02d : %02d", metricTime[0], metricTime[1], metricTime[2])
+        
+        
+        if stressTestMode {
+            // log values
+            print("ActualTime: \(actualTime[0]):\(actualTime[1]):\(actualTime[2])")
+            print(" ")
+            print("MetricTime: \(metricTime[0]):\(metricTime[1]):\(metricTime[2])")
+            print(" ")
+            print(" ")
+        }
 
     }
     
@@ -106,6 +153,10 @@ class ViewController: UIViewController {
             infoScreenButton?.hidden = true
             
         }
+        if stressTestMode {
+            
+          interval = 0.025;
+        }
         
         
         
@@ -128,8 +179,8 @@ class ViewController: UIViewController {
 
         
         //set timer
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.25, target: self, selector: #selector(ViewController.updateTime), userInfo: nil, repeats: true)
-        timer.tolerance = 0.25 //allow the timer to be off by up to 0.4 seconds if iOS needs it...
+        timer = NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: #selector(ViewController.updateTime), userInfo: nil, repeats: true)
+        timer.tolerance = 0.25 //allow the timer to be off by up to 0.25 seconds if iOS needs it...
         
         
         // Do any additional setup after loading the view, typically from a nib.
