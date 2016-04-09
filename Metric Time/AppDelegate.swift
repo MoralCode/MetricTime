@@ -7,22 +7,20 @@
 //
 
 import UIKit
+import Buglife
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, BuglifeDelegate {
 
     var window: UIWindow?
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        if NSUserDefaults.standardUserDefaults().boolForKey("useSplitDay") != true && NSUserDefaults.standardUserDefaults().boolForKey("useSplitDay") != false {
-            
-            print ("HIIIIII")
-            
-            
-        }
         
+        Buglife.sharedBuglife().startWithAPIKey("QYIjFXEqihrPzldO3NGzLAtt")
+        Buglife.sharedBuglife().invocationOptions = [.Shake, .Screenshot]
+        Buglife.sharedBuglife().delegate = self
         
         return true
     }
