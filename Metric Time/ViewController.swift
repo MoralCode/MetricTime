@@ -108,8 +108,7 @@ class ViewController: UIViewController {
     
     func calculateMetricTime() {
         
-        if NSUserDefaults.standardUserDefaults().boolForKey("useSplitDay") == true {
-            //parts of day time here.
+                   //parts of day time here.
             
             metricDecimalDay = Float(Double(actualTime[0])/24) + Float(Double(actualTime[1])/1440) + Float(Double(actualTime[2])/86400)
             
@@ -124,23 +123,7 @@ class ViewController: UIViewController {
             metricTime[2] = Int(metricDecimalDay * 100000) % 100
             
             
-        } else {
-            
-            //100->100 timekeeping here
-            
-            
-            print("metric2 - \(actualTime[0]):\(actualTime[1]):\(actualTime[2]) : \((actualTime[0] * 3600) + (actualTime[1] * 60) + (actualTime[2]))");
-            
-            
-            
-            //metricTime[0] = Int(metricDecimalDay * 10)
-            //metricTime[1] = Int(metricDecimalDay * 1000) % 100
-            //metricTime[2] = Int(metricDecimalDay * 100000) % 100
-
-            
-            
-        }
-    }
+            }
     
     
     
@@ -148,11 +131,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         
         
-        if NSUserDefaults.standardUserDefaults().boolForKey("hideOnNextLaunch") == true {
-            
-            infoScreenButton?.hidden = true
-            
-        }
         if stressTestMode {
             
           interval = 0.00001;

@@ -45,12 +45,6 @@
                                 <color key="textColor" red="0.0" green="1" blue="0.14984990070000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sAW-Ba-0yr">
-                                <rect key="frame" x="558" y="558" width="22" height="22"/>
-                                <connections>
-                                    <segue destination="BS8-4B-jIC" kind="showDetail" id="eMC-xJ-yFW"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -61,135 +55,19 @@
                             <constraint firstItem="DCN-vF-qMD" firstAttribute="top" secondItem="ndb-Ws-vvu" secondAttribute="bottom" constant="20" id="foL-b5-QZM"/>
                             <constraint firstItem="2Ht-Mp-ZRY" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="hRZ-dT-XIp"/>
                             <constraint firstItem="2Ht-Mp-ZRY" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="40" id="jKK-so-QPn"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="sAW-Ba-0yr" secondAttribute="bottom" constant="20" id="leY-AP-GVc"/>
                             <constraint firstItem="ndb-Ws-vvu" firstAttribute="top" secondItem="2Ht-Mp-ZRY" secondAttribute="bottom" constant="20" id="qMI-PB-Pfq"/>
                             <constraint firstItem="ndb-Ws-vvu" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="qZ7-Rk-rJY"/>
-                            <constraint firstItem="sAW-Ba-0yr" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="ud5-wm-nqf"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="decimalDay" destination="2Ht-Mp-ZRY" id="r1f-Yj-8xT"/>
-                        <outlet property="infoScreenButton" destination="sAW-Ba-0yr" id="oWr-NY-L4a"/>
                         <outlet property="metricTimeDisplay" destination="DCN-vF-qMD" id="3DK-X4-nWS"/>
                         <outlet property="timeDisplay" destination="ndb-Ws-vvu" id="WrS-op-MhT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="149" y="421"/>
-        </scene>
-        <!--Info View Controller-->
-        <scene sceneID="bqz-yd-jY6">
-            <objects>
-                <viewController id="BS8-4B-jIC" customClass="InfoViewController" customModule="Metric_Time" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="05a-PL-MZx"/>
-                        <viewControllerLayoutGuide type="bottom" id="6na-Zi-j8w"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="bFB-PP-xBF">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yPt-OB-bqL">
-                                <rect key="frame" x="20" y="20" width="40" height="34"/>
-                                <state key="normal" title="Back"/>
-                                <connections>
-                                    <segue destination="BYZ-38-t0r" kind="presentation" id="ARn-3w-qg3"/>
-                                </connections>
-                            </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Kwc-qq-qBi">
-                                <rect key="frame" x="20" y="58" width="560" height="215"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="215" id="Rbe-Oz-dFR"/>
-                                </constraints>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wlS-1B-vNT">
-                                <rect key="frame" x="531" y="281" width="51" height="31"/>
-                            </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use Split Day Timekeeping" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8nY-HZ-M37">
-                                <rect key="frame" x="20" y="285" width="205" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="qSb-hz-NZv">
-                                <rect key="frame" x="531" y="320" width="51" height="31"/>
-                            </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hide this page on next Launch" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qce-cH-RkW">
-                                <rect key="frame" x="20" y="325" width="232" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter time to convert to metric" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dt7-z0-usw">
-                                <rect key="frame" x="191" y="289" width="219" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="K7s-ad-UIB">
-                                <rect key="frame" x="200" y="331" width="200" height="29"/>
-                                <segments>
-                                    <segment title="AM"/>
-                                    <segment title="PM"/>
-                                    <segment title="24-Hour"/>
-                                </segments>
-                            </segmentedControl>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xoo-MP-Gzb">
-                                <rect key="frame" x="273" y="367" width="55" height="30"/>
-                                <state key="normal" title="Convert"/>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="Kwc-qq-qBi" firstAttribute="top" secondItem="05a-PL-MZx" secondAttribute="bottom" constant="38" id="BMj-Wj-Iuk"/>
-                            <constraint firstItem="wlS-1B-vNT" firstAttribute="trailing" secondItem="bFB-PP-xBF" secondAttribute="trailingMargin" id="Cs0-9e-gqI"/>
-                            <constraint firstItem="wlS-1B-vNT" firstAttribute="top" secondItem="Kwc-qq-qBi" secondAttribute="bottom" constant="8" id="FqP-61-mUn"/>
-                            <constraint firstItem="Xoo-MP-Gzb" firstAttribute="centerX" secondItem="bFB-PP-xBF" secondAttribute="centerX" id="NiJ-2l-l4P"/>
-                            <constraint firstItem="yPt-OB-bqL" firstAttribute="leading" secondItem="bFB-PP-xBF" secondAttribute="leadingMargin" id="Oui-rB-vEZ"/>
-                            <constraint firstItem="K7s-ad-UIB" firstAttribute="centerX" secondItem="bFB-PP-xBF" secondAttribute="centerX" id="QjV-5M-2l1"/>
-                            <constraint firstItem="Qce-cH-RkW" firstAttribute="leading" secondItem="bFB-PP-xBF" secondAttribute="leadingMargin" id="d4P-0h-T9j"/>
-                            <constraint firstItem="qSb-hz-NZv" firstAttribute="trailing" secondItem="bFB-PP-xBF" secondAttribute="trailingMargin" id="ecb-Sa-5eG"/>
-                            <constraint firstItem="qSb-hz-NZv" firstAttribute="centerY" secondItem="Qce-cH-RkW" secondAttribute="centerY" id="fhD-xn-TVp"/>
-                            <constraint firstItem="8nY-HZ-M37" firstAttribute="top" secondItem="Kwc-qq-qBi" secondAttribute="bottom" constant="12" id="fj3-oY-SmZ"/>
-                            <constraint firstItem="Kwc-qq-qBi" firstAttribute="leading" secondItem="bFB-PP-xBF" secondAttribute="leadingMargin" id="gR1-OW-u2P"/>
-                            <constraint firstItem="Dt7-z0-usw" firstAttribute="centerX" secondItem="bFB-PP-xBF" secondAttribute="centerX" id="hgx-W0-Tqm"/>
-                            <constraint firstItem="yPt-OB-bqL" firstAttribute="top" secondItem="05a-PL-MZx" secondAttribute="bottom" id="jjh-Yp-uyE"/>
-                            <constraint firstItem="K7s-ad-UIB" firstAttribute="top" secondItem="Dt7-z0-usw" secondAttribute="bottom" constant="12" id="p5m-Lh-bTW"/>
-                            <constraint firstItem="qSb-hz-NZv" firstAttribute="top" secondItem="wlS-1B-vNT" secondAttribute="bottom" constant="8" id="qMQ-hR-GDh"/>
-                            <constraint firstItem="Dt7-z0-usw" firstAttribute="top" secondItem="Kwc-qq-qBi" secondAttribute="bottom" constant="16" id="tnb-0F-S6c"/>
-                            <constraint firstItem="Kwc-qq-qBi" firstAttribute="trailing" secondItem="bFB-PP-xBF" secondAttribute="trailingMargin" id="xNf-iK-l5T"/>
-                            <constraint firstItem="Xoo-MP-Gzb" firstAttribute="top" secondItem="K7s-ad-UIB" secondAttribute="bottom" constant="8" id="xvJ-df-u7B"/>
-                            <constraint firstItem="8nY-HZ-M37" firstAttribute="leading" secondItem="bFB-PP-xBF" secondAttribute="leadingMargin" id="ywd-32-uNV"/>
-                        </constraints>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="Dt7-z0-usw"/>
-                                <exclude reference="K7s-ad-UIB"/>
-                                <exclude reference="Xoo-MP-Gzb"/>
-                            </mask>
-                            <mask key="constraints">
-                                <exclude reference="hgx-W0-Tqm"/>
-                                <exclude reference="tnb-0F-S6c"/>
-                                <exclude reference="QjV-5M-2l1"/>
-                                <exclude reference="p5m-Lh-bTW"/>
-                                <exclude reference="NiJ-2l-l4P"/>
-                                <exclude reference="xvJ-df-u7B"/>
-                            </mask>
-                        </variation>
-                    </view>
-                    <connections>
-                        <outlet property="hideOnNextLaunch" destination="qSb-hz-NZv" id="vvA-4s-Zhl"/>
-                        <outlet property="infoBox" destination="Kwc-qq-qBi" id="z8D-48-jxN"/>
-                        <outlet property="useSplitDay" destination="wlS-1B-vNT" id="yqS-MB-kBL"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aks-RA-GOk" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="861" y="421"/>
+            <point key="canvasLocation" x="448" y="428"/>
         </scene>
     </scenes>
 </document>
