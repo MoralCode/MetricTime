@@ -25,22 +25,19 @@ class ViewController: UIViewController {
     
     var stressTestMode = false;
     var interval = 0.864;
-   
-    
-    var deciday = 0; //(2h 24m)
-    var centiday = 0;//(14m 24s)
-    var milliday = 0;//(1m 26.4s)
-    var microday = 0;//(86.4 ms)
-    
-    
-    
-    var metricDecimalDay:Float = 0 //shows how far you are through the day as a decimal (noon is .500000)
+
     
     //  the actual time that normal humans use (in millitary time) (actualTime[0] = hour, actualTime[1] = minute, actualTime[2] = second)
     var actualTime: [Int] = [0, 0, 0];
     
+    var millisecondsSinceToday = 0;
     //the converted "metric time"
     var metricTime: [Int] = [0, 0, 0];
+    
+    
+    
+    
+    
     
     
     func updateTime() {
@@ -85,7 +82,7 @@ class ViewController: UIViewController {
         
         //display updated values
         
-        decimalDay?.text = String(format: "%.5f", metricDecimalDay)
+      //  decimalDay?.text = String(format: "%.5f", metricDecimalDay)
         timeDisplay?.text = String(format: "%02d : %02d : %02d", actualTime[0], actualTime[1], actualTime[2])
         metricTimeDisplay?.text = String(format: "%01d : %02d : %02d", metricTime[0], metricTime[1], metricTime[2])
         
@@ -104,16 +101,28 @@ class ViewController: UIViewController {
     
     func calculateMetricTime() {
         
-            /*calculate metric "hours", "minutes", and "seconds"
-             
-                deciday = (int)(day * 10); milliday = (int)(day * 1000) % 100; msec = (int)(day * 100000) % 100;
-            */
-            
-           // metricTime[0] = Int(metricDecimalDay * 10)
-           // metricTime[1] = Int(metricDecimalDay * 1000) % 100
-           // metricTime[2] = Int(metricDecimalDay * 100000) % 100
-            
-            
+            /*calculate metric "hours", "minutes", and "seconds" */
+        millisecondsSinceToday = 0
+        millisecondsSinceToday = (actualTime[0] * 3600000 /*milliseconds per hour*/) + (actualTime[1] * 60000 /* milliseconds per minute*/) + (actualTime[2] * 1000 /*milliseconds per second*/)
+        
+        
+        
+        /* metric hour = milliseconds since this morning / milliseconds per hour  (gives decimal number)*/
+        metricTime[0] = Int(millisecondsSinceToday / 8640000)
+        
+        /* metric minute = (milliseconds since this morning - (hours passed in ms )) / milliseconds per minute*/
+        metricTime[1] = Int((millisecondsSinceToday - ( metricTime[0] * 8640000)) / 86400)
+        
+        /* metric second = (milliseconds since this morning - (hours passed in ms * minutes passsed in ms)) / milliseconds per second*/
+        metricTime[1] = Int((millisecondsSinceToday - ( metricTime[0] * 8640000) * (metricTime[1] * 86400)) / 864)
+        
+        
+        print("ActualTime: \(actualTime[0]):\(actualTime[1]):\(actualTime[2])")
+        print(" ")
+        print("MetricTime: \(metricTime[0]):\(metricTime[1]):\(metricTime[2])")
+        print(" ")
+        print(" ")
+        
             }
     
     
