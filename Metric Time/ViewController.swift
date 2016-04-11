@@ -106,21 +106,39 @@ class ViewController: UIViewController {
         millisecondsSinceToday = (actualTime[0] * 3600000 /*milliseconds per hour*/) + (actualTime[1] * 60000 /* milliseconds per minute*/) + (actualTime[2] * 1000 /*milliseconds per second*/)
         
         
+        //print(Double(millisecondsSinceToday / 8640000))
+      
+        
+        
         
         /* metric hour = milliseconds since this morning / milliseconds per hour  (gives decimal number)*/
-        metricTime[0] = Int(millisecondsSinceToday / 8640000)
+        metricTime[0] = Int(millisecondsSinceToday / 8640000)//correct
+
+        millisecondsSinceToday -= (metricTime[0]*8640000)
         
         /* metric minute = (milliseconds since this morning - (hours passed in ms )) / milliseconds per minute*/
-        metricTime[1] = Int((millisecondsSinceToday - ( metricTime[0] * 8640000)) / 86400)
+        metricTime[1] = Int(millisecondsSinceToday / 86400)//correct
         
-        /* metric second = (milliseconds since this morning - (hours passed in ms * minutes passsed in ms)) / milliseconds per second*/
-        metricTime[1] = Int((millisecondsSinceToday - ( metricTime[0] * 8640000) * (metricTime[1] * 86400)) / 864)
+        millisecondsSinceToday -= (metricTime[1]*86400)
         
+        /* metric second = (milliseconds since this morning - (hours passed in ms + minutes passsed in ms)) / milliseconds per second*/
+        metricTime[2] = Int(millisecondsSinceToday / 864)
+        
+        
+        //metric milliseconds = millisecondsst
+        
+        
+        print((millisecondsSinceToday - ( metricTime[0] * 8640000)) / 86400)//correct
+        print((millisecondsSinceToday - ( metricTime[0] * 8640000) + (metricTime[1] * 86400)) / 864)
+        print(" ")
+        print((millisecondsSinceToday - ( metricTime[0] * 8640000)))
+        print((millisecondsSinceToday - ( metricTime[0] * 8640000) + (metricTime[1] * 86400)))
+        print(" ")
         
         print("ActualTime: \(actualTime[0]):\(actualTime[1]):\(actualTime[2])")
-        print(" ")
+        print("millisecondsSinceToday \(millisecondsSinceToday)") //correct
         print("MetricTime: \(metricTime[0]):\(metricTime[1]):\(metricTime[2])")
-        print(" ")
+        
         print(" ")
         
             }
