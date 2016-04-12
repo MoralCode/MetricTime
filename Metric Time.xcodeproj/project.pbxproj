@@ -17,6 +17,7 @@
 		3AD7E3E01C72961500502023 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AD7E3DE1C72961500502023 /* LaunchScreen.storyboard */; };
 		3AD7E3EB1C72961500502023 /* Metric_TimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD7E3EA1C72961500502023 /* Metric_TimeTests.swift */; };
 		3AD7E3F61C72961500502023 /* Metric_TimeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD7E3F51C72961500502023 /* Metric_TimeUITests.swift */; };
+		3AD99B811CBD9E76007FF474 /* Buglife.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AD99B801CBD9E76007FF474 /* Buglife.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		3AD7E3F11C72961500502023 /* Metric TimeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Metric TimeUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AD7E3F51C72961500502023 /* Metric_TimeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metric_TimeUITests.swift; sourceTree = "<group>"; };
 		3AD7E3F71C72961500502023 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3AD99B801CBD9E76007FF474 /* Buglife.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Buglife.framework; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 			files = (
 				3A5AD0371CB9B3F400F1EB27 /* SystemConfiguration.framework in Frameworks */,
 				3A5AD0351CB9B3CF00F1EB27 /* CoreTelephony.framework in Frameworks */,
+				3AD99B811CBD9E76007FF474 /* Buglife.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +88,7 @@
 		3A5AD0311CB9B22100F1EB27 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3AD99B801CBD9E76007FF474 /* Buglife.framework */,
 				3A5AD0341CB9B3CF00F1EB27 /* CoreTelephony.framework */,
 				3A5AD0361CB9B3F400F1EB27 /* SystemConfiguration.framework */,
 			);
@@ -430,6 +434,7 @@
 					Time,
 					"$(PROJECT_DIR)/Metric",
 					Time,
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "Metric Time/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -449,6 +454,7 @@
 					Time,
 					"$(PROJECT_DIR)/Metric",
 					Time,
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "Metric Time/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
