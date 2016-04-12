@@ -10,7 +10,6 @@
 		3A50755C1C86525600CC6860 /* Calculator.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A50755B1C86525600CC6860 /* Calculator.ttf */; };
 		3A5AD0351CB9B3CF00F1EB27 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A5AD0341CB9B3CF00F1EB27 /* CoreTelephony.framework */; };
 		3A5AD0371CB9B3F400F1EB27 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A5AD0361CB9B3F400F1EB27 /* SystemConfiguration.framework */; };
-		3A7FF9AE1CBB4F9800FC3F36 /* Buglife.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A7FF9AD1CBB4F9800FC3F36 /* Buglife.framework */; };
 		3AD7E3D61C72961500502023 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD7E3D51C72961500502023 /* AppDelegate.swift */; };
 		3AD7E3D81C72961500502023 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD7E3D71C72961500502023 /* ViewController.swift */; };
 		3AD7E3DB1C72961500502023 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AD7E3D91C72961500502023 /* Main.storyboard */; };
@@ -41,7 +40,6 @@
 		3A50755B1C86525600CC6860 /* Calculator.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Calculator.ttf; sourceTree = "<group>"; };
 		3A5AD0341CB9B3CF00F1EB27 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		3A5AD0361CB9B3F400F1EB27 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		3A7FF9AD1CBB4F9800FC3F36 /* Buglife.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Buglife.framework; sourceTree = "<group>"; };
 		3AD7E3D21C72961500502023 /* Metric Time.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Metric Time.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AD7E3D51C72961500502023 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3AD7E3D71C72961500502023 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -62,7 +60,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A7FF9AE1CBB4F9800FC3F36 /* Buglife.framework in Frameworks */,
 				3A5AD0371CB9B3F400F1EB27 /* SystemConfiguration.framework in Frameworks */,
 				3A5AD0351CB9B3CF00F1EB27 /* CoreTelephony.framework in Frameworks */,
 			);
@@ -88,17 +85,18 @@
 		3A5AD0311CB9B22100F1EB27 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3A7FF9AD1CBB4F9800FC3F36 /* Buglife.framework */,
 				3A5AD0341CB9B3CF00F1EB27 /* CoreTelephony.framework */,
 				3A5AD0361CB9B3F400F1EB27 /* SystemConfiguration.framework */,
 			);
 			name = Frameworks;
+			path = "Metric Time";
 			sourceTree = "<group>";
 		};
 		3AD7E3C91C72961500502023 = {
 			isa = PBXGroup;
 			children = (
 				3AD7E3D41C72961500502023 /* Metric Time */,
+				3A5AD0311CB9B22100F1EB27 /* Frameworks */,
 				3AD7E3E91C72961500502023 /* Metric TimeTests */,
 				3AD7E3F41C72961500502023 /* Metric TimeUITests */,
 				3AD7E3D31C72961500502023 /* Products */,
@@ -118,7 +116,6 @@
 		3AD7E3D41C72961500502023 /* Metric Time */ = {
 			isa = PBXGroup;
 			children = (
-				3A5AD0311CB9B22100F1EB27 /* Frameworks */,
 				3AD7E3D51C72961500502023 /* AppDelegate.swift */,
 				3AD7E3D71C72961500502023 /* ViewController.swift */,
 				3AD7E3D91C72961500502023 /* Main.storyboard */,

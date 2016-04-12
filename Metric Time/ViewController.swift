@@ -107,7 +107,7 @@ class ViewController: UIViewController {
     let font = UIFont(name: "Calculator", size: 52.0);
     
     var stressTestMode = false;
-    var interval = 0.125;
+    var interval = 0.864;
 
     
     //  the actual time that normal humans use (in millitary time) (actualTime[0] = hour, actualTime[1] = minute, actualTime[2] = second)
@@ -253,7 +253,7 @@ class ViewController: UIViewController {
         
         //set timer
         timer = NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: #selector(ViewController.updateTime), userInfo: nil, repeats: true)
-        timer.tolerance = 0.04 //allow the timer to be off by a little if iOS needs it...
+        timer.tolerance = 0 //allow the timer to be off by a little if iOS needs it...
         
         
         // Do any additional setup after loading the view, typically from a nib.
