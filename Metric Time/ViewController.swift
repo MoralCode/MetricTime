@@ -16,39 +16,7 @@ class View: UIView {
     
     
     override func drawRect(rect:CGRect) {
-        /*
-         //get context
-         let context = UIGraphicsGetCurrentContext()
-         
-         //set radius
-         let radius = CGRectGetWidth(rect)/2.8
-         
-         let endAngle = CGFloat(2*M_PI)
-         
-         //add circle
-         CGContextAddArc(context, CGRectGetMidX(rect), CGRectGetMidY(rect), radius, 0, endAngle, 1)
-         
-         
-         //set properties
-         CGContextSetFillColor(context, UIColor.grayColor().CGColor)
-         CGContextSetStrokeColor(context, UIColor.whiteColor().CGColor)
-         CGContextSetLineWidth(context, 4.0)
-         
-         //draw path
-         CGContextDrawPath(context, CGPathDrawingMode.FillStroke)
-         
-         //add markers
-         secondMarkers(context!, x: CGRectGetMidX(rect), y: CGRectGetMidY(rect), radius: radius, sides: 100, color: UIColor.whiteColor())
-         
-         //add text
-         drawText(rect, ctx: context!, x: CGRectGetMidX(rect), y: CGRectGetMidY(rect), radius: radius, sides: 10, color: UIColor.whiteColor())
-         */
-        
-        
-        
-        
-        
-        
+
         
         
         
@@ -76,9 +44,9 @@ class View: UIView {
         // draw the path
         CGContextDrawPath(ctx, CGPathDrawingMode.FillStroke);
         
-        secondMarkers(ctx!, x: CGRectGetMidX(rect), y: CGRectGetMidY(rect), radius: rad, sides: 60, color: UIColor.whiteColor())
+        secondMarkers(ctx!, x: CGRectGetMidX(rect), y: CGRectGetMidY(rect), radius: rad, sides: 100, color: UIColor.whiteColor())
         
-        drawText(rect, ctx: ctx!, x: CGRectGetMidX(rect), y: CGRectGetMidY(rect), radius: rad, sides: 12, color: UIColor.whiteColor())
+        drawText(rect, ctx: ctx!, x: CGRectGetMidX(rect), y: CGRectGetMidY(rect), radius: rad, sides: 10, color: UIColor.whiteColor())
         
         
     }
@@ -119,7 +87,25 @@ class ViewController: UIViewController {
     
     
     
-    
+    func rotateLayer(currentLayer:CALayer,dur:CFTimeInterval){
+        
+        var angle = degree2radian(360)
+        
+        // rotation http://stackoverflow.com/questions/1414923/how-to-rotate-uiimageview-with-fix-point
+        var theAnimation = CABasicAnimation(keyPath:"transform.rotation.z")
+        theAnimation.duration = dur
+        // Make this view controller the delegate so it knows when the animation starts and ends
+        theAnimation.delegate = self
+        theAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+        // Use fromValue and toValue
+        theAnimation.fromValue = 0
+        theAnimation.repeatCount = Float.infinity
+        theAnimation.toValue = angle
+        
+        // Add the animation to the layer
+        currentLayer.addAnimation(theAnimation, forKey:"rotate")
+        
+    }
     
     
     
@@ -217,10 +203,7 @@ class ViewController: UIViewController {
         
         super.viewDidLoad()
         
-        let newView = View(frame: CGRect(x: 0, y: 0, width: CGRectGetWidth(self.view.frame), height: CGRectGetWidth(self.view.frame)))
-        
-        self.view.addSubview(newView)
-        
+       
         if stressTestMode {
             interval = 0.00001;
         }
@@ -237,6 +220,96 @@ class ViewController: UIViewController {
         
         
         updateTime()
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        let endAngle = CGFloat(2*M_PI)
+        let newView = View(frame: CGRect(x: 0, y: 0, width: CGRectGetWidth(self.view.frame), height: CGRectGetWidth(self.view.frame)))
+        
+        self.view.addSubview(newView)
+        
+        
+        let time = timeCoords(CGRectGetMidX(newView.frame), y: CGRectGetMidY(newView.frame), time: (h: metricTime[0],m: metricTime[1],s:metricTime[2]),radius: 50)
+        
+        
+        let hourLayer = CAShapeLayer()
+        hourLayer.frame = newView.frame
+        let path = CGPathCreateMutable()
+        
+        CGPathMoveToPoint(path, nil, CGRectGetMidX(newView.frame), CGRectGetMidY(newView.frame))
+        CGPathAddLineToPoint(path, nil, time.h.x, time.h.y)
+        hourLayer.path = path
+        hourLayer.lineWidth = 4
+        hourLayer.lineCap = kCALineCapRound
+        hourLayer.strokeColor = UIColor.blackColor().CGColor
+        
+        // see for rasterization advice http://stackoverflow.com/questions/24316705/how-to-draw-a-smooth-circle-with-cashapelayer-and-uibezierpath
+        hourLayer.rasterizationScale = UIScreen.mainScreen().scale;
+        hourLayer.shouldRasterize = true
+        
+        newView.layer.addSublayer(hourLayer)
+        // time it takes for hour hand to pass through 360 degress
+        rotateLayer(hourLayer,dur:43200)
+        
+        // Minutes
+        let minuteLayer = CAShapeLayer()
+        minuteLayer.frame = newView.frame
+        let minutePath = CGPathCreateMutable()
+        
+        CGPathMoveToPoint(minutePath, nil, CGRectGetMidX(newView.frame), CGRectGetMidY(newView.frame))
+        CGPathAddLineToPoint(minutePath, nil, time.m.x, time.m.y)
+        minuteLayer.path = minutePath
+        minuteLayer.lineWidth = 3
+        minuteLayer.lineCap = kCALineCapRound
+        minuteLayer.strokeColor = UIColor.whiteColor().CGColor
+        
+        minuteLayer.rasterizationScale = UIScreen.mainScreen().scale;
+        minuteLayer.shouldRasterize = true
+        
+       newView.layer.addSublayer(minuteLayer)
+        rotateLayer(minuteLayer,dur: 3600)
+        
+        // Seconds
+        let secondLayer = CAShapeLayer()
+        secondLayer.frame = newView.frame
+        
+        let secondPath = CGPathCreateMutable()
+        CGPathMoveToPoint(secondPath, nil, CGRectGetMidX(newView.frame), CGRectGetMidY(newView.frame))
+        CGPathAddLineToPoint(secondPath, nil, time.s.x, time.s.y)
+        
+        
+        secondLayer.path = secondPath
+        secondLayer.lineWidth = 1
+        secondLayer.lineCap = kCALineCapRound
+        secondLayer.strokeColor = UIColor.redColor().CGColor
+        
+        secondLayer.rasterizationScale = UIScreen.mainScreen().scale;
+        
+        secondLayer.shouldRasterize = true
+       newView.layer.addSublayer(secondLayer)
+        rotateLayer(secondLayer,dur: 60)
+        let centerPiece = CAShapeLayer()
+        
+        let circle = UIBezierPath(arcCenter: CGPoint(x:CGRectGetMidX(newView.frame),y:CGRectGetMidX(newView.frame)), radius: 4.5, startAngle: 0, endAngle: endAngle, clockwise: true)
+        // thanks to http://stackoverflow.com/a/19395006/1694526 for how to fill the color
+        centerPiece.path = circle.CGPath
+        centerPiece.fillColor = UIColor.whiteColor().CGColor
+        newView.layer.addSublayer(centerPiece)
+        
+        
+        
+        
+        
+        
+        
         
         
        // if NSUserDefaults.standardUserDefaults().boolForKey("useSplitDay") == true { let interval = 0.1; ) else { let interval =  }
@@ -264,6 +337,57 @@ class ViewController: UIViewController {
     
     
 }
+
+
+
+
+// MARK: Retrieve time
+func ctime ()->(h:Int,m:Int,s:Int) {
+    
+    var t = time_t()
+    time(&t)
+    let x = localtime(&t) // returns UnsafeMutablePointer
+    
+    return (h:Int(x.memory.tm_hour),m:Int(x.memory.tm_min),s:Int(x.memory.tm_sec))
+}
+// END: Retrieve time
+
+// MARK: Calculate coordinates of time
+func  timeCoords(x:CGFloat,y:CGFloat,time:(h:Int,m:Int,s:Int),radius:CGFloat,adjustment:CGFloat=90)->(h:CGPoint, m:CGPoint,s:CGPoint) {
+    let cx = x // x origin
+    let cy = y // y origin
+    var r  = radius // radius of circle
+    var points = [CGPoint]()
+    var angle = degree2radian(36)
+    func newPoint (t:Int) {
+        let xpo = cx - r * cos(angle * CGFloat(t)+degree2radian(adjustment))
+        let ypo = cy - r * sin(angle * CGFloat(t)+degree2radian(adjustment))
+        points.append(CGPoint(x: xpo, y: ypo))
+    }
+    // work out hours first
+    var hours = time.h
+    let hoursInSeconds = time.h*10000 + time.m*100 + time.s
+    newPoint(hoursInSeconds*5/10000)
+    
+    // work out minutes second
+    r = radius * 1.25
+    let minutesInSeconds = time.m*100 + time.s
+    newPoint(minutesInSeconds/100)
+    
+    // work out seconds last
+    r = radius * 1.5
+    newPoint(time.s)
+    
+    return (h:points[0],m:points[1],s:points[2])
+}
+// END: Calculate coordinates of hour
+
+enum NumberOfNumerals:Int {
+    case two = 2, four = 4, twelve = 12
+}
+
+
+
 
 //MARK: DRAW Circle
 
