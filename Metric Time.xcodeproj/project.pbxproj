@@ -17,7 +17,7 @@
 		3AD7E3E01C72961500502023 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AD7E3DE1C72961500502023 /* LaunchScreen.storyboard */; };
 		3AD7E3EB1C72961500502023 /* Metric_TimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD7E3EA1C72961500502023 /* Metric_TimeTests.swift */; };
 		3AD7E3F61C72961500502023 /* Metric_TimeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD7E3F51C72961500502023 /* Metric_TimeUITests.swift */; };
-		3AD99B811CBD9E76007FF474 /* Buglife.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AD99B801CBD9E76007FF474 /* Buglife.framework */; };
+		3AD99B821CBD9F57007FF474 /* Buglife.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AD99B801CBD9E76007FF474 /* Buglife.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,9 +62,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3AD99B821CBD9F57007FF474 /* Buglife.framework in Frameworks */,
 				3A5AD0371CB9B3F400F1EB27 /* SystemConfiguration.framework in Frameworks */,
 				3A5AD0351CB9B3CF00F1EB27 /* CoreTelephony.framework in Frameworks */,
-				3AD99B811CBD9E76007FF474 /* Buglife.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

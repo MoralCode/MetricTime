@@ -107,7 +107,7 @@ class ViewController: UIViewController {
     let font = UIFont(name: "Calculator", size: 52.0);
     
     var stressTestMode = false;
-    var interval = 0.864;
+    var interval = 0.2;
 
     
     //  the actual time that normal humans use (in millitary time) (actualTime[0] = hour, actualTime[1] = minute, actualTime[2] = second)
@@ -124,6 +124,7 @@ class ViewController: UIViewController {
     
     
     func updateTime() {
+        
         //get current hour, minute and second
         if !stressTestMode {
             components = NSCalendar.currentCalendar().components([ .Hour, .Minute, .Second], fromDate: NSDate())
@@ -178,8 +179,6 @@ class ViewController: UIViewController {
             print(" ")
             print(" ")
         }
-
-
     }
     
     func calculateMetricTime() {
@@ -203,16 +202,8 @@ class ViewController: UIViewController {
         
         metricTime[2] = Int(millisecondsSinceToday / 864)
         
+
     
-        
-        //Debug
-        print("Seconds: \(millisecondsSinceToday / 864)")
-        print("Seconds Modulus: \(millisecondsSinceToday % 864)")
-        print("ActualTime: \(actualTime[0]):\(actualTime[1]):\(actualTime[2])")
-        print("millisecondsSinceToday \(millisecondsSinceToday)") //correct
-        print("MetricTime: \(metricTime[0]):\(metricTime[1]):\(metricTime[2])")
-        
-        print(" ")
         
             }
     
