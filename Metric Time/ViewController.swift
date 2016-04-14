@@ -8,55 +8,9 @@
 
 import UIKit
 
-
-
-
-
-class View: UIView {
-    
-    
-    override func drawRect(rect:CGRect) {
-
-        
-        
-        
-        // obtain context
-        let ctx = UIGraphicsGetCurrentContext()
-        
-        // decide on radius
-        let rad = CGRectGetWidth(rect)/2.8
-        
-        let endAngle = CGFloat(2*M_PI)
-        
-        // add the circle to the context
-        CGContextAddArc(ctx, CGRectGetMidX(rect), CGRectGetMidY(rect), rad, 0, endAngle, 1)
-        
-        // set fill color
-        CGContextSetFillColorWithColor(ctx,UIColor.grayColor().CGColor)
-        
-        // set stroke color
-        CGContextSetStrokeColorWithColor(ctx, UIColor.whiteColor().CGColor)
-        
-        // set line width
-        CGContextSetLineWidth(ctx, 4.0)
-        // use to fill and stroke path (see http://stackoverflow.com/questions/13526046/cant-stroke-path-after-filling-it )
-        
-        // draw the path
-        CGContextDrawPath(ctx, CGPathDrawingMode.FillStroke);
-        
-        secondMarkers(ctx!, x: CGRectGetMidX(rect), y: CGRectGetMidY(rect), radius: rad, sides: 100, color: UIColor.whiteColor())
-        
-        drawText(rect, ctx: ctx!, x: CGRectGetMidX(rect), y: CGRectGetMidY(rect), radius: rad, sides: 10, color: UIColor.whiteColor())
-        
-        
-    }
-}
-
-
-
-
-
-
+//enum NumberOfNumerals:Int {
+//    case two = 2, four = 4, twelve = 12
+//}
 
 
 class ViewController: UIViewController {
@@ -84,29 +38,6 @@ class ViewController: UIViewController {
     var millisecondsSinceToday = 0;
     //the converted "metric time"
     var metricTime: [Int] = [0, 0, 0];
-    
-    
-    
-    func rotateLayer(currentLayer:CALayer,dur:CFTimeInterval){
-        
-        var angle = degree2radian(360)
-        
-        // rotation http://stackoverflow.com/questions/1414923/how-to-rotate-uiimageview-with-fix-point
-        var theAnimation = CABasicAnimation(keyPath:"transform.rotation.z")
-        theAnimation.duration = dur
-        // Make this view controller the delegate so it knows when the animation starts and ends
-        theAnimation.delegate = self
-        theAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
-        // Use fromValue and toValue
-        theAnimation.fromValue = 0
-        theAnimation.repeatCount = Float.infinity
-        theAnimation.toValue = angle
-        
-        // Add the animation to the layer
-        currentLayer.addAnimation(theAnimation, forKey:"rotate")
-        
-    }
-    
     
     
     func updateTime() {
@@ -152,9 +83,14 @@ class ViewController: UIViewController {
         
         //display updated values
         
+        //update clock
+        
       //  decimalDay?.text = String(format: "%.5f", metricDecimalDay)
         timeDisplay?.text = String(format: "%02d : %02d : %02d", actualTime[0], actualTime[1], actualTime[2])
         metricTimeDisplay?.text = String(format: "%01d : %02d : %02d", metricTime[0], metricTime[1], metricTime[2])
+        
+        
+        
         
         
         if stressTestMode {
@@ -194,7 +130,17 @@ class ViewController: UIViewController {
             }
     
     
-    
+    func rotate(view : UIView, duration : Double, rotation : CGFloat, amount:Double, reps : Float){
+        
+        let rotationAnimation = CABasicAnimation(keyPath:"transform.rotation.z")
+        rotationAnimation.toValue = CGFloat( amount * (M_PI * 2.0))
+        rotationAnimation.duration = duration
+        rotationAnimation.cumulative = true
+        rotationAnimation.repeatCount = reps
+        
+        view.layer.addAnimation(rotationAnimation, forKey: "rotationAnimation")
+        view.layer.sublayerTransform = CATransform3DMakeRotation( CGFloat(M_PI) , 160, 160, 1)//* percentageSecondsIntoMinute,
+    }
 
     
     override func viewDidLoad() {
@@ -220,91 +166,82 @@ class ViewController: UIViewController {
         
         
         updateTime()
+
         
+        //MARK: draw clock and hands...
+        
+        let clockView = View(frame: CGRect(x: 0, y: 0, width: CGRectGetWidth(self.view.frame), height: CGRectGetWidth(self.view.frame)))
+
+        //let time = getHandsPosition(CGRectGetMidX(clockView.frame), y: CGRectGetMidY(clockView.frame), time: (h: 00, m: 0, s:0/*metricTime[0], m: metricTime[1], s: metricTime[2]*/),radius: 50)
+        
+        // Hours
+        let hourLayer = CAShapeLayer()
+        let minuteLayer = CAShapeLayer()
+        let secondLayer = CAShapeLayer()
+        let centerPiece = CAShapeLayer()
+        
+        
+        hourLayer.frame = clockView.frame
+        minuteLayer.frame = clockView.frame
+        secondLayer.frame = clockView.frame
+        
+        let path = CGPathCreateMutable()
+        let minutePath = CGPathCreateMutable()
+        let secondPath = CGPathCreateMutable()
+        
+        CGPathMoveToPoint(path, nil, CGRectGetMidX(clockView.frame), CGRectGetMidY(clockView.frame))
+        CGPathMoveToPoint(minutePath, nil, CGRectGetMidX(clockView.frame), CGRectGetMidY(clockView.frame))
+        CGPathMoveToPoint(secondPath, nil, CGRectGetMidX(clockView.frame), CGRectGetMidY(clockView.frame))
+        
+        //all hands start off in vertical position.
+        CGPathAddLineToPoint(path, nil, CGRectGetMidX(clockView.frame), CGRectGetMidY(clockView.frame)-50)
+        CGPathAddLineToPoint(minutePath, nil, CGRectGetMidX(clockView.frame), CGRectGetMidY(clockView.frame)-62.5)
+        CGPathAddLineToPoint(secondPath, nil, CGRectGetMidX(clockView.frame), CGRectGetMidY(clockView.frame)-75)
+        
+        hourLayer.path = path
+        minuteLayer.path = minutePath
+        secondLayer.path = secondPath
+        
+        hourLayer.lineWidth = 4
+        minuteLayer.lineWidth = 3
+        secondLayer.lineWidth = 1
+        
+        hourLayer.lineCap = kCALineCapRound
+        minuteLayer.lineCap = kCALineCapRound
+        secondLayer.lineCap = kCALineCapRound
+        
+        hourLayer.strokeColor = UIColor.whiteColor().CGColor
+        minuteLayer.strokeColor = UIColor.whiteColor().CGColor
+        secondLayer.strokeColor = UIColor.redColor().CGColor
+        
+
+        hourLayer.rasterizationScale = UIScreen.mainScreen().scale;
+        minuteLayer.rasterizationScale = UIScreen.mainScreen().scale;
+        secondLayer.rasterizationScale = UIScreen.mainScreen().scale;
+        
+        hourLayer.shouldRasterize = true
+        minuteLayer.shouldRasterize = true
+        secondLayer.shouldRasterize = true
+        
+        
+        let endAngle = CGFloat(2*M_PI)
+        
+        let circle = UIBezierPath(arcCenter: CGPoint(x:CGRectGetMidX(clockView.frame),y:CGRectGetMidX(clockView.frame)), radius: 2.75, startAngle: 0, endAngle: endAngle, clockwise: true)
+        centerPiece.path = circle.CGPath
+        centerPiece.fillColor = UIColor.grayColor().CGColor
 
         
         
         
+        self.view.addSubview(clockView)
+        clockView.layer.addSublayer(hourLayer)
+        clockView.layer.addSublayer(minuteLayer)
+        clockView.layer.addSublayer(secondLayer)
+        clockView.layer.addSublayer(centerPiece)
+    
+
         
-        
-        
-        
-        
-        
-        let endAngle = CGFloat(2*M_PI)
-        let newView = View(frame: CGRect(x: 0, y: 0, width: CGRectGetWidth(self.view.frame), height: CGRectGetWidth(self.view.frame)))
-        
-        self.view.addSubview(newView)
-        
-        
-        let time = timeCoords(CGRectGetMidX(newView.frame), y: CGRectGetMidY(newView.frame), time: (h: metricTime[0],m: metricTime[1],s:metricTime[2]),radius: 50)
-        
-        
-        let hourLayer = CAShapeLayer()
-        hourLayer.frame = newView.frame
-        let path = CGPathCreateMutable()
-        
-        CGPathMoveToPoint(path, nil, CGRectGetMidX(newView.frame), CGRectGetMidY(newView.frame))
-        CGPathAddLineToPoint(path, nil, time.h.x, time.h.y)
-        hourLayer.path = path
-        hourLayer.lineWidth = 4
-        hourLayer.lineCap = kCALineCapRound
-        hourLayer.strokeColor = UIColor.blackColor().CGColor
-        
-        // see for rasterization advice http://stackoverflow.com/questions/24316705/how-to-draw-a-smooth-circle-with-cashapelayer-and-uibezierpath
-        hourLayer.rasterizationScale = UIScreen.mainScreen().scale;
-        hourLayer.shouldRasterize = true
-        
-        newView.layer.addSublayer(hourLayer)
-        // time it takes for hour hand to pass through 360 degress
-        rotateLayer(hourLayer,dur:43200)
-        
-        // Minutes
-        let minuteLayer = CAShapeLayer()
-        minuteLayer.frame = newView.frame
-        let minutePath = CGPathCreateMutable()
-        
-        CGPathMoveToPoint(minutePath, nil, CGRectGetMidX(newView.frame), CGRectGetMidY(newView.frame))
-        CGPathAddLineToPoint(minutePath, nil, time.m.x, time.m.y)
-        minuteLayer.path = minutePath
-        minuteLayer.lineWidth = 3
-        minuteLayer.lineCap = kCALineCapRound
-        minuteLayer.strokeColor = UIColor.whiteColor().CGColor
-        
-        minuteLayer.rasterizationScale = UIScreen.mainScreen().scale;
-        minuteLayer.shouldRasterize = true
-        
-       newView.layer.addSublayer(minuteLayer)
-        rotateLayer(minuteLayer,dur: 3600)
-        
-        // Seconds
-        let secondLayer = CAShapeLayer()
-        secondLayer.frame = newView.frame
-        
-        let secondPath = CGPathCreateMutable()
-        CGPathMoveToPoint(secondPath, nil, CGRectGetMidX(newView.frame), CGRectGetMidY(newView.frame))
-        CGPathAddLineToPoint(secondPath, nil, time.s.x, time.s.y)
-        
-        
-        secondLayer.path = secondPath
-        secondLayer.lineWidth = 1
-        secondLayer.lineCap = kCALineCapRound
-        secondLayer.strokeColor = UIColor.redColor().CGColor
-        
-        secondLayer.rasterizationScale = UIScreen.mainScreen().scale;
-        
-        secondLayer.shouldRasterize = true
-       newView.layer.addSublayer(secondLayer)
-        rotateLayer(secondLayer,dur: 60)
-        let centerPiece = CAShapeLayer()
-        
-        let circle = UIBezierPath(arcCenter: CGPoint(x:CGRectGetMidX(newView.frame),y:CGRectGetMidX(newView.frame)), radius: 4.5, startAngle: 0, endAngle: endAngle, clockwise: true)
-        // thanks to http://stackoverflow.com/a/19395006/1694526 for how to fill the color
-        centerPiece.path = circle.CGPath
-        centerPiece.fillColor = UIColor.whiteColor().CGColor
-        newView.layer.addSublayer(centerPiece)
-        
-        
+        rotate(clockView, duration: 10, rotation: 90, amount: 1, reps: 1)
         
         
         
@@ -341,61 +278,90 @@ class ViewController: UIViewController {
 
 
 
-// MARK: Retrieve time
-func ctime ()->(h:Int,m:Int,s:Int) {
-    
-    var t = time_t()
-    time(&t)
-    let x = localtime(&t) // returns UnsafeMutablePointer
-    
-    return (h:Int(x.memory.tm_hour),m:Int(x.memory.tm_min),s:Int(x.memory.tm_sec))
-}
-// END: Retrieve time
+
+
+
+
+
+
 
 // MARK: Calculate coordinates of time
-func  timeCoords(x:CGFloat,y:CGFloat,time:(h:Int,m:Int,s:Int),radius:CGFloat,adjustment:CGFloat=90)->(h:CGPoint, m:CGPoint,s:CGPoint) {
+func getHandsPosition(x:CGFloat,y:CGFloat,time:(h:Int,m:Int,s:Int),radius:CGFloat,adjustment:CGFloat=90)->(h:CGPoint, m:CGPoint,s:CGPoint) {
     let cx = x // x origin
     let cy = y // y origin
     var r  = radius // radius of circle
     var points = [CGPoint]()
-    var angle = degree2radian(36)
+    var angle = degree2radian(10)
     func newPoint (t:Int) {
         let xpo = cx - r * cos(angle * CGFloat(t)+degree2radian(adjustment))
         let ypo = cy - r * sin(angle * CGFloat(t)+degree2radian(adjustment))
         points.append(CGPoint(x: xpo, y: ypo))
     }
-    // work out hours first
-    var hours = time.h
-    let hoursInSeconds = time.h*10000 + time.m*100 + time.s
-    newPoint(hoursInSeconds*5/10000)
+    
+    let secondsInMin = 100
+    let minutesInHour = 100
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//    
+//        - (void)updateHands {
+//            NSDate *now = [NSDate date];
+//            NSCalendar *cal = [NSCalendar currentCalendar];
+//            NSDateComponents *comps = [cal components:NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit fromDate:now];
+//            
+//            NSInteger minutesIntoDay = [comps hour] * 60 + [comps minute];
+//            float percentageMinutesIntoDay = minutesIntoDay / (12.0 * 60.0);
+//            float percentageMinutesIntoHour = (float)[comps minute] / 60.0;
+//            float percentageSecondsIntoMinute = (float)[comps second] / 60.0;
+//            
+//            secondHand_.transform = CATransform3DMakeRotation((M_PI * 2) * percentageSecondsIntoMinute, 0, 0, 1);
+//            minuteHand_.transform = CATransform3DMakeRotation((M_PI * 2) * percentageMinutesIntoHour, 0, 0, 1);
+//            hourHand_.transform = CATransform3DMakeRotation((M_PI * 2) * percentageMinutesIntoDay, 0, 0, 1);
+//    }
+    
+    
+    //calculate hours
+    
+    let hoursInSeconds = time.h*(secondsInMin*minutesInHour) + time.m*secondsInMin + time.s
+    newPoint(hoursInSeconds*5/(secondsInMin*minutesInHour))
+    print(hoursInSeconds*5/(secondsInMin*minutesInHour))
     
     // work out minutes second
     r = radius * 1.25
-    let minutesInSeconds = time.m*100 + time.s
-    newPoint(minutesInSeconds/100)
+    let minutesInSeconds = time.m*secondsInMin + time.s
+    newPoint(minutesInSeconds/secondsInMin)
+    print(minutesInSeconds/secondsInMin)
     
     // work out seconds last
     r = radius * 1.5
     newPoint(time.s)
-    
+    print(time.s)
+//    print(points[0])
+//    print(points[1])
+//    print(points[2])
     return (h:points[0],m:points[1],s:points[2])
 }
-// END: Calculate coordinates of hour
-
-enum NumberOfNumerals:Int {
-    case two = 2, four = 4, twelve = 12
-}
 
 
 
 
-//MARK: DRAW Circle
 
 
-func degree2radian(a:CGFloat)->CGFloat {
-    let b = CGFloat(M_PI) * a/180
-    return b
-}
+
+
+
+
+
+
+
+
+
 
 
 func circleCircumferencePoints(sides:Int,x:CGFloat,y:CGFloat,radius:CGFloat,adjustment:CGFloat=0)->[CGPoint] {
@@ -414,29 +380,31 @@ func circleCircumferencePoints(sides:Int,x:CGFloat,y:CGFloat,radius:CGFloat,adju
     return points
 }
 
-func secondMarkers(ctx:CGContextRef, x:CGFloat, y:CGFloat, radius:CGFloat, sides:Int, color:UIColor) {
+
+
+
+
+func addMarkersandText(rect:CGRect, context:CGContextRef, x:CGFloat, y:CGFloat, radius:CGFloat, sides:Int, sides2:Int, tickTextcolor:UIColor) {
+
     // retrieve points
     let points = circleCircumferencePoints(sides,x: x,y: y,radius: radius)
     // create path
-    let path = CGPathCreateMutable()
+    let path1 = CGPathCreateMutable()
     // determine length of marker as a fraction of the total radius
     var divider:CGFloat = 1/16
-    
-    
-    
-    
+
     //add the tick marks
     for p in points.enumerate() {
-        
-        
-        
+        //tick marks every 5
         if p.index % 10 == 0 {
             divider = 1/8
             
         }
+        //tick marks every 10
         else if p.index % 5 == 0 {
             divider = 3/16
         }
+        //tick marks every 1
         else {
             divider = 1/16
         }
@@ -444,69 +412,102 @@ func secondMarkers(ctx:CGContextRef, x:CGFloat, y:CGFloat, radius:CGFloat, sides
         let xn = p.element.x + divider*(x-p.element.x)
         let yn = p.element.y + divider*(y-p.element.y)
         // build path
-        CGPathMoveToPoint(path, nil, p.element.x, p.element.y)
-        CGPathAddLineToPoint(path, nil, xn, yn)
-        CGPathCloseSubpath(path)
+        CGPathMoveToPoint(path1, nil, p.element.x, p.element.y)
+        CGPathAddLineToPoint(path1, nil, xn, yn)
+        CGPathCloseSubpath(path1)
         // add path to context
-        CGContextAddPath(ctx, path)
+        CGContextAddPath(context, path1)
+
+
     }
     
     // set path color
-    let cgcolor = color.CGColor
-    CGContextSetStrokeColorWithColor(ctx,cgcolor)
-    CGContextSetLineWidth(ctx, 3.0)
-    CGContextStrokePath(ctx)
+    let cgcolor = tickTextcolor.CGColor
+    CGContextSetStrokeColorWithColor(context,cgcolor)
+    CGContextSetLineWidth(context, 3.0)
+    CGContextStrokePath(context)
     
-}
+    
+    
 
-func drawText(rect:CGRect, ctx:CGContextRef, x:CGFloat, y:CGFloat, radius:CGFloat, sides:Int, color:UIColor) {
-    
+
     // Flip text co-ordinate space, see: http://blog.spacemanlabs.com/2011/08/quick-tip-drawing-core-text-right-side-up/
-    CGContextTranslateCTM(ctx, 0.0, CGRectGetHeight(rect))
-    CGContextScaleCTM(ctx, 1.0, -1.0)
+    CGContextTranslateCTM(context, 0.0, CGRectGetHeight(rect))
+    CGContextScaleCTM(context, 1.0, -1.0)
+    
     // dictates on how inset the ring of numbers will be
-    let inset:CGFloat = radius/3.25//3.5
+    let inset:CGFloat = radius/3.2
     // An adjustment of 270 degrees to position numbers correctly
-    let points = circleCircumferencePoints(sides,x: x,y: y,radius: radius-inset,adjustment:270)
-    _ = CGPathCreateMutable()
-    // see
-    for p in points.enumerate() {
+    let textPoints = circleCircumferencePoints(sides2,x: x,y: y,radius: radius-inset,adjustment:270)
+    // multiplier enables correcting numbering when fewer than 12 numbers are featured, e.g. 4 sides will display 12, 3, 6, 9
+    let multiplier = 12/sides2
+    
+    for p in textPoints.enumerate() {
         if p.index > 0 {
             // Font name must be written exactly the same as the system stores it (some names are hyphenated, some aren't) and must exist on the user's device. Otherwise there will be a crash. (In real use checks and fallbacks would be created.) For a list of iOS 7 fonts see here: http://support.apple.com/en-us/ht5878
             let aFont = UIFont(name: "DamascusBold", size: radius/5)
             // create a dictionary of attributes to be applied to the string
-            let attr:CFDictionaryRef = [NSFontAttributeName:aFont!,NSForegroundColorAttributeName:UIColor.whiteColor()]
+            let attr:CFDictionaryRef = [NSFontAttributeName:aFont!,NSForegroundColorAttributeName:tickTextcolor]
             // create the attributed string
-            let text = CFAttributedStringCreate(nil, p.index.description, attr)
+            let str = String(p.index*multiplier)
+            let text = CFAttributedStringCreate(nil, str, attr)
             // create the line of text
             let line = CTLineCreateWithAttributedString(text)
             // retrieve the bounds of the text
             let bounds = CTLineGetBoundsWithOptions(line, CTLineBoundsOptions.UseOpticalBounds)
             // set the line width to stroke the text with
-            CGContextSetLineWidth(ctx, 1.5)
+            CGContextSetLineWidth(context, 1.5)
             // set the drawing mode to stroke
-            CGContextSetTextDrawingMode(ctx, CGTextDrawingMode.FillStroke)
+            CGContextSetTextDrawingMode(context, CGTextDrawingMode.Stroke)
             // Set text position and draw the line into the graphics context, text length and height is adjusted for
             let xn = p.element.x - bounds.width/2
             let yn = p.element.y - bounds.midY
-            CGContextSetTextPosition(ctx, xn, yn)
+            CGContextSetTextPosition(context, xn, yn)
             // the line of text is drawn - see https://developer.apple.com/library/ios/DOCUMENTATION/StringsTextFonts/Conceptual/CoreText_Programming/LayoutOperations/LayoutOperations.html
             // draw the line of text
-            CTLineDraw(line, ctx)
+            CTLineDraw(line, context)
         }
     }
+}
 
+
+
+func degree2radian(a:CGFloat)->CGFloat {
+    let b = CGFloat(M_PI) * a/180
+    return b
+}
+
+class View: UIView {
     
     
+    override func drawRect(rect:CGRect) {
+        //assemble all pieces
+        
+        let context = UIGraphicsGetCurrentContext()
     
-    //MARK: ANIMATE Hands
+        // set properties
     
 
+        let radius = CGRectGetWidth(rect)/2.8
 
-
-
-
-
-
-
+        let endAngle = CGFloat(2*M_PI)
+        
+        //add circle
+        CGContextAddArc(context, CGRectGetMidX(rect), CGRectGetMidY(rect), radius, 0, endAngle, 1)
+        
+        //set circle properties
+       // CGContextSetFillColorWithColor(context,UIColor.grayColor().CGColor)
+        //CGContextSetStrokeColorWithColor(context,UIColor.whiteColor().CGColor)
+       // CGContextSetLineWidth(context, 4.0)
+        
+        //draw path
+        CGContextDrawPath(context, CGPathDrawingMode.FillStroke);
+        
+        addMarkersandText(rect, context: context!, x: CGRectGetMidX(rect), y: CGRectGetMidY(rect), radius: radius, sides: 100, sides2: 10, tickTextcolor: UIColor.greenColor())
+        
     }
+    
+    
+}
+
+
