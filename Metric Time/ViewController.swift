@@ -40,6 +40,20 @@ class ViewController: UIViewController {
     var metricTime: [Int] = [0, 0, 0];
     
     
+    //variables for drawing hands
+    var clockView = View();
+
+    
+    let hourLayer = CAShapeLayer()
+    let minuteLayer = CAShapeLayer()
+    let secondLayer = CAShapeLayer()
+    let centerPiece = CAShapeLayer()
+    
+    
+    
+    
+    
+    
     func updateTime() {
         
         //get current hour, minute and second
@@ -84,6 +98,9 @@ class ViewController: UIViewController {
         //display updated values
         
         //update clock
+        let positions = getHandsPosition(metricTime[0], m: metricTime[1], s: metricTime[2])
+        rotateHands(clockView, rotation: (positions.h, positions.m, positions.s) )
+
         
       //  decimalDay?.text = String(format: "%.5f", metricDecimalDay)
         timeDisplay?.text = String(format: "%02d : %02d : %02d", actualTime[0], actualTime[1], actualTime[2])
@@ -130,16 +147,18 @@ class ViewController: UIViewController {
             }
     
     
-    func rotate(view : UIView, duration : Double, rotation : CGFloat, amount:Double, reps : Float){
+    func rotateHands(view : UIView, rotation:(hour:CGFloat,minute:CGFloat,second:CGFloat)){
         
-        let rotationAnimation = CABasicAnimation(keyPath:"transform.rotation.z")
-        rotationAnimation.toValue = CGFloat( amount * (M_PI * 2.0))
-        rotationAnimation.duration = duration
-        rotationAnimation.cumulative = true
-        rotationAnimation.repeatCount = reps
+        //view.layer.transform = CATransform3DMakeRotation(hRotation, 0, 0, 1)//* percentageSecondsIntoMinute,
+    
+   // print(view.layer.sublayers)
         
-        view.layer.addAnimation(rotationAnimation, forKey: "rotationAnimation")
-        view.layer.sublayerTransform = CATransform3DMakeRotation( CGFloat(M_PI) , 160, 160, 1)//* percentageSecondsIntoMinute,
+   //print(self.contentView.layer.sublayers)
+    
+        hourLayer.transform = CATransform3DMakeRotation(rotation.hour, 0, 0, 1)
+        minuteLayer.transform = CATransform3DMakeRotation(rotation.minute, 0, 0, 1)
+        secondLayer.transform = CATransform3DMakeRotation(rotation.second, 0, 0, 1)
+    
     }
 
     
@@ -165,21 +184,18 @@ class ViewController: UIViewController {
         metricTimeDisplay?.textColor = color
         
         
-        updateTime()
+        
 
         
         //MARK: draw clock and hands...
         
-        let clockView = View(frame: CGRect(x: 0, y: 0, width: CGRectGetWidth(self.view.frame), height: CGRectGetWidth(self.view.frame)))
-
-        //let time = getHandsPosition(CGRectGetMidX(clockView.frame), y: CGRectGetMidY(clockView.frame), time: (h: 00, m: 0, s:0/*metricTime[0], m: metricTime[1], s: metricTime[2]*/),radius: 50)
+        clockView = View(frame: CGRect(x: 0, y: 0, width: CGRectGetWidth(self.view.frame), height: CGRectGetWidth(self.view.frame)))
         
-        // Hours
-        let hourLayer = CAShapeLayer()
-        let minuteLayer = CAShapeLayer()
-        let secondLayer = CAShapeLayer()
-        let centerPiece = CAShapeLayer()
         
+        hourLayer.name = "hourHand"
+        minuteLayer.name = "minuteHand"
+        secondLayer.name = "secondHand"
+        centerPiece.name = "centerPiece"
         
         hourLayer.frame = clockView.frame
         minuteLayer.frame = clockView.frame
@@ -229,8 +245,6 @@ class ViewController: UIViewController {
         let circle = UIBezierPath(arcCenter: CGPoint(x:CGRectGetMidX(clockView.frame),y:CGRectGetMidX(clockView.frame)), radius: 2.75, startAngle: 0, endAngle: endAngle, clockwise: true)
         centerPiece.path = circle.CGPath
         centerPiece.fillColor = UIColor.grayColor().CGColor
-
-        
         
         
         self.view.addSubview(clockView)
@@ -239,17 +253,7 @@ class ViewController: UIViewController {
         clockView.layer.addSublayer(secondLayer)
         clockView.layer.addSublayer(centerPiece)
     
-
-        
-        rotate(clockView, duration: 10, rotation: 90, amount: 1, reps: 1)
-        
-        
-        
-        
-        
-        
-        
-       // if NSUserDefaults.standardUserDefaults().boolForKey("useSplitDay") == true { let interval = 0.1; ) else { let interval =  }
+        //by not calling updatetime() here, we get the cool aanimation of the clock setting the time after startup...
 
         
         //set timer
@@ -257,7 +261,6 @@ class ViewController: UIViewController {
         timer.tolerance = 0 //allow the timer to be off by a little if iOS needs it...
         
         
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
     
@@ -286,66 +289,20 @@ class ViewController: UIViewController {
 
 
 // MARK: Calculate coordinates of time
-func getHandsPosition(x:CGFloat,y:CGFloat,time:(h:Int,m:Int,s:Int),radius:CGFloat,adjustment:CGFloat=90)->(h:CGPoint, m:CGPoint,s:CGPoint) {
-    let cx = x // x origin
-    let cy = y // y origin
-    var r  = radius // radius of circle
-    var points = [CGPoint]()
-    var angle = degree2radian(10)
-    func newPoint (t:Int) {
-        let xpo = cx - r * cos(angle * CGFloat(t)+degree2radian(adjustment))
-        let ypo = cy - r * sin(angle * CGFloat(t)+degree2radian(adjustment))
-        points.append(CGPoint(x: xpo, y: ypo))
-    }
+func getHandsPosition( h:Int, m:Int, s:Int)->(h:CGFloat,m:CGFloat,s:CGFloat) {
     
-    let secondsInMin = 100
-    let minutesInHour = 100
+    var hoursAngle = (Double(h)/10)
+    var minutesAngle = (Double(m)/100)
+    var secondsAngle = (Double(s)/100)
+
     
+    hoursAngle = hoursAngle*360
+    minutesAngle = minutesAngle*360
+    secondsAngle = secondsAngle*360
+   
+   // print(degree2radian(secondsAngle))
     
-    
-    
-    
-    
-    
-    
-    
-//    
-//        - (void)updateHands {
-//            NSDate *now = [NSDate date];
-//            NSCalendar *cal = [NSCalendar currentCalendar];
-//            NSDateComponents *comps = [cal components:NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit fromDate:now];
-//            
-//            NSInteger minutesIntoDay = [comps hour] * 60 + [comps minute];
-//            float percentageMinutesIntoDay = minutesIntoDay / (12.0 * 60.0);
-//            float percentageMinutesIntoHour = (float)[comps minute] / 60.0;
-//            float percentageSecondsIntoMinute = (float)[comps second] / 60.0;
-//            
-//            secondHand_.transform = CATransform3DMakeRotation((M_PI * 2) * percentageSecondsIntoMinute, 0, 0, 1);
-//            minuteHand_.transform = CATransform3DMakeRotation((M_PI * 2) * percentageMinutesIntoHour, 0, 0, 1);
-//            hourHand_.transform = CATransform3DMakeRotation((M_PI * 2) * percentageMinutesIntoDay, 0, 0, 1);
-//    }
-    
-    
-    //calculate hours
-    
-    let hoursInSeconds = time.h*(secondsInMin*minutesInHour) + time.m*secondsInMin + time.s
-    newPoint(hoursInSeconds*5/(secondsInMin*minutesInHour))
-    print(hoursInSeconds*5/(secondsInMin*minutesInHour))
-    
-    // work out minutes second
-    r = radius * 1.25
-    let minutesInSeconds = time.m*secondsInMin + time.s
-    newPoint(minutesInSeconds/secondsInMin)
-    print(minutesInSeconds/secondsInMin)
-    
-    // work out seconds last
-    r = radius * 1.5
-    newPoint(time.s)
-    print(time.s)
-//    print(points[0])
-//    print(points[1])
-//    print(points[2])
-    return (h:points[0],m:points[1],s:points[2])
+    return (h: degree2radian(CGFloat(hoursAngle)),m: degree2radian(CGFloat(minutesAngle)),s: degree2radian(CGFloat(secondsAngle)))
 }
 
 
