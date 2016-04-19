@@ -16,9 +16,8 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet var timeDisplay:UILabel?
-    @IBOutlet var decimalDay:UILabel?
     @IBOutlet var metricTimeDisplay:UILabel?
-    @IBOutlet var infoScreenButton:UIButton?
+
     
     
     var components = NSCalendar.currentCalendar().components( [.Hour, .Minute, .Second], fromDate: NSDate())
@@ -177,10 +176,8 @@ class ViewController: UIViewController {
         
         //load the font and color the text boxes
         timeDisplay?.font = font
-        decimalDay?.font = font
         metricTimeDisplay?.font = font
         timeDisplay?.textColor = color
-        decimalDay?.textColor = color
         metricTimeDisplay?.textColor = color
         
         
@@ -189,7 +186,20 @@ class ViewController: UIViewController {
         
         //MARK: draw clock and hands...
         
-        clockView = View(frame: CGRect(x: 0, y: 0, width: CGRectGetWidth(self.view.frame), height: CGRectGetWidth(self.view.frame)))
+        clockView = View(frame: CGRect(x: 0, y: 0, width: 230, height: 230))
+        
+        
+        
+        //position clock view
+            //clockView.center.y = self.view.center.y
+        self.view.addSubview(clockView)
+        
+        //causes thread1 signal SIGABRT
+        let horizontalCenter = NSLayoutConstraint(item: clockView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1.0, constant: 0.0)
+        self.view.addConstraint(horizontalCenter)
+        
+        
+        
         
         
         hourLayer.name = "hourHand"
@@ -205,11 +215,10 @@ class ViewController: UIViewController {
         let minutePath = CGPathCreateMutable()
         let secondPath = CGPathCreateMutable()
         
+        //all hands start off in vertical position.
         CGPathMoveToPoint(path, nil, CGRectGetMidX(clockView.frame), CGRectGetMidY(clockView.frame))
         CGPathMoveToPoint(minutePath, nil, CGRectGetMidX(clockView.frame), CGRectGetMidY(clockView.frame))
         CGPathMoveToPoint(secondPath, nil, CGRectGetMidX(clockView.frame), CGRectGetMidY(clockView.frame))
-        
-        //all hands start off in vertical position.
         CGPathAddLineToPoint(path, nil, CGRectGetMidX(clockView.frame), CGRectGetMidY(clockView.frame)-50)
         CGPathAddLineToPoint(minutePath, nil, CGRectGetMidX(clockView.frame), CGRectGetMidY(clockView.frame)-62.5)
         CGPathAddLineToPoint(secondPath, nil, CGRectGetMidX(clockView.frame), CGRectGetMidY(clockView.frame)-75)
@@ -230,7 +239,7 @@ class ViewController: UIViewController {
         minuteLayer.strokeColor = UIColor.whiteColor().CGColor
         secondLayer.strokeColor = UIColor.redColor().CGColor
         
-
+        
         hourLayer.rasterizationScale = UIScreen.mainScreen().scale;
         minuteLayer.rasterizationScale = UIScreen.mainScreen().scale;
         secondLayer.rasterizationScale = UIScreen.mainScreen().scale;
@@ -247,7 +256,7 @@ class ViewController: UIViewController {
         centerPiece.fillColor = UIColor.grayColor().CGColor
         
         
-        self.view.addSubview(clockView)
+        
         clockView.layer.addSublayer(hourLayer)
         clockView.layer.addSublayer(minuteLayer)
         clockView.layer.addSublayer(secondLayer)
@@ -279,15 +288,6 @@ class ViewController: UIViewController {
 }
 
 
-
-
-
-
-
-
-
-
-
 // MARK: Calculate coordinates of time
 func getHandsPosition( h:Int, m:Int, s:Int)->(h:CGFloat,m:CGFloat,s:CGFloat) {
     
@@ -304,22 +304,6 @@ func getHandsPosition( h:Int, m:Int, s:Int)->(h:CGFloat,m:CGFloat,s:CGFloat) {
     
     return (h: degree2radian(CGFloat(hoursAngle)),m: degree2radian(CGFloat(minutesAngle)),s: degree2radian(CGFloat(secondsAngle)))
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 func circleCircumferencePoints(sides:Int,x:CGFloat,y:CGFloat,radius:CGFloat,adjustment:CGFloat=0)->[CGPoint] {
     let angle = degree2radian(360/CGFloat(sides))
@@ -434,6 +418,8 @@ func degree2radian(a:CGFloat)->CGFloat {
     return b
 }
 
+
+
 class View: UIView {
     
     
@@ -445,7 +431,7 @@ class View: UIView {
         // set properties
     
 
-        let radius = CGRectGetWidth(rect)/2.8
+        let radius = CGRectGetWidth(rect)/2
 
         let endAngle = CGFloat(2*M_PI)
         

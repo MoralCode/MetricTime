@@ -10,7 +10,7 @@ import UIKit
 import Buglife
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, BuglifeDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate,  BuglifeDelegate {
 
     var window: UIWindow?
 
