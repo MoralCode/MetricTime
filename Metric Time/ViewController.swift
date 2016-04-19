@@ -8,9 +8,7 @@
 
 import UIKit
 
-//enum NumberOfNumerals:Int {
-//    case two = 2, four = 4, twelve = 12
-//}
+
 
 
 class ViewController: UIViewController {
@@ -160,6 +158,9 @@ class ViewController: UIViewController {
     
     }
 
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
     
     override func viewDidLoad() {
         
