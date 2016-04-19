@@ -195,9 +195,13 @@ class ViewController: UIViewController {
             //clockView.center.y = self.view.center.y
         self.view.addSubview(clockView)
         
-        //causes thread1 signal SIGABRT
-        let horizontalCenter = NSLayoutConstraint(item: clockView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterX, multiplier: 1.0, constant: 0.0)
-        self.view.addConstraint(horizontalCenter)
+        self.view.addSubview(clockView)
+        clockView.translatesAutoresizingMaskIntoConstraints = false
+        clockView.centerYAnchor.constraintEqualToAnchor(self.view.centerYAnchor, constant: 0.0).active = false
+        clockView.topAnchor.constraintEqualToAnchor(self.view.topAnchor, constant: 25.0).active = true
+        clockView.centerXAnchor.constraintEqualToAnchor(self.view.centerXAnchor, constant: 0.0).active = true
+        clockView.widthAnchor.constraintEqualToConstant(230.0).active = true
+        clockView.heightAnchor.constraintEqualToConstant(230.0).active = true
         
         
         
