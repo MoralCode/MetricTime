@@ -1,8 +1,8 @@
 # MetricTime
 An app to display Metric Time for taking trips to countries that use the metric system. Based on @2012rcampion's answer to this question: http://worldbuilding.stackexchange.com/questions/35808/how-to-make-this-base-10-metric-time-concept-work
 
-##How It Works
-For information on the metric time concept behind this app, please see [this](https://github.com/DeveloperACE/MetricTime/wiki/The-MetricTime-Concept) wiki entry.
+## Pranking people.
+All necessary information about how this app works and how to sell the prank is on the wiki. www.github.com/DeveloperACE/MetricTime/wiki
 
 
 
