@@ -33,9 +33,9 @@ class ViewController: UIViewController {
     var actualTime: [Int] = [0, 0, 0];
     
     var millisecondsSinceToday = 0;
+    
     //the converted "metric time"
     var metricTime: [Int] = [0, 0, 0];
-    
     
     //variables for drawing hands
     var clockView = View();
@@ -124,15 +124,11 @@ class ViewController: UIViewController {
         millisecondsSinceToday = (actualTime[0] * 3600000 /*milliseconds per hour*/) + (actualTime[1] * 60000 /* milliseconds per minute*/) + (actualTime[2] * 1000 /*milliseconds per second*/)
         
         
-        //print(Double(millisecondsSinceToday / 8640000))
-      
-        
-        
-        metricTime[0] = Int(millisecondsSinceToday / 8640000)//correct
+        metricTime[0] = Int(millisecondsSinceToday / 8640000)
 
         millisecondsSinceToday -= (metricTime[0]*8640000)
         
-        metricTime[1] = Int(millisecondsSinceToday / 86400)//correct
+        metricTime[1] = Int(millisecondsSinceToday / 86400)
         
         millisecondsSinceToday -= (metricTime[1]*86400)
         
@@ -145,12 +141,6 @@ class ViewController: UIViewController {
     
     
     func rotateHands(view : UIView, rotation:(hour:CGFloat,minute:CGFloat,second:CGFloat)){
-        
-        //view.layer.transform = CATransform3DMakeRotation(hRotation, 0, 0, 1)//* percentageSecondsIntoMinute,
-    
-   // print(view.layer.sublayers)
-        
-   //print(self.contentView.layer.sublayers)
     
         hourLayer.transform = CATransform3DMakeRotation(rotation.hour, 0, 0, 1)
         minuteLayer.transform = CATransform3DMakeRotation(rotation.minute, 0, 0, 1)
@@ -192,8 +182,6 @@ class ViewController: UIViewController {
         
         
         //position clock view
-            //clockView.center.y = self.view.center.y
-        self.view.addSubview(clockView)
         
         self.view.addSubview(clockView)
         clockView.translatesAutoresizingMaskIntoConstraints = false
@@ -296,16 +284,15 @@ class ViewController: UIViewController {
 // MARK: Calculate coordinates of time
 func getHandsPosition( h:Int, m:Int, s:Int)->(h:CGFloat,m:CGFloat,s:CGFloat) {
     
-    var hoursAngle = (Double(h)/10)
+    
     var minutesAngle = (Double(m)/100)
+    var hoursAngle = (Double(h)/10) + minutesAngle/10 //this line must come after minutesAngle Calculation...
     var secondsAngle = (Double(s)/100)
 
-    
     hoursAngle = hoursAngle*360
     minutesAngle = minutesAngle*360
     secondsAngle = secondsAngle*360
-   
-   // print(degree2radian(secondsAngle))
+
     
     return (h: degree2radian(CGFloat(hoursAngle)),m: degree2radian(CGFloat(minutesAngle)),s: degree2radian(CGFloat(secondsAngle)))
 }
