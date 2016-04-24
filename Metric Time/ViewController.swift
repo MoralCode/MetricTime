@@ -10,13 +10,14 @@ import UIKit
 
 
 
-
 class ViewController: UIViewController {
     
     @IBOutlet var timeDisplay:UILabel?
     @IBOutlet var metricTimeDisplay:UILabel?
 
-    
+    var longPressGestureRecognizer: UILongPressGestureRecognizer!
+    var longPressGestureRecognizerView: UIView!
+   
     
     var components = NSCalendar.currentCalendar().components( [.Hour, .Minute, .Second], fromDate: NSDate())
     var timer = NSTimer();
@@ -137,7 +138,7 @@ class ViewController: UIViewController {
 
     
         
-            }
+        }
     
     
     func rotateHands(view : UIView, rotation:(hour:CGFloat,minute:CGFloat,second:CGFloat)){
@@ -151,6 +152,37 @@ class ViewController: UIViewController {
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
+    
+    
+    
+    func handleLongPressGestures(sender: UILongPressGestureRecognizer){
+        
+        print("long press detected.")
+        self.performSegueWithIdentifier("moveToConversionView", sender: nil)
+    
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)!
+        
+        //longPressGestureRecognizerView = UIView.
+        longPressGestureRecognizerView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height))
+        
+        /* First create the gesture recognizer */
+        longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(ViewController.handleLongPressGestures(_:)))
+        
+        /* The number of fingers that must be present on the screen */
+        longPressGestureRecognizer.numberOfTouchesRequired = 1
+        
+        /* Maximum 100 points of movement allowed before the gesture is recognized */
+        //longPressGestureRecognizer.allowableMovement = 50
+        
+        /* The user must press 2 fingers (numberOfTouchesRequired) for at least 1 second for the gesture to be recognized */
+        longPressGestureRecognizer.minimumPressDuration = 2
+        
+    }
+
+        
     
     override func viewDidLoad() {
         
@@ -254,6 +286,13 @@ class ViewController: UIViewController {
         clockView.layer.addSublayer(minuteLayer)
         clockView.layer.addSublayer(secondLayer)
         clockView.layer.addSublayer(centerPiece)
+        
+        //add gesture recognizer to view
+        longPressGestureRecognizerView.center = view.center
+        view.addSubview(longPressGestureRecognizerView)
+        
+        /* Add this gesture recognizer to our view */
+        longPressGestureRecognizerView.addGestureRecognizer(longPressGestureRecognizer)
     
         //by not calling updatetime() here, we get the cool aanimation of the clock setting the time after startup...
 
@@ -264,7 +303,6 @@ class ViewController: UIViewController {
         
         
     }
-    
     
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
