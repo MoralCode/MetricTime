@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ConversionViewController: UIViewController {
+class ConversionViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
 
     
     @IBOutlet weak var inputTimePicker: UISegmentedControl!
@@ -20,7 +20,8 @@ class ConversionViewController: UIViewController {
     let font = UIFont(name: "Calculator", size: 32.0);
     
     
-    var datePicker: UIDatePicker!
+    var normalTimePicker: UIDatePicker!
+    var metricTimePicker: UIPickerView!
     
     // Given date
     let date = NSDate()
@@ -63,21 +64,29 @@ class ConversionViewController: UIViewController {
     
     
     
-    func datePickerDateChanged(datePicker: UIDatePicker){
+    func normalTimePickerDateChanged(normalTimePicker: UIDatePicker){
         
         let formatter = NSDateFormatter();
         formatter.dateFormat = "HH:mm";
-        let formattedTimeStr = formatter.stringFromDate(datePicker.date);
+        let formattedTimeStr = formatter.stringFromDate(normalTimePicker.date);
 
         
         
         print("Selected date = \(formattedTimeStr)")
         
         inputTime.text = "\(formattedTimeStr)"
-        outputTime.text = String(format: "%d MetricTime", datePicker.date)
+        outputTime.text = String(format: "%d MetricTime", normalTimePicker.date)
     
     
     }
+    
+    
+    
+    func metricTimePickerDateChanged(normalTimePicker: UIDatePicker){
+    
+    
+    }
+    
     
     func segmentedControlValueChanged(sender: UISegmentedControl){
         
@@ -88,18 +97,14 @@ class ConversionViewController: UIViewController {
         
         if selectedSegmentIndex == 0 { //convert to metric
             
-         
+            metricTimePicker.hidden = true
+            normalTimePicker.hidden = false
             
             
         } else if selectedSegmentIndex == 1 { //convert to normal
             
-            let calendar: NSCalendar! = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
-            
-            let date10h = calendar.dateBySettingHour(10, minute: 59, second: 0, ofDate: date, options: NSCalendarOptions.MatchFirst)!
-
-            
-            datePicker.maximumDate = date10h
-            
+             metricTimePicker.hidden = false
+             normalTimePicker.hidden = true
             
         }
         
@@ -107,7 +112,30 @@ class ConversionViewController: UIViewController {
     
     
     
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        if pickerView == metricTimePicker{
+            return 2
+        }
+        return 0
+    }
     
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if pickerView == metricTimePicker{
+            
+            if component == 0 {
+                return 10
+            } else if component == 1 {
+                
+                return 100
+            }
+            
+        }
+        return 0
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?{
+        return "\(row + 1)"
+    }
     
     
     
@@ -121,35 +149,58 @@ class ConversionViewController: UIViewController {
         inputTime?.textColor = color
         outputTime?.textColor = color
         
+        inputTimePicker.addTarget(self, action: #selector(ConversionViewController.segmentedControlValueChanged(_:)), forControlEvents: .ValueChanged)
         
 
         // Do any additional setup after loading the view.
-        datePicker = UIDatePicker()
+        normalTimePicker = UIDatePicker()
         
         
-        datePicker.datePickerMode = .Time
-        datePicker.backgroundColor = UIColor.whiteColor()
-        datePicker.tintColor = UIColor.whiteColor()
-        datePicker.minuteInterval = 1
+        normalTimePicker.datePickerMode = .Time
+        normalTimePicker.backgroundColor = UIColor.whiteColor()
+        normalTimePicker.tintColor = UIColor.whiteColor()
+        normalTimePicker.minuteInterval = 1
         
         // First moment of tody
         let startOfDay = NSCalendar.currentCalendar().startOfDayForDate(date)
         
-        datePicker.date = startOfDay
-        view.addSubview(datePicker)
+        normalTimePicker.date = startOfDay
+        view.addSubview(normalTimePicker)
 
-        //add constraints 
-        // ERROR: these next few lines cause thread 1 signal sigabrt
-        datePicker.translatesAutoresizingMaskIntoConstraints = false
-        datePicker.centerYAnchor.constraintEqualToAnchor(self.view.centerYAnchor, constant: 0.0).active = false
-        datePicker.bottomAnchor.constraintEqualToAnchor(self.view.bottomAnchor, constant: 15.0).active = true
-        datePicker.centerXAnchor.constraintEqualToAnchor(self.view.centerXAnchor, constant: 0.0).active = true
+        //add constraints
+        normalTimePicker.translatesAutoresizingMaskIntoConstraints = false
+        normalTimePicker.centerYAnchor.constraintEqualToAnchor(self.view.centerYAnchor, constant: 0.0).active = false
+        normalTimePicker.bottomAnchor.constraintEqualToAnchor(self.view.bottomAnchor, constant: 15.0).active = true
+        normalTimePicker.centerXAnchor.constraintEqualToAnchor(self.view.centerXAnchor, constant: 0.0).active = true
 
         
         
-        datePicker.addTarget(self, action: #selector(ConversionViewController.datePickerDateChanged(_:)), forControlEvents: .ValueChanged)
+        normalTimePicker.addTarget(self, action: #selector(ConversionViewController.normalTimePickerDateChanged(_:)), forControlEvents: .ValueChanged)
         
-        inputTimePicker.addTarget(self, action: #selector(ConversionViewController.segmentedControlValueChanged(_:)), forControlEvents: .ValueChanged)
+        
+        
+        metricTimePicker = UIPickerView()
+        
+        metricTimePicker.backgroundColor = UIColor.whiteColor()
+        metricTimePicker.tintColor = UIColor.whiteColor()
+        metricTimePicker.dataSource = self
+        metricTimePicker.delegate = self
+        
+        
+        view.addSubview(metricTimePicker)
+        //add constraints
+        metricTimePicker.translatesAutoresizingMaskIntoConstraints = false
+        metricTimePicker.centerYAnchor.constraintEqualToAnchor(self.view.centerYAnchor, constant: 0.0).active = false
+        metricTimePicker.bottomAnchor.constraintEqualToAnchor(self.view.bottomAnchor, constant: 15.0).active = true
+        metricTimePicker.centerXAnchor.constraintEqualToAnchor(self.view.centerXAnchor, constant: 0.0).active = true
+
+        metricTimePicker.hidden = true
+
+        
+        
+        
+    //    metricTimePicker.addTarget(self, action: #selector(ConversionViewController.metricTimePickerDateChanged(_:)), forControlEvents: .ValueChanged)
+        
         
         
         
@@ -173,7 +224,7 @@ class ConversionViewController: UIViewController {
         // Pass the selected object to the new view controller
         
         
-        datePicker.removeFromSuperview()
+        normalTimePicker.removeFromSuperview()
         
         
     }
