@@ -10,7 +10,33 @@ import UIKit
 
 class ConversionViewController: UIViewController {
 
+    
+    @IBOutlet weak var inputTimePicker: UISegmentedControl!
+    @IBOutlet weak var inputTime: UILabel!
+    @IBOutlet weak var outputTime: UILabel!
+    
+    
+    
     var datePicker: UIDatePicker!
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     override func viewDidLoad() {
