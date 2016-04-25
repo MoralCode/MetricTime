@@ -159,7 +159,7 @@ class ViewController: UIViewController {
         
         print("long press detected.")
         self.performSegueWithIdentifier("moveToConversionView", sender: nil)
-    
+        longPressGestureRecognizerView.removeGestureRecognizer(longPressGestureRecognizer)
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -293,7 +293,8 @@ class ViewController: UIViewController {
         
         /* Add this gesture recognizer to our view */
         longPressGestureRecognizerView.addGestureRecognizer(longPressGestureRecognizer)
-    
+        
+        
         //by not calling updatetime() here, we get the cool aanimation of the clock setting the time after startup...
 
         
