@@ -15,14 +15,14 @@ class ConversionViewController: UIViewController {
     @IBOutlet weak var outputLabel: UILabel!
     @IBOutlet weak var inputLabel: UILabel!
     
-    @IBOutlet weak var plusHours: UIButton!
-    @IBOutlet weak var minusHours: UIButton!
-    
-    @IBOutlet weak var plusMinutes: UIButton!
-    @IBOutlet weak var minusMinutes: UIButton!
-    
-    @IBOutlet weak var plusSeconds: UIButton!
-    @IBOutlet weak var minusSeconds: UIButton!
+//    @IBOutlet weak var plusHours: UIButton!
+//    @IBOutlet weak var minusHours: UIButton!
+//    
+//    @IBOutlet weak var plusMinutes: UIButton!
+//    @IBOutlet weak var minusMinutes: UIButton!
+//    
+//    @IBOutlet weak var plusSeconds: UIButton!
+//    @IBOutlet weak var minusSeconds: UIButton!
     
     let color = UIColor.greenColor();
     let font = UIFont(name: "Calculator", size: 52.0);
@@ -31,9 +31,9 @@ class ConversionViewController: UIViewController {
     var outputTime: [Int] = [0, 0, 0];
 
     
-    var hoursMax: Int = 0
-    var minutesMax: Int = 0
-    var secondsMax: Int = 0
+    var hoursMax: Int = 24
+    var minutesMax: Int = 60
+    var secondsMax: Int = 60
     
     
     
@@ -41,7 +41,7 @@ class ConversionViewController: UIViewController {
         
         inputTime[0] += 1
         
-        if inputTime[0] == hoursMax {
+        if inputTime[0] >= hoursMax {
             inputTime[0] = 0
         }
         
@@ -66,7 +66,7 @@ class ConversionViewController: UIViewController {
         
         inputTime[1] += 1
         
-        if inputTime[1] == minutesMax {
+        if inputTime[1] >= minutesMax {
             inputTime[1] = 0
         }
         
@@ -90,7 +90,7 @@ class ConversionViewController: UIViewController {
         
         inputTime[2] += 1
         
-        if inputTime[2] == secondsMax {
+        if inputTime[2] >= secondsMax {
             inputTime[2] = 0
         }
         
@@ -117,9 +117,9 @@ class ConversionViewController: UIViewController {
     func updateLabels() {
 
         
-        inputLabel.text = String(format: "%01d : %02d : %02d", inputTime[0], inputTime[1], inputTime[2])
+        inputLabel.text = String(format: "%02d:%02d:%02d", inputTime[0], inputTime[1], inputTime[2])
         
-        outputLabel.text = String(format: "%01d : %02d : %02d", outputTime[0], outputTime[1], outputTime[2])
+        outputLabel.text = String(format: "%02d:%02d:%02d", outputTime[0], outputTime[1], outputTime[2])
         
     }
     
@@ -229,8 +229,8 @@ class ConversionViewController: UIViewController {
         
         
         
-        outputLabel.text = "00:00"
-        inputLabel.text = "00:00"
+        outputLabel.text = "00:00:00"
+        inputLabel.text = "00:00:00"
         
     }
     
