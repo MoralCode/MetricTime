@@ -6,7 +6,7 @@ All necessary information about how this app works and how to sell the prank is 
 
 
 ## Converting Times
-If you would like just the raw time-convertion functionality of this app to bulk-convert any input time to "Metric", please see [this gist](https://gist.github.com/DeveloperACE/edd2c3b68f240022d4a799c1c3f99645).
+If you would like just the raw time-convertion functionality of this app to bulk-convert any input time to "Metric", please see [this gist](https://gist.github.com/DeveloperACE/edd2c3b68f240022d4a799c1c3f99645). there is also a built-in Metric-time-converter that is opened by long-pressing anywhere on the initial opening screen.
 
 
 ###A note on images
