@@ -26,10 +26,7 @@ class ViewController: UIViewController {
     
     let color = UIColor.greenColor();
     let font = UIFont(name: "Calculator", size: 52.0);
-    
-    var stressTestMode = false;
-    var interval = 0.2;
-    
+
     
     //  the actual time that normal humans use (in millitary time) (actualTime[0] = hour, actualTime[1] = minute, actualTime[2] = second)
     var actualTime: [Int] = [0, 0, 0];
@@ -56,41 +53,12 @@ class ViewController: UIViewController {
     func updateTime() {
         
         //get current hour, minute and second
-        if !stressTestMode {
+    
             components = NSCalendar.currentCalendar().components([ .Hour, .Minute, .Second], fromDate: NSDate())
             
             actualTime[0] = components.hour;
             actualTime[1] = components.minute;
             actualTime[2] = components.second;
-            
-        } else {
-            
-            //increment seconds
-            actualTime[2] += 1
-            
-            //if seconds = 60
-            if actualTime[2] == 60 {
-                //increment minutes and reset seconds
-                
-                actualTime[1] += 1
-                actualTime[2] = 0
-            }
-            
-            //if min = 60
-            if actualTime[1] == 60 {
-                //increment hours and reset minutes
-                actualTime[0] += 1
-                actualTime[1] = 0
-            }
-            
-            //if hours = 24
-            if actualTime[0] == 24 {
-                //stop timer running.
-                //timer.invalidate()
-                
-            }
-            
-        }
         
         calculateMetricTime()
         
@@ -108,15 +76,6 @@ class ViewController: UIViewController {
         
         
         
-        
-        if stressTestMode {
-            // log values
-            print("ActualTime: \(actualTime[0]):\(actualTime[1]):\(actualTime[2])")
-            print(" ")
-            print("MetricTime: \(metricTime[0]):\(metricTime[1]):\(metricTime[2])")
-            print(" ")
-            print(" ")
-        }
     }
     
     func calculateMetricTime() {
@@ -162,6 +121,7 @@ class ViewController: UIViewController {
         
         print("long press detected.")
         self.performSegueWithIdentifier("moveToConversionView", sender: nil)
+        //remove the gesture recogniser so it doesnt get called while the Convertion view is segue-ing in...
         longPressGestureRecognizerView.removeGestureRecognizer(longPressGestureRecognizer)
     }
     
@@ -189,16 +149,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         
-        
-        
         super.viewDidLoad()
         
-        
-        if stressTestMode {
-            interval = 0.00001;
-        }
-        
-        
+        print("ViewDidLoad")
         
         //load the font and color the text boxes
         timeDisplay?.font = font
@@ -290,9 +243,14 @@ class ViewController: UIViewController {
         clockView.layer.addSublayer(secondLayer)
         clockView.layer.addSublayer(centerPiece)
         
-        //add gesture recognizer to view
-        longPressGestureRecognizerView.center = view.center
+        //add gesture recognizer view to view
         view.addSubview(longPressGestureRecognizerView)
+        longPressGestureRecognizerView.translatesAutoresizingMaskIntoConstraints = false
+        longPressGestureRecognizerView.topAnchor.constraintEqualToAnchor(self.view.topAnchor, constant: 0.0).active = true
+        longPressGestureRecognizerView.bottomAnchor.constraintEqualToAnchor(self.view.bottomAnchor, constant: 0.0).active = true
+        longPressGestureRecognizerView.leftAnchor.constraintEqualToAnchor(self.view.leftAnchor, constant: 0.0).active = true
+        longPressGestureRecognizerView.rightAnchor.constraintEqualToAnchor(self.view.rightAnchor, constant: 0.0).active = true
+
         
         /* Add this gesture recognizer to our view */
         longPressGestureRecognizerView.addGestureRecognizer(longPressGestureRecognizer)

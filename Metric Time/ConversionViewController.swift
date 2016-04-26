@@ -54,7 +54,7 @@ class ConversionViewController: UIViewController {
         inputTime[0] -= 1
         
         if inputTime[0] == -1 {
-            inputTime[0] = hoursMax
+            inputTime[0] = hoursMax-1
         }
         
         updateTime()
@@ -79,7 +79,7 @@ class ConversionViewController: UIViewController {
         inputTime[1] -= 1
         
         if inputTime[1] == -1 {
-            inputTime[1] = minutesMax
+            inputTime[1] = minutesMax-1
         }
         
         updateTime()
@@ -103,7 +103,7 @@ class ConversionViewController: UIViewController {
         inputTime[2] -= 1
         
         if inputTime[2] == -1 {
-            inputTime[2] = secondsMax
+            inputTime[2] = secondsMax-1
         }
         
         updateTime()
