@@ -31,17 +31,11 @@ class ConversionViewController: UIViewController {
     var outputTime: [Int] = [0, 0, 0];
     
     
-    var millisecondsSinceToday = 0
-    
-    
-    
-    
-    
     
     
     func convertToMetricTime(time:[Int]) -> [Int] {
         
-        millisecondsSinceToday = (time[0] * 3600000 /*milliseconds per hour*/) + (time[1] * 60000 /* milliseconds per minute*/) + (time[2] * 1000 /*milliseconds per second*/)
+       var millisecondsSinceToday = (time[0] * 3600000 /*milliseconds per hour*/) + (time[1] * 60000 /* milliseconds per minute*/) + (time[2] * 1000 /*milliseconds per second*/)
         
          var convertedTime: [Int] = [0, 0, 0];
         
