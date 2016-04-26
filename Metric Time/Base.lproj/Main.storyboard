@@ -186,13 +186,13 @@
                     <connections>
                         <outlet property="inputLabel" destination="91L-6k-JcZ" id="Hc3-cs-paB"/>
                         <outlet property="inputTimePicker" destination="VFi-Jz-qcc" id="3eN-f4-J4B"/>
-                        <outlet property="minusHoursButton" destination="bX3-OI-vii" id="OOr-eA-5Ov"/>
-                        <outlet property="minusMinutesButton" destination="69e-Um-xI2" id="trO-LV-zp3"/>
-                        <outlet property="minusSecondsButton" destination="jTn-35-XBN" id="zr4-GW-Pf8"/>
+                        <outlet property="minusHours" destination="bX3-OI-vii" id="Vp1-2n-wnP"/>
+                        <outlet property="minusMinutes" destination="69e-Um-xI2" id="wfK-Ng-SeB"/>
+                        <outlet property="minusSeconds" destination="jTn-35-XBN" id="tN1-cF-4eh"/>
                         <outlet property="outputLabel" destination="Vsy-pK-tcR" id="dNT-b2-Tbh"/>
-                        <outlet property="plusHoursButton" destination="uET-Ov-7L2" id="2x9-kD-jMx"/>
-                        <outlet property="plusMinutesButton" destination="kqY-Pq-RNM" id="KS3-9S-WJG"/>
-                        <outlet property="plusSecondsButton" destination="kh8-yK-Gvi" id="LyI-eH-5KO"/>
+                        <outlet property="plusHours" destination="uET-Ov-7L2" id="S7P-lE-DCn"/>
+                        <outlet property="plusMinutes" destination="kqY-Pq-RNM" id="xb4-pq-4BP"/>
+                        <outlet property="plusSeconds" destination="kh8-yK-Gvi" id="R30-gf-62x"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BPZ-38-HsW" userLabel="First Responder" sceneMemberID="firstResponder"/>

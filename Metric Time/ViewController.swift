@@ -142,6 +142,8 @@ class ViewController: UIViewController {
     }
     
     
+    
+    
     func rotateHands(view : UIView, rotation:(hour:CGFloat,minute:CGFloat,second:CGFloat)){
         
         hourLayer.transform = CATransform3DMakeRotation(rotation.hour, 0, 0, 1)
@@ -299,7 +301,8 @@ class ViewController: UIViewController {
         //by not calling updatetime() here, we get the cool aanimation of the clock setting the time after startup...
         
         
-        //It is better to use an CADisplayLink for timing related to animation. This is why you have an issue with dropping ticks/frames. NSTimer executes when it's convenient for the run loop could be before or after the display has been rendered. CADisplayLink will always be executed prior to pixels being pushed to the screen. For more on this watch the video here: https://developer.apple.com/videos/play/wwdc2014/236/
+        //It is better to use an CADisplayLink for timing related to animation. This is why you have an issue with dropping ticks/frames.
+        //NSTimer executes when it's convenient for the run loop could be before or after the display has been rendered. CADisplayLink will always be executed prior to pixels being pushed to the screen. For more on this watch the video here: https://developer.apple.com/videos/play/wwdc2014/236/
         self.displayLink = CADisplayLink(target: self, selector: #selector(self.updateTime))
         self.displayLink?.addToRunLoop(NSRunLoop.currentRunLoop(), forMode: NSRunLoopCommonModes)
         

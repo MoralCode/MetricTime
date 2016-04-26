@@ -15,20 +15,137 @@ class ConversionViewController: UIViewController {
     @IBOutlet weak var outputLabel: UILabel!
     @IBOutlet weak var inputLabel: UILabel!
     
-    @IBOutlet weak var plusHoursButton: UIButton!
-    @IBOutlet weak var minusHoursButton: UIButton!
+    @IBOutlet weak var plusHours: UIButton!
+    @IBOutlet weak var minusHours: UIButton!
     
-    @IBOutlet weak var plusMinutesButton: UIButton!
-    @IBOutlet weak var minusMinutesButton: UIButton!
+    @IBOutlet weak var plusMinutes: UIButton!
+    @IBOutlet weak var minusMinutes: UIButton!
     
-    @IBOutlet weak var plusSecondsButton: UIButton!
-    @IBOutlet weak var minusSecondsButton: UIButton!
+    @IBOutlet weak var plusSeconds: UIButton!
+    @IBOutlet weak var minusSeconds: UIButton!
     
     let color = UIColor.greenColor();
     let font = UIFont(name: "Calculator", size: 52.0);
     
     var inputTime: [Int] = [0, 0, 0];
     var outputTime: [Int] = [0, 0, 0];
+
+    
+    var hoursMax: Int = 0
+    var minutesMax: Int = 0
+    var secondsMax: Int = 0
+    
+    
+    
+    @IBAction func plusHours(sender: UIButton) {
+        
+        inputTime[0] += 1
+        
+        if inputTime[0] == hoursMax {
+            inputTime[0] = 0
+        }
+        
+        updateTime()
+        
+    }
+
+    @IBAction func minusHours(sender: UIButton) {
+        
+        inputTime[0] -= 1
+        
+        if inputTime[0] == -1 {
+            inputTime[0] = hoursMax
+        }
+        
+        updateTime()
+        
+    }
+    
+    
+    @IBAction func plusMinutes(sender: UIButton) {
+        
+        inputTime[1] += 1
+        
+        if inputTime[1] == minutesMax {
+            inputTime[1] = 0
+        }
+        
+        updateTime()
+        
+    }
+    
+    @IBAction func minusMinutes(sender: UIButton) {
+        
+        inputTime[1] -= 1
+        
+        if inputTime[1] == -1 {
+            inputTime[1] = minutesMax
+        }
+        
+        updateTime()
+        
+    }
+    
+    @IBAction func plusSeconds(sender: UIButton) {
+        
+        inputTime[2] += 1
+        
+        if inputTime[2] == secondsMax {
+            inputTime[2] = 0
+        }
+        
+        updateTime()
+        
+    }
+    
+    @IBAction func minusSeconds(sender: UIButton) {
+        
+        inputTime[2] -= 1
+        
+        if inputTime[2] == -1 {
+            inputTime[2] = secondsMax
+        }
+        
+        updateTime()
+        
+    }
+    
+    
+    
+    
+    
+    func updateLabels() {
+
+        
+        inputLabel.text = String(format: "%01d : %02d : %02d", inputTime[0], inputTime[1], inputTime[2])
+        
+        outputLabel.text = String(format: "%01d : %02d : %02d", outputTime[0], outputTime[1], outputTime[2])
+        
+    }
+    
+    
+    func updateTime() {
+        
+        if inputTimePicker.selectedSegmentIndex == 0 {
+            
+            outputTime = convertToMetricTime(inputTime)
+            
+        } else if inputTimePicker.selectedSegmentIndex == 1 {
+            
+            convertToNormalTime(inputTime)
+        }
+        
+        updateLabels()
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -50,22 +167,39 @@ class ConversionViewController: UIViewController {
     }
     
     
+    func convertToNormalTime(time:[Int]) -> [Int] {
+        
+        var millisecondsSinceToday = (time[0] * 8640000 /*metric milliseconds per hour*/) + (time[1] * 86400 /* metric milliseconds per minute*/) + (time[2] * 864 /*milliseconds per second*/)
+        
+        var convertedTime: [Int] = [0, 0, 0];
+        
+        convertedTime[0] = Int(millisecondsSinceToday / 3600000)
+        millisecondsSinceToday -= (convertedTime[0]*3600000)
+        convertedTime[1] = Int(millisecondsSinceToday / 60000)
+        millisecondsSinceToday -= (convertedTime[1]*60000)
+        convertedTime[2] = Int(millisecondsSinceToday / 1000)
+        
+        
+        return convertedTime
+    }
+    
+    
     
     
     
     func segmentedControlValueChanged(sender: UISegmentedControl){
         
-        print("segmentedControlValueChanged")
-        
-        let selectedSegmentIndex = sender.selectedSegmentIndex
-        
-        
-        if selectedSegmentIndex == 0 { //convert to metric
+        if sender.selectedSegmentIndex == 0 { //convert to metric
+            
+            inputTime = [0, 0, 0]
             
             //accept normal time as input
+            hoursMax = 24
+            minutesMax = 60
+            secondsMax = 60
             
             
-        } else if selectedSegmentIndex == 1 { //convert to normal
+        } else if sender.selectedSegmentIndex == 1 { //convert to normal
             
           
             //accept metric time as input
