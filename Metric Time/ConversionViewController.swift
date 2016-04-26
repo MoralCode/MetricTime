@@ -9,7 +9,7 @@
 import UIKit
 
 class ConversionViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
-
+    
     
     @IBOutlet weak var inputTimePicker: UISegmentedControl!
     @IBOutlet weak var inputTime: UILabel!
@@ -69,22 +69,22 @@ class ConversionViewController: UIViewController, UIPickerViewDataSource, UIPick
         let formatter = NSDateFormatter();
         formatter.dateFormat = "HH:mm";
         let formattedTimeStr = formatter.stringFromDate(normalTimePicker.date);
-
+        
         
         
         print("Selected date = \(formattedTimeStr)")
         
         inputTime.text = "\(formattedTimeStr)"
         outputTime.text = String(format: "%d MetricTime", normalTimePicker.date)
-    
-    
+        
+        
     }
     
     
     
     func metricTimePickerDateChanged(normalTimePicker: UIDatePicker){
-    
-    
+        
+        
     }
     
     
@@ -92,7 +92,7 @@ class ConversionViewController: UIViewController, UIPickerViewDataSource, UIPick
         
         print("segmentedControlValueChanged")
         
-            let selectedSegmentIndex = sender.selectedSegmentIndex
+        let selectedSegmentIndex = sender.selectedSegmentIndex
         
         
         if selectedSegmentIndex == 0 { //convert to metric
@@ -103,8 +103,8 @@ class ConversionViewController: UIViewController, UIPickerViewDataSource, UIPick
             
         } else if selectedSegmentIndex == 1 { //convert to normal
             
-             metricTimePicker.hidden = false
-             normalTimePicker.hidden = true
+            metricTimePicker.hidden = false
+            normalTimePicker.hidden = true
             
         }
         
@@ -151,7 +151,7 @@ class ConversionViewController: UIViewController, UIPickerViewDataSource, UIPick
         
         inputTimePicker.addTarget(self, action: #selector(ConversionViewController.segmentedControlValueChanged(_:)), forControlEvents: .ValueChanged)
         
-
+        
         // Do any additional setup after loading the view.
         normalTimePicker = UIDatePicker()
         
@@ -166,13 +166,13 @@ class ConversionViewController: UIViewController, UIPickerViewDataSource, UIPick
         
         normalTimePicker.date = startOfDay
         view.addSubview(normalTimePicker)
-
+        
         //add constraints
         normalTimePicker.translatesAutoresizingMaskIntoConstraints = false
         normalTimePicker.centerYAnchor.constraintEqualToAnchor(self.view.centerYAnchor, constant: 0.0).active = false
         normalTimePicker.bottomAnchor.constraintEqualToAnchor(self.view.bottomAnchor, constant: 15.0).active = true
         normalTimePicker.centerXAnchor.constraintEqualToAnchor(self.view.centerXAnchor, constant: 0.0).active = true
-
+        
         
         
         normalTimePicker.addTarget(self, action: #selector(ConversionViewController.normalTimePickerDateChanged(_:)), forControlEvents: .ValueChanged)
@@ -193,13 +193,13 @@ class ConversionViewController: UIViewController, UIPickerViewDataSource, UIPick
         metricTimePicker.centerYAnchor.constraintEqualToAnchor(self.view.centerYAnchor, constant: 0.0).active = false
         metricTimePicker.bottomAnchor.constraintEqualToAnchor(self.view.bottomAnchor, constant: 15.0).active = true
         metricTimePicker.centerXAnchor.constraintEqualToAnchor(self.view.centerXAnchor, constant: 0.0).active = true
-
+        
         metricTimePicker.hidden = true
-
         
         
         
-    //    metricTimePicker.addTarget(self, action: #selector(ConversionViewController.metricTimePickerDateChanged(_:)), forControlEvents: .ValueChanged)
+        
+        //    metricTimePicker.addTarget(self, action: #selector(ConversionViewController.metricTimePickerDateChanged(_:)), forControlEvents: .ValueChanged)
         
         
         
@@ -208,26 +208,11 @@ class ConversionViewController: UIViewController, UIPickerViewDataSource, UIPick
         outputTime.text = "00:00"
         
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    //Segues always instantiate new view controllers. When going back we want don't want, or need, a new view controller so we will just dismiss the presented one.
+    @IBAction func backPressed(sender: UIButton) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-
     
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller
-        
-        
-        normalTimePicker.removeFromSuperview()
-        
-        
-    }
-    
-
 }
