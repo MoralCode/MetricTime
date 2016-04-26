@@ -27,16 +27,10 @@ class ConversionViewController: UIViewController {
     let color = UIColor.greenColor();
     let font = UIFont(name: "Calculator", size: 52.0);
     
-
+    var inputTime: [Int] = [0, 0, 0];
+    var outputTime: [Int] = [0, 0, 0];
     
     
-    
-    
-    
-    var actualTime:[Int] = [0, 0, 0] //change this variable to the hours, minutes and seconds of the time you want to convert (millitary time please) (e.x. [13, 55, 42] for 1:55:42)
-    
-    
-    var metricTime:[Int] = [0, 0, 0]
     var millisecondsSinceToday = 0
     
     
@@ -47,40 +41,20 @@ class ConversionViewController: UIViewController {
     
     func convertToMetricTime(time:[Int]) -> [Int] {
         
-        millisecondsSinceToday = (actualTime[0] * 3600000 /*milliseconds per hour*/) + (actualTime[1] * 60000 /* milliseconds per minute*/) + (actualTime[2] * 1000 /*milliseconds per second*/)
+        millisecondsSinceToday = (time[0] * 3600000 /*milliseconds per hour*/) + (time[1] * 60000 /* milliseconds per minute*/) + (time[2] * 1000 /*milliseconds per second*/)
+        
+         var convertedTime: [Int] = [0, 0, 0];
+        
+        convertedTime[0] = Int(millisecondsSinceToday / 8640000)
+        millisecondsSinceToday -= (convertedTime[0]*8640000)
+        convertedTime[1] = Int(millisecondsSinceToday / 86400)
+        millisecondsSinceToday -= (convertedTime[1]*86400)
+        convertedTime[2] = Int(millisecondsSinceToday / 864)
         
         
-        metricTime[0] = Int(millisecondsSinceToday / 8640000)
-        millisecondsSinceToday -= (metricTime[0]*8640000)
-        metricTime[1] = Int(millisecondsSinceToday / 86400)
-        millisecondsSinceToday -= (metricTime[1]*86400)
-        metricTime[2] = Int(millisecondsSinceToday / 864)
-        
-        
-        return metricTime
+        return convertedTime
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-//        let formatter = NSDateFormatter();
-//        formatter.dateFormat = "HH:mm";
-//        let formattedTimeStr = formatter.stringFromDate(normalTimePicker.date);
-//        
-//        
-//        
-//        print("Selected date = \(formattedTimeStr)")
-//        
-//        
-//        outputLabel.text = String(format: "%d MetricTime", normalTimePicker.date)
-//        
-    
- 
     
     
     
@@ -94,12 +68,14 @@ class ConversionViewController: UIViewController {
         
         if selectedSegmentIndex == 0 { //convert to metric
             
-            
+            //accept normal time as input
             
             
         } else if selectedSegmentIndex == 1 { //convert to normal
             
           
+            //accept metric time as input
+            
         }
         
     }
