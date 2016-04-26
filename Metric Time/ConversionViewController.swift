@@ -22,9 +22,7 @@ class ConversionViewController: UIViewController {
     let color = UIColor.greenColor();
     let font = UIFont(name: "Calculator", size: 32.0);
     
-    
-    var normalTimePicker: UIDatePicker!
-    var metricTimePicker: UIPickerView!
+
     
     // Given date
     let date = NSDate()
