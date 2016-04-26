@@ -54,22 +54,19 @@ class ViewController: UIViewController {
         
         //get current hour, minute and second
     
-            components = NSCalendar.currentCalendar().components([ .Hour, .Minute, .Second], fromDate: NSDate())
+        components = NSCalendar.currentCalendar().components([ .Hour, .Minute, .Second], fromDate: NSDate())
             
-            actualTime[0] = components.hour;
-            actualTime[1] = components.minute;
-            actualTime[2] = components.second;
+        actualTime[0] = components.hour;
+        actualTime[1] = components.minute;
+        actualTime[2] = components.second;
         
         calculateMetricTime()
         
-        //display updated values
         
         //update clock
         let positions = getHandsPosition(metricTime[0], m: metricTime[1], s: metricTime[2])
         rotateHands(clockView, rotation: (positions.h, positions.m, positions.s) )
         
-        
-        //  decimalDay?.text = String(format: "%.5f", metricDecimalDay)
         timeDisplay?.text = String(format: "%02d : %02d : %02d", actualTime[0], actualTime[1], actualTime[2])
         metricTimeDisplay?.text = String(format: "%01d : %02d : %02d", metricTime[0], metricTime[1], metricTime[2])
         
@@ -118,9 +115,8 @@ class ViewController: UIViewController {
     
     
     func handleLongPressGestures(sender: UILongPressGestureRecognizer){
-        
-        print("long press detected.")
         self.performSegueWithIdentifier("moveToConversionView", sender: nil)
+        
         //remove the gesture recogniser so it doesnt get called while the Convertion view is segue-ing in...
         longPressGestureRecognizerView.removeGestureRecognizer(longPressGestureRecognizer)
     }
@@ -145,13 +141,15 @@ class ViewController: UIViewController {
         
     }
     
-    
+    override func viewDidAppear(animated: Bool) {
+        //re-add the gesture recognizer so the convertion screen can be re-accessed...
+        longPressGestureRecognizerView.addGestureRecognizer(longPressGestureRecognizer)
+    }
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        print("ViewDidLoad")
         
         //load the font and color the text boxes
         timeDisplay?.font = font
@@ -263,10 +261,6 @@ class ViewController: UIViewController {
         //NSTimer executes when it's convenient for the run loop could be before or after the display has been rendered. CADisplayLink will always be executed prior to pixels being pushed to the screen. For more on this watch the video here: https://developer.apple.com/videos/play/wwdc2014/236/
         self.displayLink = CADisplayLink(target: self, selector: #selector(self.updateTime))
         self.displayLink?.addToRunLoop(NSRunLoop.currentRunLoop(), forMode: NSRunLoopCommonModes)
-        
-        //You can delete this timer code if you think displayLink will suit your needs
-        //timer = NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: #selector(ViewController.updateTime), userInfo: nil, repeats: true)
-        //timer.tolerance = 0 //allow the timer to be off by a little if iOS needs it...
         
         
     }

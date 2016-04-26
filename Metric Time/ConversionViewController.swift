@@ -15,15 +15,6 @@ class ConversionViewController: UIViewController {
     @IBOutlet weak var outputLabel: UILabel!
     @IBOutlet weak var inputLabel: UILabel!
     
-//    @IBOutlet weak var plusHours: UIButton!
-//    @IBOutlet weak var minusHours: UIButton!
-//    
-//    @IBOutlet weak var plusMinutes: UIButton!
-//    @IBOutlet weak var minusMinutes: UIButton!
-//    
-//    @IBOutlet weak var plusSeconds: UIButton!
-//    @IBOutlet weak var minusSeconds: UIButton!
-    
     let color = UIColor.greenColor();
     let font = UIFont(name: "Calculator", size: 52.0);
     
@@ -38,76 +29,39 @@ class ConversionViewController: UIViewController {
     
     
     @IBAction func plusHours(sender: UIButton) {
-        
         inputTime[0] += 1
-        
-        if inputTime[0] >= hoursMax {
-            inputTime[0] = 0
-        }
-        
+        if inputTime[0] >= hoursMax {inputTime[0] = 0}
         updateTime()
-        
     }
 
     @IBAction func minusHours(sender: UIButton) {
-        
         inputTime[0] -= 1
-        
-        if inputTime[0] == -1 {
-            inputTime[0] = hoursMax-1
-        }
-        
+        if inputTime[0] == -1 {inputTime[0] = hoursMax-1}
         updateTime()
-        
     }
     
-    
     @IBAction func plusMinutes(sender: UIButton) {
-        
         inputTime[1] += 1
-        
-        if inputTime[1] >= minutesMax {
-            inputTime[1] = 0
-        }
-        
+        if inputTime[1] >= minutesMax {inputTime[1] = 0}
         updateTime()
-        
     }
     
     @IBAction func minusMinutes(sender: UIButton) {
-        
         inputTime[1] -= 1
-        
-        if inputTime[1] == -1 {
-            inputTime[1] = minutesMax-1
-        }
-        
+        if inputTime[1] == -1 {inputTime[1] = minutesMax-1}
         updateTime()
-        
     }
     
     @IBAction func plusSeconds(sender: UIButton) {
-        
         inputTime[2] += 1
-        
-        if inputTime[2] >= secondsMax {
-            inputTime[2] = 0
-        }
-        
+        if inputTime[2] >= secondsMax {inputTime[2] = 0}
         updateTime()
-        
     }
     
     @IBAction func minusSeconds(sender: UIButton) {
-        
         inputTime[2] -= 1
-        
-        if inputTime[2] == -1 {
-            inputTime[2] = secondsMax-1
-        }
-        
+        if inputTime[2] == -1 {inputTime[2] = secondsMax-1}
         updateTime()
-        
     }
     
     
@@ -139,16 +93,7 @@ class ConversionViewController: UIViewController {
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
     func convertToMetricTime(time:[Int]) -> [Int] {
         
