@@ -13,19 +13,21 @@ class ConversionViewController: UIViewController {
     
     @IBOutlet weak var inputTimePicker: UISegmentedControl!
     @IBOutlet weak var outputLabel: UILabel!
+    @IBOutlet weak var inputLabel: UILabel!
     
-    @IBOutlet weak var inputHours: UITextField!
-    @IBOutlet weak var inputMinutes: UITextField!
-    @IBOutlet weak var inputSeconds: UITextField!
+    @IBOutlet weak var plusHoursButton: UIButton!
+    @IBOutlet weak var minusHoursButton: UIButton!
     
+    @IBOutlet weak var plusMinutesButton: UIButton!
+    @IBOutlet weak var minusMinutesButton: UIButton!
+    
+    @IBOutlet weak var plusSecondsButton: UIButton!
+    @IBOutlet weak var minusSecondsButton: UIButton!
     
     let color = UIColor.greenColor();
-    let font = UIFont(name: "Calculator", size: 32.0);
+    let font = UIFont(name: "Calculator", size: 52.0);
     
 
-    
-    // Given date
-    let date = NSDate()
     
     
     
@@ -112,6 +114,8 @@ class ConversionViewController: UIViewController {
         
         outputLabel?.font = font
         outputLabel?.textColor = color
+        inputLabel?.font = font
+        inputLabel?.textColor = color
         
         
         
@@ -122,6 +126,7 @@ class ConversionViewController: UIViewController {
         
         
         outputLabel.text = "00:00"
+        inputLabel.text = "00:00"
         
     }
     
