@@ -132,7 +132,7 @@ class ConversionViewController: UIViewController {
             
         } else if inputTimePicker.selectedSegmentIndex == 1 {
             
-            convertToNormalTime(inputTime)
+            outputTime = convertToNormalTime(inputTime)
         }
         
         updateLabels()
@@ -191,7 +191,9 @@ class ConversionViewController: UIViewController {
         
         if sender.selectedSegmentIndex == 0 { //convert to metric
             
+            //clear values from input/output labels
             inputTime = [0, 0, 0]
+            updateTime()
             
             //accept normal time as input
             hoursMax = 24
@@ -202,7 +204,14 @@ class ConversionViewController: UIViewController {
         } else if sender.selectedSegmentIndex == 1 { //convert to normal
             
           
+            //clear values from input/output labels
+            inputTime = [0, 0, 0]
+            updateTime()
+            
             //accept metric time as input
+            hoursMax = 10
+            minutesMax = 100
+            secondsMax = 100
             
         }
         
@@ -222,11 +231,8 @@ class ConversionViewController: UIViewController {
         inputLabel?.textColor = color
         
         
-        
-        
-        
-        //    metricTimePicker.addTarget(self, action: #selector(ConversionViewController.metricTimePickerDateChanged(_:)), forControlEvents: .ValueChanged)
-        
+        inputTimePicker.addTarget(self, action: #selector(ConversionViewController.segmentedControlValueChanged(_:)), forControlEvents: .ValueChanged)
+
         
         
         outputLabel.text = "00:00:00"
