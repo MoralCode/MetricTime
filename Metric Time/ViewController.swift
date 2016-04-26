@@ -14,21 +14,22 @@ class ViewController: UIViewController {
     
     @IBOutlet var timeDisplay:UILabel?
     @IBOutlet var metricTimeDisplay:UILabel?
-
+    
     var longPressGestureRecognizer: UILongPressGestureRecognizer!
     var longPressGestureRecognizerView: UIView!
-   
+    
     
     var components = NSCalendar.currentCalendar().components( [.Hour, .Minute, .Second], fromDate: NSDate())
-    var timer = NSTimer();
+    //var timer = NSTimer();
     
+    private var displayLink:CADisplayLink?
     
     let color = UIColor.greenColor();
     let font = UIFont(name: "Calculator", size: 52.0);
     
     var stressTestMode = false;
     var interval = 0.2;
-
+    
     
     //  the actual time that normal humans use (in millitary time) (actualTime[0] = hour, actualTime[1] = minute, actualTime[2] = second)
     var actualTime: [Int] = [0, 0, 0];
@@ -40,7 +41,7 @@ class ViewController: UIViewController {
     
     //variables for drawing hands
     var clockView = View();
-
+    
     
     let hourLayer = CAShapeLayer()
     let minuteLayer = CAShapeLayer()
@@ -68,7 +69,7 @@ class ViewController: UIViewController {
             actualTime[2] += 1
             
             //if seconds = 60
-             if actualTime[2] == 60 {
+            if actualTime[2] == 60 {
                 //increment minutes and reset seconds
                 
                 actualTime[1] += 1
@@ -76,16 +77,16 @@ class ViewController: UIViewController {
             }
             
             //if min = 60
-             if actualTime[1] == 60 {
+            if actualTime[1] == 60 {
                 //increment hours and reset minutes
                 actualTime[0] += 1
                 actualTime[1] = 0
             }
             
             //if hours = 24
-             if actualTime[0] == 24 {
+            if actualTime[0] == 24 {
                 //stop timer running.
-                timer.invalidate()
+                //timer.invalidate()
                 
             }
             
@@ -98,9 +99,9 @@ class ViewController: UIViewController {
         //update clock
         let positions = getHandsPosition(metricTime[0], m: metricTime[1], s: metricTime[2])
         rotateHands(clockView, rotation: (positions.h, positions.m, positions.s) )
-
         
-      //  decimalDay?.text = String(format: "%.5f", metricDecimalDay)
+        
+        //  decimalDay?.text = String(format: "%.5f", metricDecimalDay)
         timeDisplay?.text = String(format: "%02d : %02d : %02d", actualTime[0], actualTime[1], actualTime[2])
         metricTimeDisplay?.text = String(format: "%01d : %02d : %02d", metricTime[0], metricTime[1], metricTime[2])
         
@@ -120,13 +121,13 @@ class ViewController: UIViewController {
     
     func calculateMetricTime() {
         
-            /*calculate metric "hours", "minutes", and "seconds" */
+        /*calculate metric "hours", "minutes", and "seconds" */
         millisecondsSinceToday = 0
         millisecondsSinceToday = (actualTime[0] * 3600000 /*milliseconds per hour*/) + (actualTime[1] * 60000 /* milliseconds per minute*/) + (actualTime[2] * 1000 /*milliseconds per second*/)
         
         
         metricTime[0] = Int(millisecondsSinceToday / 8640000)
-
+        
         millisecondsSinceToday -= (metricTime[0]*8640000)
         
         metricTime[1] = Int(millisecondsSinceToday / 86400)
@@ -135,20 +136,20 @@ class ViewController: UIViewController {
         
         metricTime[2] = Int(millisecondsSinceToday / 864)
         
-
-    
         
-        }
+        
+        
+    }
     
     
     func rotateHands(view : UIView, rotation:(hour:CGFloat,minute:CGFloat,second:CGFloat)){
-    
+        
         hourLayer.transform = CATransform3DMakeRotation(rotation.hour, 0, 0, 1)
         minuteLayer.transform = CATransform3DMakeRotation(rotation.minute, 0, 0, 1)
         secondLayer.transform = CATransform3DMakeRotation(rotation.second, 0, 0, 1)
-    
+        
     }
-
+    
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
@@ -181,8 +182,8 @@ class ViewController: UIViewController {
         longPressGestureRecognizer.minimumPressDuration = 2
         
     }
-
-        
+    
+    
     
     override func viewDidLoad() {
         
@@ -190,7 +191,7 @@ class ViewController: UIViewController {
         
         super.viewDidLoad()
         
-       
+        
         if stressTestMode {
             interval = 0.00001;
         }
@@ -205,7 +206,7 @@ class ViewController: UIViewController {
         
         
         
-
+        
         
         //MARK: draw clock and hands...
         
@@ -296,27 +297,18 @@ class ViewController: UIViewController {
         
         
         //by not calling updatetime() here, we get the cool aanimation of the clock setting the time after startup...
-
-        
-        //set timer
-        timer = NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: #selector(ViewController.updateTime), userInfo: nil, repeats: true)
-        timer.tolerance = 0 //allow the timer to be off by a little if iOS needs it...
         
         
-    }
-    
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        timer.invalidate()
+        //It is better to use an CADisplayLink for timing related to animation. This is why you have an issue with dropping ticks/frames. NSTimer executes when it's convenient for the run loop could be before or after the display has been rendered. CADisplayLink will always be executed prior to pixels being pushed to the screen. For more on this watch the video here: https://developer.apple.com/videos/play/wwdc2014/236/
+        self.displayLink = CADisplayLink(target: self, selector: #selector(self.updateTime))
+        self.displayLink?.addToRunLoop(NSRunLoop.currentRunLoop(), forMode: NSRunLoopCommonModes)
+        
+        //You can delete this timer code if you think displayLink will suit your needs
+        //timer = NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: #selector(ViewController.updateTime), userInfo: nil, repeats: true)
+        //timer.tolerance = 0 //allow the timer to be off by a little if iOS needs it...
+        
         
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
 }
 
 
@@ -327,11 +319,11 @@ func getHandsPosition( h:Int, m:Int, s:Int)->(h:CGFloat,m:CGFloat,s:CGFloat) {
     var minutesAngle = (Double(m)/100)
     var hoursAngle = (Double(h)/10) + minutesAngle/10 //this line must come after minutesAngle Calculation...
     var secondsAngle = (Double(s)/100)
-
+    
     hoursAngle = hoursAngle*360
     minutesAngle = minutesAngle*360
     secondsAngle = secondsAngle*360
-
+    
     
     return (h: degree2radian(CGFloat(hoursAngle)),m: degree2radian(CGFloat(minutesAngle)),s: degree2radian(CGFloat(secondsAngle)))
 }
@@ -357,14 +349,14 @@ func circleCircumferencePoints(sides:Int,x:CGFloat,y:CGFloat,radius:CGFloat,adju
 
 
 func addMarkersandText(rect:CGRect, context:CGContextRef, x:CGFloat, y:CGFloat, radius:CGFloat, sides:Int, sides2:Int, tickTextcolor:UIColor) {
-
+    
     // retrieve points
     let points = circleCircumferencePoints(sides,x: x,y: y,radius: radius)
     // create path
     let path1 = CGPathCreateMutable()
     // determine length of marker as a fraction of the total radius
     var divider:CGFloat = 1/16
-
+    
     //add the tick marks
     for p in points.enumerate() {
         //tick marks every 5
@@ -372,11 +364,11 @@ func addMarkersandText(rect:CGRect, context:CGContextRef, x:CGFloat, y:CGFloat, 
             divider = 1/8
             
         }
-        //tick marks every 10
+            //tick marks every 10
         else if p.index % 5 == 0 {
             divider = 3/16
         }
-        //tick marks every 1
+            //tick marks every 1
         else {
             divider = 1/16
         }
@@ -389,8 +381,8 @@ func addMarkersandText(rect:CGRect, context:CGContextRef, x:CGFloat, y:CGFloat, 
         CGPathCloseSubpath(path1)
         // add path to context
         CGContextAddPath(context, path1)
-
-
+        
+        
     }
     
     // set path color
@@ -401,8 +393,8 @@ func addMarkersandText(rect:CGRect, context:CGContextRef, x:CGFloat, y:CGFloat, 
     
     
     
-
-
+    
+    
     // Flip text co-ordinate space, see: http://blog.spacemanlabs.com/2011/08/quick-tip-drawing-core-text-right-side-up/
     CGContextTranslateCTM(context, 0.0, CGRectGetHeight(rect))
     CGContextScaleCTM(context, 1.0, -1.0)
@@ -458,21 +450,21 @@ class View: UIView {
         //assemble all pieces
         
         let context = UIGraphicsGetCurrentContext()
-    
+        
         // set properties
-    
-
+        
+        
         let radius = CGRectGetWidth(rect)/2
-
+        
         let endAngle = CGFloat(2*M_PI)
         
         //add circle
         CGContextAddArc(context, CGRectGetMidX(rect), CGRectGetMidY(rect), radius, 0, endAngle, 1)
         
         //set circle properties
-       // CGContextSetFillColorWithColor(context,UIColor.grayColor().CGColor)
+        // CGContextSetFillColorWithColor(context,UIColor.grayColor().CGColor)
         //CGContextSetStrokeColorWithColor(context,UIColor.whiteColor().CGColor)
-       // CGContextSetLineWidth(context, 4.0)
+        // CGContextSetLineWidth(context, 4.0)
         
         //draw path
         CGContextDrawPath(context, CGPathDrawingMode.FillStroke);
