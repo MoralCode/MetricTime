@@ -8,12 +8,15 @@
 
 import UIKit
 
-class ConversionViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class ConversionViewController: UIViewController {
     
     
     @IBOutlet weak var inputTimePicker: UISegmentedControl!
-    @IBOutlet weak var inputTime: UILabel!
-    @IBOutlet weak var outputTime: UILabel!
+    @IBOutlet weak var outputLabel: UILabel!
+    
+    @IBOutlet weak var inputHours: UITextField!
+    @IBOutlet weak var inputMinutes: UITextField!
+    @IBOutlet weak var inputSeconds: UITextField!
     
     
     let color = UIColor.greenColor();
@@ -64,28 +67,22 @@ class ConversionViewController: UIViewController, UIPickerViewDataSource, UIPick
     
     
     
-    func normalTimePickerDateChanged(normalTimePicker: UIDatePicker){
-        
-        let formatter = NSDateFormatter();
-        formatter.dateFormat = "HH:mm";
-        let formattedTimeStr = formatter.stringFromDate(normalTimePicker.date);
-        
-        
-        
-        print("Selected date = \(formattedTimeStr)")
-        
-        inputTime.text = "\(formattedTimeStr)"
-        outputTime.text = String(format: "%d MetricTime", normalTimePicker.date)
-        
-        
-    }
+    
+//        let formatter = NSDateFormatter();
+//        formatter.dateFormat = "HH:mm";
+//        let formattedTimeStr = formatter.stringFromDate(normalTimePicker.date);
+//        
+//        
+//        
+//        print("Selected date = \(formattedTimeStr)")
+//        
+//        
+//        outputLabel.text = String(format: "%d MetricTime", normalTimePicker.date)
+//        
+    
+ 
     
     
-    
-    func metricTimePickerDateChanged(normalTimePicker: UIDatePicker){
-        
-        
-    }
     
     
     func segmentedControlValueChanged(sender: UISegmentedControl){
@@ -97,45 +94,16 @@ class ConversionViewController: UIViewController, UIPickerViewDataSource, UIPick
         
         if selectedSegmentIndex == 0 { //convert to metric
             
-            metricTimePicker.hidden = true
-            normalTimePicker.hidden = false
+            
             
             
         } else if selectedSegmentIndex == 1 { //convert to normal
             
-            metricTimePicker.hidden = false
-            normalTimePicker.hidden = true
-            
+          
         }
         
     }
     
-    
-    
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        if pickerView == metricTimePicker{
-            return 2
-        }
-        return 0
-    }
-    
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if pickerView == metricTimePicker{
-            
-            if component == 0 {
-                return 10
-            } else if component == 1 {
-                
-                return 100
-            }
-            
-        }
-        return 0
-    }
-    
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?{
-        return "\(row + 1)"
-    }
     
     
     
@@ -144,57 +112,9 @@ class ConversionViewController: UIViewController, UIPickerViewDataSource, UIPick
         
         
         
-        inputTime?.font = font
-        outputTime?.font = font
-        inputTime?.textColor = color
-        outputTime?.textColor = color
+        outputLabel?.font = font
+        outputLabel?.textColor = color
         
-        inputTimePicker.addTarget(self, action: #selector(ConversionViewController.segmentedControlValueChanged(_:)), forControlEvents: .ValueChanged)
-        
-        
-        // Do any additional setup after loading the view.
-        normalTimePicker = UIDatePicker()
-        
-        
-        normalTimePicker.datePickerMode = .Time
-        normalTimePicker.backgroundColor = UIColor.whiteColor()
-        normalTimePicker.tintColor = UIColor.whiteColor()
-        normalTimePicker.minuteInterval = 1
-        
-        // First moment of tody
-        let startOfDay = NSCalendar.currentCalendar().startOfDayForDate(date)
-        
-        normalTimePicker.date = startOfDay
-        view.addSubview(normalTimePicker)
-        
-        //add constraints
-        normalTimePicker.translatesAutoresizingMaskIntoConstraints = false
-        normalTimePicker.centerYAnchor.constraintEqualToAnchor(self.view.centerYAnchor, constant: 0.0).active = false
-        normalTimePicker.bottomAnchor.constraintEqualToAnchor(self.view.bottomAnchor, constant: 15.0).active = true
-        normalTimePicker.centerXAnchor.constraintEqualToAnchor(self.view.centerXAnchor, constant: 0.0).active = true
-        
-        
-        
-        normalTimePicker.addTarget(self, action: #selector(ConversionViewController.normalTimePickerDateChanged(_:)), forControlEvents: .ValueChanged)
-        
-        
-        
-        metricTimePicker = UIPickerView()
-        
-        metricTimePicker.backgroundColor = UIColor.whiteColor()
-        metricTimePicker.tintColor = UIColor.whiteColor()
-        metricTimePicker.dataSource = self
-        metricTimePicker.delegate = self
-        
-        
-        view.addSubview(metricTimePicker)
-        //add constraints
-        metricTimePicker.translatesAutoresizingMaskIntoConstraints = false
-        metricTimePicker.centerYAnchor.constraintEqualToAnchor(self.view.centerYAnchor, constant: 0.0).active = false
-        metricTimePicker.bottomAnchor.constraintEqualToAnchor(self.view.bottomAnchor, constant: 15.0).active = true
-        metricTimePicker.centerXAnchor.constraintEqualToAnchor(self.view.centerXAnchor, constant: 0.0).active = true
-        
-        metricTimePicker.hidden = true
         
         
         
@@ -203,9 +123,7 @@ class ConversionViewController: UIViewController, UIPickerViewDataSource, UIPick
         
         
         
-        
-        inputTime.text = "00:00"
-        outputTime.text = "00:00"
+        outputLabel.text = "00:00"
         
     }
     
