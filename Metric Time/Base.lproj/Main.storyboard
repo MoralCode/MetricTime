@@ -181,10 +181,14 @@
                             <constraint firstItem="91L-6k-JcZ" firstAttribute="leading" secondItem="zVk-di-qZv" secondAttribute="leadingMargin" id="AHD-Ze-OCh"/>
                             <constraint firstItem="91L-6k-JcZ" firstAttribute="trailing" secondItem="zVk-di-qZv" secondAttribute="trailingMargin" id="B2M-UG-YBh"/>
                             <constraint firstItem="Vsy-pK-tcR" firstAttribute="trailing" secondItem="zVk-di-qZv" secondAttribute="trailingMargin" id="DyI-fw-u0c"/>
-                            <constraint firstItem="VFi-Jz-qcc" firstAttribute="top" secondItem="DaS-WH-uWC" secondAttribute="bottom" constant="22" id="FA3-qj-FFV"/>
+                            <constraint firstItem="VFi-Jz-qcc" firstAttribute="top" secondItem="DaS-WH-uWC" secondAttribute="bottom" constant="22" id="FA3-qj-FFV">
+                                <variation key="widthClass=compact" constant="55"/>
+                            </constraint>
                             <constraint firstItem="bX3-OI-vii" firstAttribute="top" secondItem="91L-6k-JcZ" secondAttribute="bottom" constant="8" id="GzY-cg-9K4"/>
                             <constraint firstItem="Vsy-pK-tcR" firstAttribute="leading" secondItem="zVk-di-qZv" secondAttribute="leadingMargin" id="K8O-52-RXb"/>
-                            <constraint firstItem="91L-6k-JcZ" firstAttribute="top" secondItem="zVk-di-qZv" secondAttribute="topMargin" constant="150" id="NwU-Bq-A5H"/>
+                            <constraint firstItem="91L-6k-JcZ" firstAttribute="top" secondItem="zVk-di-qZv" secondAttribute="topMargin" constant="150" id="NwU-Bq-A5H">
+                                <variation key="widthClass=compact" constant="183"/>
+                            </constraint>
                             <constraint firstItem="jTn-35-XBN" firstAttribute="top" secondItem="91L-6k-JcZ" secondAttribute="bottom" constant="8" id="Ozb-gW-bhR"/>
                             <constraint firstItem="eIS-2Q-HbX" firstAttribute="leading" secondItem="zVk-di-qZv" secondAttribute="leadingMargin" id="Tve-mK-Vhh"/>
                             <constraint firstItem="VFi-Jz-qcc" firstAttribute="centerX" secondItem="zVk-di-qZv" secondAttribute="centerX" id="Vrf-5L-Bcc"/>
