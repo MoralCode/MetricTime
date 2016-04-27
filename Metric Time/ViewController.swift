@@ -24,72 +24,68 @@ class ViewController: UIViewController {
     
     private var displayLink:CADisplayLink?
     
-    let color = UIColor.greenColor();
-    let font = UIFont(name: "Calculator", size: 52.0);
+    let color = UIColor.greenColor()
+    let font = UIFont(name: "Calculator", size: 52.0)
     
-    var stressTestMode = false;
-    var interval = 0.2;
+    var stressTestMode = true
+    var interval = 0
+    var lastCall:NSDate?
     
+    /**
+     * Determines whether second hand sweeps or ticks
+     */
+    var continuous = false
+    
+    var seconds = 0.0
+    var convertedSeconds = 0.0
     
     //  the actual time that normal humans use (in millitary time) (actualTime[0] = hour, actualTime[1] = minute, actualTime[2] = second)
-    var actualTime: [Int] = [0, 0, 0];
+    var actualTime: [Int] = [0, 0, 0]
     
-    var millisecondsSinceToday = 0;
+    var millisecondsSinceToday:Double = 0.0
     
     //the converted "metric time"
-    var metricTime: [Int] = [0, 0, 0];
+    var metricTime: [Int] = [0, 0, 0]
     
     //variables for drawing hands
     var clockView = View();
-    
     
     let hourLayer = CAShapeLayer()
     let minuteLayer = CAShapeLayer()
     let secondLayer = CAShapeLayer()
     let centerPiece = CAShapeLayer()
     
-    
-    
-    
-    
-    
     func updateTime() {
         
         //get current hour, minute and second
         if !stressTestMode {
-            components = NSCalendar.currentCalendar().components([ .Hour, .Minute, .Second], fromDate: NSDate())
+            components = NSCalendar.currentCalendar().components([ .Hour, .Minute, .Second, .Nanosecond], fromDate: NSDate())
             
             actualTime[0] = components.hour;
             actualTime[1] = components.minute;
             actualTime[2] = components.second;
+            if self.continuous
+            {
+                self.seconds = Double(components.second) + Double(components.nanosecond)/1000000000.0
+            }
+            else
+            {
+                self.seconds = Double(components.second)
+            }
             
         } else {
             
             //increment seconds
-            actualTime[2] += 1
-            
-            //if seconds = 60
-            if actualTime[2] == 60 {
-                //increment minutes and reset seconds
-                
-                actualTime[1] += 1
-                actualTime[2] = 0
+            if let lastTimeCalled = self.lastCall
+            {
+                actualTime[2] += Int(Double(interval) * lastTimeCalled.timeIntervalSinceNow * 60.0 * -1.0)
+                self.seconds += Double(interval) * lastTimeCalled.timeIntervalSinceNow * 60.0 * -1.0
             }
-            
-            //if min = 60
-            if actualTime[1] == 60 {
-                //increment hours and reset minutes
-                actualTime[0] += 1
-                actualTime[1] = 0
+            else
+            {
+                actualTime[2] += interval
             }
-            
-            //if hours = 24
-            if actualTime[0] == 24 {
-                //stop timer running.
-                //timer.invalidate()
-                
-            }
-            
+            self.lastCall = NSDate()
         }
         
         calculateMetricTime()
@@ -97,7 +93,7 @@ class ViewController: UIViewController {
         //display updated values
         
         //update clock
-        let positions = getHandsPosition(metricTime[0], m: metricTime[1], s: metricTime[2])
+        let positions = getHandsPosition(metricTime[0], m: metricTime[1], s: self.convertedSeconds)
         rotateHands(clockView, rotation: (positions.h, positions.m, positions.s) )
         
         
@@ -122,19 +118,20 @@ class ViewController: UIViewController {
     func calculateMetricTime() {
         
         /*calculate metric "hours", "minutes", and "seconds" */
-        millisecondsSinceToday = 0
-        millisecondsSinceToday = (actualTime[0] * 3600000 /*milliseconds per hour*/) + (actualTime[1] * 60000 /* milliseconds per minute*/) + (actualTime[2] * 1000 /*milliseconds per second*/)
+        millisecondsSinceToday = 0.0
+        millisecondsSinceToday = Double(actualTime[0] * 3600000 /*milliseconds per hour*/) + Double((actualTime[1] * 60000 /* milliseconds per minute*/)) + (self.seconds * 1000.0 /*milliseconds per second*/)
         
         
         metricTime[0] = Int(millisecondsSinceToday / 8640000)
         
-        millisecondsSinceToday -= (metricTime[0]*8640000)
+        millisecondsSinceToday -= Double(metricTime[0]*8640000)
         
         metricTime[1] = Int(millisecondsSinceToday / 86400)
         
-        millisecondsSinceToday -= (metricTime[1]*86400)
+        millisecondsSinceToday -= Double(metricTime[1]*86400)
         
         metricTime[2] = Int(millisecondsSinceToday / 864)
+        self.convertedSeconds = Double(millisecondsSinceToday / 864)
         
         
         
@@ -187,16 +184,12 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         
-        
-        
         super.viewDidLoad()
         
-        
         if stressTestMode {
-            interval = 0.00001;
+            //adjust this to make stress test go faster or slower greater = faster second hand doesn't tick as such because the clock is going so fast that it just jumps around.
+            interval = 50;
         }
-        
-        
         
         //load the font and color the text boxes
         timeDisplay?.font = font
@@ -204,15 +197,9 @@ class ViewController: UIViewController {
         timeDisplay?.textColor = color
         metricTimeDisplay?.textColor = color
         
-        
-        
-        
-        
         //MARK: draw clock and hands...
         
         clockView = View(frame: CGRect(x: 0, y: 0, width: 230, height: 230))
-        
-        
         
         //position clock view
         
@@ -223,10 +210,6 @@ class ViewController: UIViewController {
         clockView.centerXAnchor.constraintEqualToAnchor(self.view.centerXAnchor, constant: 0.0).active = true
         clockView.widthAnchor.constraintEqualToConstant(230.0).active = true
         clockView.heightAnchor.constraintEqualToConstant(230.0).active = true
-        
-        
-        
-        
         
         hourLayer.name = "hourHand"
         minuteLayer.name = "minuteHand"
@@ -309,24 +292,26 @@ class ViewController: UIViewController {
         
         
     }
+    
+    func getHandsPosition( h:Int, m:Int, s:Double)->(h:CGFloat,m:CGFloat,s:CGFloat) {
+        
+        
+        var minutesAngle = (Double(m)/100 + Double(s)/10000.0)
+        var hoursAngle = (Double(h)/10) + minutesAngle/10 //this line must come after minutesAngle Calculation...
+        var secondsAngle = (Double(s)/100)
+        
+        hoursAngle = hoursAngle*360
+        minutesAngle = minutesAngle*360
+        secondsAngle = secondsAngle*360
+        
+        
+        return (h: degree2radian(CGFloat(hoursAngle)),m: degree2radian(CGFloat(minutesAngle)),s: degree2radian(CGFloat(secondsAngle)))
+    }
 }
 
 
 // MARK: Calculate coordinates of time
-func getHandsPosition( h:Int, m:Int, s:Int)->(h:CGFloat,m:CGFloat,s:CGFloat) {
-    
-    
-    var minutesAngle = (Double(m)/100)
-    var hoursAngle = (Double(h)/10) + minutesAngle/10 //this line must come after minutesAngle Calculation...
-    var secondsAngle = (Double(s)/100)
-    
-    hoursAngle = hoursAngle*360
-    minutesAngle = minutesAngle*360
-    secondsAngle = secondsAngle*360
-    
-    
-    return (h: degree2radian(CGFloat(hoursAngle)),m: degree2radian(CGFloat(minutesAngle)),s: degree2radian(CGFloat(secondsAngle)))
-}
+
 
 func circleCircumferencePoints(sides:Int,x:CGFloat,y:CGFloat,radius:CGFloat,adjustment:CGFloat=0)->[CGPoint] {
     let angle = degree2radian(360/CGFloat(sides))
