@@ -220,7 +220,6 @@
 				TargetAttributes = {
 					3AD7E3D11C72961500502023 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = UJPCPV3425;
 					};
 					3AD7E3E51C72961500502023 = {
 						CreatedOnToolsVersion = 7.2.1;
