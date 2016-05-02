@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3A47BD641CCD5F9E0073D8E8 /* ConversionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A47BD631CCD5F9E0073D8E8 /* ConversionViewController.swift */; };
+		3A48CBAB1CD8176D007E4E6F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3A48CBAA1CD8176D007E4E6F /* Settings.bundle */; };
 		3A50755C1C86525600CC6860 /* Calculator.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A50755B1C86525600CC6860 /* Calculator.ttf */; };
 		3A5AD0351CB9B3CF00F1EB27 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A5AD0341CB9B3CF00F1EB27 /* CoreTelephony.framework */; };
 		3A5AD0371CB9B3F400F1EB27 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A5AD0361CB9B3F400F1EB27 /* SystemConfiguration.framework */; };
@@ -40,6 +41,7 @@
 
 /* Begin PBXFileReference section */
 		3A47BD631CCD5F9E0073D8E8 /* ConversionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversionViewController.swift; sourceTree = "<group>"; };
+		3A48CBAA1CD8176D007E4E6F /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Settings.bundle; path = ../Settings.bundle; sourceTree = "<group>"; };
 		3A50755B1C86525600CC6860 /* Calculator.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Calculator.ttf; sourceTree = "<group>"; };
 		3A5AD0341CB9B3CF00F1EB27 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		3A5AD0361CB9B3F400F1EB27 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -122,6 +124,7 @@
 		3AD7E3D41C72961500502023 /* Metric Time */ = {
 			isa = PBXGroup;
 			children = (
+				3A48CBAA1CD8176D007E4E6F /* Settings.bundle */,
 				3AD7E3D51C72961500502023 /* AppDelegate.swift */,
 				3AD7E3D71C72961500502023 /* ViewController.swift */,
 				3A47BD631CCD5F9E0073D8E8 /* ConversionViewController.swift */,
@@ -260,6 +263,7 @@
 			files = (
 				3A50755C1C86525600CC6860 /* Calculator.ttf in Resources */,
 				3AD7E3E01C72961500502023 /* LaunchScreen.storyboard in Resources */,
+				3A48CBAB1CD8176D007E4E6F /* Settings.bundle in Resources */,
 				3AD7E3DD1C72961500502023 /* Assets.xcassets in Resources */,
 				3AD7E3DB1C72961500502023 /* Main.storyboard in Resources */,
 			);

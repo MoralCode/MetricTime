@@ -45,11 +45,7 @@ class ViewController: UIViewController {
     let secondLayer = CAShapeLayer()
     let centerPiece = CAShapeLayer()
     
-    
-    
-    
-    
-    
+
     func updateTime() {
         
         //get current hour, minute and second
@@ -69,9 +65,7 @@ class ViewController: UIViewController {
         
         timeDisplay?.text = String(format: "%02d : %02d : %02d", actualTime[0], actualTime[1], actualTime[2])
         metricTimeDisplay?.text = String(format: "%01d : %02d : %02d", metricTime[0], metricTime[1], metricTime[2])
-        
-        
-        
+
         
     }
     
@@ -94,11 +88,8 @@ class ViewController: UIViewController {
         
         
         
-        
     }
-    
-    
-    
+
     
     func rotateHands(view : UIView, rotation:(hour:CGFloat,minute:CGFloat,second:CGFloat)){
         
