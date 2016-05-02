@@ -171,17 +171,13 @@ class ViewController: UIViewController {
         
         self.view.addSubview(clockView)
         clockView.translatesAutoresizingMaskIntoConstraints = false
-        if #available(iOS 9.0, *) {
-            clockView.centerYAnchor.constraintEqualToAnchor(self.view.centerYAnchor, constant: 0.0).active = false
-            clockView.topAnchor.constraintEqualToAnchor(self.view.topAnchor, constant: 15.0).active = true
-            clockView.centerXAnchor.constraintEqualToAnchor(self.view.centerXAnchor, constant: 0.0).active = true
-            clockView.widthAnchor.constraintEqualToConstant(230.0).active = true
-            clockView.heightAnchor.constraintEqualToConstant(230.0).active = true
+        
+        clockView.centerYAnchor.constraintEqualToAnchor(self.view.centerYAnchor, constant: 0.0).active = false
+        clockView.topAnchor.constraintEqualToAnchor(self.view.topAnchor, constant: 15.0).active = true
+        clockView.centerXAnchor.constraintEqualToAnchor(self.view.centerXAnchor, constant: 0.0).active = true
+        clockView.widthAnchor.constraintEqualToConstant(230.0).active = true
+        clockView.heightAnchor.constraintEqualToConstant(230.0).active = true
 
-        } else {
-            // Fallback on earlier versions
-            
-        }
         
         
         
@@ -249,16 +245,12 @@ class ViewController: UIViewController {
         
         //add gesture recognizer view to view
         view.addSubview(longPressGestureRecognizerView)
-        if #available(iOS 9.0, *) {
         longPressGestureRecognizerView.translatesAutoresizingMaskIntoConstraints = false
         longPressGestureRecognizerView.topAnchor.constraintEqualToAnchor(self.view.topAnchor, constant: 0.0).active = true
         longPressGestureRecognizerView.bottomAnchor.constraintEqualToAnchor(self.view.bottomAnchor, constant: 0.0).active = true
         longPressGestureRecognizerView.leftAnchor.constraintEqualToAnchor(self.view.leftAnchor, constant: 0.0).active = true
         longPressGestureRecognizerView.rightAnchor.constraintEqualToAnchor(self.view.rightAnchor, constant: 0.0).active = true
-        } else  {
-            // Fallback on earlier versions
-            
-        }
+        
         
         /* Add this gesture recognizer to our view */
         longPressGestureRecognizerView.addGestureRecognizer(longPressGestureRecognizer)
