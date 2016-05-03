@@ -19,10 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,  BuglifeDelegate {
         // Override point for customization after application launch.
         
         
-        //NSDictionary *appDefaults = [NSDictionary dictionaryWithObject:@"YES" forKey:@"enableRotation"];
-        NSUserDefaults.standardUserDefaults().registerDefaults()
-        NSUserDefaults.standardUserDefaults().synchronize()
-        
+        var defaultSettings = Dictionary<String, Bool>()
+        defaultSettings["continuous"] = false
+        NSUserDefaults.standardUserDefaults().registerDefaults(defaultSettings)
         
         
         Buglife.sharedBuglife().startWithAPIKey("QYIjFXEqihrPzldO3NGzLAtt")
