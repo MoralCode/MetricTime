@@ -1,5 +1,3 @@
-
-
 //
 //  ViewController.swift
 //  Metric Time
