@@ -19,10 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,  BuglifeDelegate {
         // Override point for customization after application launch.
         
         
-        var defaultSettings = Dictionary<String, Bool>()
-        defaultSettings["continuous"] = false
-        NSUserDefaults.standardUserDefaults().registerDefaults(defaultSettings)
-        
         
         Buglife.sharedBuglife().startWithAPIKey("QYIjFXEqihrPzldO3NGzLAtt")
         Buglife.sharedBuglife().invocationOptions = [.Shake, .Screenshot]

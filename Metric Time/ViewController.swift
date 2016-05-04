@@ -1,3 +1,5 @@
+
+
 //
 //  ViewController.swift
 //  Metric Time
@@ -26,7 +28,7 @@ class ViewController: UIViewController {
     
     let color = UIColor.greenColor();
     let font = UIFont(name: "Calculator", size: 52.0);
-
+    
     
     //  the actual time that normal humans use (in millitary time) (actualTime[0] = hour, actualTime[1] = minute, actualTime[2] = second)
     var actualTime: [Int] = [0, 0, 0];
@@ -45,29 +47,33 @@ class ViewController: UIViewController {
     let secondLayer = CAShapeLayer()
     let centerPiece = CAShapeLayer()
     
-
+    
+    
+    
+    
+    
     func updateTime() {
         
         //get current hour, minute and second
-        components = NSCalendar.currentCalendar().components([ .Hour, .Minute, .Second, .Nanosecond], fromDate: NSDate())
-            
+        
+        components = NSCalendar.currentCalendar().components([ .Hour, .Minute, .Second], fromDate: NSDate())
+        
         actualTime[0] = components.hour;
         actualTime[1] = components.minute;
         actualTime[2] = components.second;
-        if NSUserDefaults.standardUserDefaults().boolForKey("continuous") {
-            actualTime[3] = components.nanosecond / 1000000000;
-            
-        }
         
         calculateMetricTime()
         
         
-       
-        rotateHands(clockView, rotation: getHandsPosition(metricTime[0], m: metricTime[1], s: metricTime[2]))
+        //update clock
+        let positions = getHandsPosition(metricTime[0], m: metricTime[1], s: metricTime[2])
+        rotateHands(clockView, rotation: (positions.h, positions.m, positions.s) )
         
         timeDisplay?.text = String(format: "%02d : %02d : %02d", actualTime[0], actualTime[1], actualTime[2])
         metricTimeDisplay?.text = String(format: "%01d : %02d : %02d", metricTime[0], metricTime[1], metricTime[2])
-
+        
+        
+        
         
     }
     
@@ -89,14 +95,18 @@ class ViewController: UIViewController {
         metricTime[2] = Int(millisecondsSinceToday / 864)
         
         
-    }
-
-    
-    func rotateHands(view : UIView, rotation:[CGFloat]){
         
-        hourLayer.transform = CATransform3DMakeRotation(rotation[0], 0, 0, 1)
-        minuteLayer.transform = CATransform3DMakeRotation(rotation[1], 0, 0, 1)
-        secondLayer.transform = CATransform3DMakeRotation(rotation[2], 0, 0, 1)
+        
+    }
+    
+    
+    
+    
+    func rotateHands(view : UIView, rotation:(hour:CGFloat,minute:CGFloat,second:CGFloat)){
+        
+        hourLayer.transform = CATransform3DMakeRotation(rotation.hour, 0, 0, 1)
+        minuteLayer.transform = CATransform3DMakeRotation(rotation.minute, 0, 0, 1)
+        secondLayer.transform = CATransform3DMakeRotation(rotation.second, 0, 0, 1)
         
     }
     
@@ -169,7 +179,7 @@ class ViewController: UIViewController {
         clockView.centerXAnchor.constraintEqualToAnchor(self.view.centerXAnchor, constant: 0.0).active = true
         clockView.widthAnchor.constraintEqualToConstant(230.0).active = true
         clockView.heightAnchor.constraintEqualToConstant(230.0).active = true
-
+        
         
         
         
@@ -262,7 +272,7 @@ class ViewController: UIViewController {
 
 
 // MARK: Calculate coordinates of time
-func getHandsPosition( h:Int, m:Int, s:Int)->[CGFloat] {
+func getHandsPosition( h:Int, m:Int, s:Int)->(h:CGFloat,m:CGFloat,s:CGFloat) {
     
     
     var minutesAngle = (Double(m)/100)
@@ -274,7 +284,7 @@ func getHandsPosition( h:Int, m:Int, s:Int)->[CGFloat] {
     secondsAngle = secondsAngle*360
     
     
-    return [degree2radian(CGFloat(hoursAngle)), degree2radian(CGFloat(minutesAngle)), degree2radian(CGFloat(secondsAngle))]
+    return (h: degree2radian(CGFloat(hoursAngle)),m: degree2radian(CGFloat(minutesAngle)),s: degree2radian(CGFloat(secondsAngle)))
 }
 
 func circleCircumferencePoints(sides:Int,x:CGFloat,y:CGFloat,radius:CGFloat,adjustment:CGFloat=0)->[CGPoint] {
