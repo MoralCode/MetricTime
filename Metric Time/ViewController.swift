@@ -26,7 +26,7 @@ class ViewController: UIViewController {
     
     let color = UIColor.greenColor();
     let font = UIFont(name: "Calculator", size: 52.0);
-
+    
     
     //  the actual time that normal humans use (in millitary time) (actualTime[0] = hour, actualTime[1] = minute, actualTime[2] = second)
     var actualTime: [Int] = [0, 0, 0];
@@ -53,9 +53,9 @@ class ViewController: UIViewController {
     func updateTime() {
         
         //get current hour, minute and second
-    
+        
         components = NSCalendar.currentCalendar().components([ .Hour, .Minute, .Second], fromDate: NSDate())
-            
+        
         actualTime[0] = components.hour;
         actualTime[1] = components.minute;
         actualTime[2] = components.second;
@@ -171,17 +171,13 @@ class ViewController: UIViewController {
         
         self.view.addSubview(clockView)
         clockView.translatesAutoresizingMaskIntoConstraints = false
-        if #available(iOS 9.0, *) {
-            clockView.centerYAnchor.constraintEqualToAnchor(self.view.centerYAnchor, constant: 0.0).active = false
-            clockView.topAnchor.constraintEqualToAnchor(self.view.topAnchor, constant: 15.0).active = true
-            clockView.centerXAnchor.constraintEqualToAnchor(self.view.centerXAnchor, constant: 0.0).active = true
-            clockView.widthAnchor.constraintEqualToConstant(230.0).active = true
-            clockView.heightAnchor.constraintEqualToConstant(230.0).active = true
-
-        } else {
-            // Fallback on earlier versions
-            
-        }
+        
+        clockView.centerYAnchor.constraintEqualToAnchor(self.view.centerYAnchor, constant: 0.0).active = false
+        clockView.topAnchor.constraintEqualToAnchor(self.view.topAnchor, constant: 15.0).active = true
+        clockView.centerXAnchor.constraintEqualToAnchor(self.view.centerXAnchor, constant: 0.0).active = true
+        clockView.widthAnchor.constraintEqualToConstant(230.0).active = true
+        clockView.heightAnchor.constraintEqualToConstant(230.0).active = true
+        
         
         
         
@@ -249,16 +245,12 @@ class ViewController: UIViewController {
         
         //add gesture recognizer view to view
         view.addSubview(longPressGestureRecognizerView)
-        if #available(iOS 9.0, *) {
         longPressGestureRecognizerView.translatesAutoresizingMaskIntoConstraints = false
         longPressGestureRecognizerView.topAnchor.constraintEqualToAnchor(self.view.topAnchor, constant: 0.0).active = true
         longPressGestureRecognizerView.bottomAnchor.constraintEqualToAnchor(self.view.bottomAnchor, constant: 0.0).active = true
         longPressGestureRecognizerView.leftAnchor.constraintEqualToAnchor(self.view.leftAnchor, constant: 0.0).active = true
         longPressGestureRecognizerView.rightAnchor.constraintEqualToAnchor(self.view.rightAnchor, constant: 0.0).active = true
-        } else  {
-            // Fallback on earlier versions
-            
-        }
+        
         
         /* Add this gesture recognizer to our view */
         longPressGestureRecognizerView.addGestureRecognizer(longPressGestureRecognizer)
