@@ -23,6 +23,7 @@ class ViewController: UIViewController {
     //var timer = NSTimer();
     
     private var displayLink:CADisplayLink?
+    var lastCall:NSDate?
     
     let color = UIColor.greenColor();
     let font = UIFont(name: "Calculator", size: 52.0);
@@ -31,11 +32,12 @@ class ViewController: UIViewController {
     //  the actual time that normal humans use (in millitary time) (actualTime[0] = hour, actualTime[1] = minute, actualTime[2] = second)
     var actualTime: [Int] = [0, 0, 0];
     
-    var millisecondsSinceToday = 0;
+    var millisecondsSinceToday:Double = 0.0;
     
     //the converted "metric time"
     var metricTime: [Int] = [0, 0, 0];
-    
+    var seconds = 0.0
+    var convertedSeconds = 0.0
     //variables for drawing hands
     var clockView = View();
     
@@ -54,22 +56,35 @@ class ViewController: UIViewController {
         
         //get current hour, minute and second
         
-        components = NSCalendar.currentCalendar().components([ .Hour, .Minute, .Second], fromDate: NSDate())
+        components = NSCalendar.currentCalendar().components([ .Hour, .Minute, .Second, .Nanosecond], fromDate: NSDate())
         
         actualTime[0] = components.hour;
         actualTime[1] = components.minute;
         actualTime[2] = components.second;
+        self.seconds = Double(components.second) + Double(components.nanosecond)/1000000000.0
+        
+        
+        if let lastTimeCalled = self.lastCall
+        {
+            actualTime[2] += Int(0.0 * lastTimeCalled.timeIntervalSinceNow * 60.0 * -1.0)
+            self.seconds += 0.0 * lastTimeCalled.timeIntervalSinceNow * 60.0 * -1.0
+        }
+        else
+        {
+            actualTime[2] += 0
+        }
+
+        self.lastCall = NSDate()
         
         calculateMetricTime()
         
         
         //update clock
-        let positions = getHandsPosition(metricTime[0], m: metricTime[1], s: metricTime[2])
+        let positions = getHandsPosition(metricTime[0], m: metricTime[1], s: self.convertedSeconds)
         rotateHands(clockView, rotation: (positions.h, positions.m, positions.s) )
         
         timeDisplay?.text = String(format: "%02d : %02d : %02d", actualTime[0], actualTime[1], actualTime[2])
         metricTimeDisplay?.text = String(format: "%01d : %02d : %02d", metricTime[0], metricTime[1], metricTime[2])
-        
         
         
         
@@ -78,20 +93,20 @@ class ViewController: UIViewController {
     func calculateMetricTime() {
         
         /*calculate metric "hours", "minutes", and "seconds" */
-        millisecondsSinceToday = 0
-        millisecondsSinceToday = (actualTime[0] * 3600000 /*milliseconds per hour*/) + (actualTime[1] * 60000 /* milliseconds per minute*/) + (actualTime[2] * 1000 /*milliseconds per second*/)
+        millisecondsSinceToday = 0.0
+        millisecondsSinceToday = Double(actualTime[0] * 3600000 /*milliseconds per hour*/) + Double(actualTime[1] * 60000 /* milliseconds per minute*/) + Double(self.seconds * 1000.0 /*milliseconds per second*/)
         
         
         metricTime[0] = Int(millisecondsSinceToday / 8640000)
         
-        millisecondsSinceToday -= (metricTime[0]*8640000)
+        millisecondsSinceToday -= Double(metricTime[0]*8640000)
         
         metricTime[1] = Int(millisecondsSinceToday / 86400)
         
-        millisecondsSinceToday -= (metricTime[1]*86400)
+        millisecondsSinceToday -= Double(metricTime[1]*86400)
         
         metricTime[2] = Int(millisecondsSinceToday / 864)
-        
+        self.convertedSeconds = Double(millisecondsSinceToday / 864)
         
         
         
@@ -270,10 +285,10 @@ class ViewController: UIViewController {
 
 
 // MARK: Calculate coordinates of time
-func getHandsPosition( h:Int, m:Int, s:Int)->(h:CGFloat,m:CGFloat,s:CGFloat) {
+func getHandsPosition( h:Int, m:Int, s:Double)->(h:CGFloat,m:CGFloat,s:CGFloat) {
     
     
-    var minutesAngle = (Double(m)/100)
+    var minutesAngle = (Double(m)/100 + Double(s)/10000.0)
     var hoursAngle = (Double(h)/10) + minutesAngle/10 //this line must come after minutesAngle Calculation...
     var secondsAngle = (Double(s)/100)
     
