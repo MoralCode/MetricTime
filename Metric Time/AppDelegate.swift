@@ -18,12 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate,  BuglifeDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-        
-        
-        Buglife.sharedBuglife().startWithAPIKey("QYIjFXEqihrPzldO3NGzLAtt")
-        Buglife.sharedBuglife().invocationOptions = [.Shake, .Screenshot]
-        Buglife.sharedBuglife().delegate = self
-        
+//        Buglife.sharedBuglife().startWithAPIKey("QYIjFXEqihrPzldO3NGzLAtt")
+//        Buglife.sharedBuglife().invocationOptions = [.Shake, .Screenshot]
+//        Buglife.sharedBuglife().delegate = self
+//        
         return true
     }
 
