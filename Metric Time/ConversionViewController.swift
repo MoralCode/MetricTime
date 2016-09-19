@@ -15,7 +15,7 @@ class ConversionViewController: UIViewController {
     @IBOutlet weak var outputLabel: UILabel!
     @IBOutlet weak var inputLabel: UILabel!
     
-    let color = UIColor.greenColor();
+    let color = UIColor.green;
     let font = UIFont(name: "Calculator", size: 52.0);
     
     var inputTime: [Int] = [0, 0, 0];
@@ -28,37 +28,37 @@ class ConversionViewController: UIViewController {
     
     
     
-    @IBAction func plusHours(sender: UIButton) {
+    @IBAction func plusHours(_ sender: UIButton) {
         inputTime[0] += 1
         if inputTime[0] >= hoursMax {inputTime[0] = 0}
         updateTime()
     }
 
-    @IBAction func minusHours(sender: UIButton) {
+    @IBAction func minusHours(_ sender: UIButton) {
         inputTime[0] -= 1
         if inputTime[0] == -1 {inputTime[0] = hoursMax-1}
         updateTime()
     }
     
-    @IBAction func plusMinutes(sender: UIButton) {
+    @IBAction func plusMinutes(_ sender: UIButton) {
         inputTime[1] += 1
         if inputTime[1] >= minutesMax {inputTime[1] = 0}
         updateTime()
     }
     
-    @IBAction func minusMinutes(sender: UIButton) {
+    @IBAction func minusMinutes(_ sender: UIButton) {
         inputTime[1] -= 1
         if inputTime[1] == -1 {inputTime[1] = minutesMax-1}
         updateTime()
     }
     
-    @IBAction func plusSeconds(sender: UIButton) {
+    @IBAction func plusSeconds(_ sender: UIButton) {
         inputTime[2] += 1
         if inputTime[2] >= secondsMax {inputTime[2] = 0}
         updateTime()
     }
     
-    @IBAction func minusSeconds(sender: UIButton) {
+    @IBAction func minusSeconds(_ sender: UIButton) {
         inputTime[2] -= 1
         if inputTime[2] == -1 {inputTime[2] = secondsMax-1}
         updateTime()
@@ -95,7 +95,7 @@ class ConversionViewController: UIViewController {
     
 
     
-    func convertToMetricTime(time:[Int]) -> [Int] {
+    func convertToMetricTime(_ time:[Int]) -> [Int] {
         
        var millisecondsSinceToday = (time[0] * 3600000 /*milliseconds per hour*/) + (time[1] * 60000 /* milliseconds per minute*/) + (time[2] * 1000 /*milliseconds per second*/)
         
@@ -112,7 +112,7 @@ class ConversionViewController: UIViewController {
     }
     
     
-    func convertToNormalTime(time:[Int]) -> [Int] {
+    func convertToNormalTime(_ time:[Int]) -> [Int] {
         
         var millisecondsSinceToday = (time[0] * 8640000 /*metric milliseconds per hour*/) + (time[1] * 86400 /* metric milliseconds per minute*/) + (time[2] * 864 /*milliseconds per second*/)
         
@@ -132,7 +132,7 @@ class ConversionViewController: UIViewController {
     
     
     
-    func segmentedControlValueChanged(sender: UISegmentedControl){
+    func segmentedControlValueChanged(_ sender: UISegmentedControl){
         
         if sender.selectedSegmentIndex == 0 { //convert to metric
             
@@ -176,7 +176,7 @@ class ConversionViewController: UIViewController {
         inputLabel?.textColor = color
         
         
-        inputTimePicker.addTarget(self, action: #selector(ConversionViewController.segmentedControlValueChanged(_:)), forControlEvents: .ValueChanged)
+        inputTimePicker.addTarget(self, action: #selector(ConversionViewController.segmentedControlValueChanged(_:)), for: .valueChanged)
 
         
         
@@ -186,8 +186,8 @@ class ConversionViewController: UIViewController {
     }
     
     //Segues always instantiate new view controllers. When going back we want don't want, or need, a new view controller so we will just dismiss the presented one.
-    @IBAction func backPressed(sender: UIButton) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func backPressed(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     

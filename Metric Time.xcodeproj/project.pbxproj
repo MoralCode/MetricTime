@@ -16,27 +16,8 @@
 		3AD7E3DB1C72961500502023 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AD7E3D91C72961500502023 /* Main.storyboard */; };
 		3AD7E3DD1C72961500502023 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3AD7E3DC1C72961500502023 /* Assets.xcassets */; };
 		3AD7E3E01C72961500502023 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AD7E3DE1C72961500502023 /* LaunchScreen.storyboard */; };
-		3AD7E3EB1C72961500502023 /* Metric_TimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD7E3EA1C72961500502023 /* Metric_TimeTests.swift */; };
-		3AD7E3F61C72961500502023 /* Metric_TimeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD7E3F51C72961500502023 /* Metric_TimeUITests.swift */; };
 		3AD99B821CBD9F57007FF474 /* Buglife.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AD99B801CBD9E76007FF474 /* Buglife.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		3AD7E3E71C72961500502023 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3AD7E3CA1C72961500502023 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3AD7E3D11C72961500502023;
-			remoteInfo = "Metric Time";
-		};
-		3AD7E3F21C72961500502023 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3AD7E3CA1C72961500502023 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3AD7E3D11C72961500502023;
-			remoteInfo = "Metric Time";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		3A47BD631CCD5F9E0073D8E8 /* ConversionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversionViewController.swift; sourceTree = "<group>"; };
@@ -50,12 +31,6 @@
 		3AD7E3DC1C72961500502023 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3AD7E3DF1C72961500502023 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3AD7E3E11C72961500502023 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3AD7E3E61C72961500502023 /* Metric TimeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Metric TimeTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3AD7E3EA1C72961500502023 /* Metric_TimeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metric_TimeTests.swift; sourceTree = "<group>"; };
-		3AD7E3EC1C72961500502023 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3AD7E3F11C72961500502023 /* Metric TimeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Metric TimeUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3AD7E3F51C72961500502023 /* Metric_TimeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metric_TimeUITests.swift; sourceTree = "<group>"; };
-		3AD7E3F71C72961500502023 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3AD99B801CBD9E76007FF474 /* Buglife.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Buglife.framework; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -67,20 +42,6 @@
 				3AD99B821CBD9F57007FF474 /* Buglife.framework in Frameworks */,
 				3A5AD0371CB9B3F400F1EB27 /* SystemConfiguration.framework in Frameworks */,
 				3A5AD0351CB9B3CF00F1EB27 /* CoreTelephony.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3AD7E3E31C72961500502023 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3AD7E3EE1C72961500502023 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,8 +64,6 @@
 			children = (
 				3AD7E3D41C72961500502023 /* Metric Time */,
 				3A5AD0311CB9B22100F1EB27 /* Frameworks */,
-				3AD7E3E91C72961500502023 /* Metric TimeTests */,
-				3AD7E3F41C72961500502023 /* Metric TimeUITests */,
 				3AD7E3D31C72961500502023 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -113,8 +72,6 @@
 			isa = PBXGroup;
 			children = (
 				3AD7E3D21C72961500502023 /* Metric Time.app */,
-				3AD7E3E61C72961500502023 /* Metric TimeTests.xctest */,
-				3AD7E3F11C72961500502023 /* Metric TimeUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -132,24 +89,6 @@
 				3AD7E3E11C72961500502023 /* Info.plist */,
 			);
 			path = "Metric Time";
-			sourceTree = "<group>";
-		};
-		3AD7E3E91C72961500502023 /* Metric TimeTests */ = {
-			isa = PBXGroup;
-			children = (
-				3AD7E3EA1C72961500502023 /* Metric_TimeTests.swift */,
-				3AD7E3EC1C72961500502023 /* Info.plist */,
-			);
-			path = "Metric TimeTests";
-			sourceTree = "<group>";
-		};
-		3AD7E3F41C72961500502023 /* Metric TimeUITests */ = {
-			isa = PBXGroup;
-			children = (
-				3AD7E3F51C72961500502023 /* Metric_TimeUITests.swift */,
-				3AD7E3F71C72961500502023 /* Info.plist */,
-			);
-			path = "Metric TimeUITests";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -172,42 +111,6 @@
 			productReference = 3AD7E3D21C72961500502023 /* Metric Time.app */;
 			productType = "com.apple.product-type.application";
 		};
-		3AD7E3E51C72961500502023 /* Metric TimeTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3AD7E3FD1C72961500502023 /* Build configuration list for PBXNativeTarget "Metric TimeTests" */;
-			buildPhases = (
-				3AD7E3E21C72961500502023 /* Sources */,
-				3AD7E3E31C72961500502023 /* Frameworks */,
-				3AD7E3E41C72961500502023 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				3AD7E3E81C72961500502023 /* PBXTargetDependency */,
-			);
-			name = "Metric TimeTests";
-			productName = "Metric TimeTests";
-			productReference = 3AD7E3E61C72961500502023 /* Metric TimeTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		3AD7E3F01C72961500502023 /* Metric TimeUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3AD7E4001C72961500502023 /* Build configuration list for PBXNativeTarget "Metric TimeUITests" */;
-			buildPhases = (
-				3AD7E3ED1C72961500502023 /* Sources */,
-				3AD7E3EE1C72961500502023 /* Frameworks */,
-				3AD7E3EF1C72961500502023 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				3AD7E3F31C72961500502023 /* PBXTargetDependency */,
-			);
-			name = "Metric TimeUITests";
-			productName = "Metric TimeUITests";
-			productReference = 3AD7E3F11C72961500502023 /* Metric TimeUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -220,16 +123,7 @@
 				TargetAttributes = {
 					3AD7E3D11C72961500502023 = {
 						CreatedOnToolsVersion = 7.2.1;
-					};
-					3AD7E3E51C72961500502023 = {
-						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = UJPCPV3425;
-						TestTargetID = 3AD7E3D11C72961500502023;
-					};
-					3AD7E3F01C72961500502023 = {
-						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = UJPCPV3425;
-						TestTargetID = 3AD7E3D11C72961500502023;
+						LastSwiftMigration = 0800;
 					};
 				};
 			};
@@ -247,8 +141,6 @@
 			projectRoot = "";
 			targets = (
 				3AD7E3D11C72961500502023 /* Metric Time */,
-				3AD7E3E51C72961500502023 /* Metric TimeTests */,
-				3AD7E3F01C72961500502023 /* Metric TimeUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -265,20 +157,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3AD7E3E41C72961500502023 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3AD7E3EF1C72961500502023 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -292,36 +170,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3AD7E3E21C72961500502023 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3AD7E3EB1C72961500502023 /* Metric_TimeTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		3AD7E3ED1C72961500502023 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3AD7E3F61C72961500502023 /* Metric_TimeUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		3AD7E3E81C72961500502023 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3AD7E3D11C72961500502023 /* Metric Time */;
-			targetProxy = 3AD7E3E71C72961500502023 /* PBXContainerItemProxy */;
-		};
-		3AD7E3F31C72961500502023 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3AD7E3D11C72961500502023 /* Metric Time */;
-			targetProxy = 3AD7E3F21C72961500502023 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		3AD7E3D91C72961500502023 /* Main.storyboard */ = {
@@ -444,6 +293,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.adriancedwards.Metric-Time";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -465,54 +315,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.adriancedwards.Metric-Time";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		3AD7E3FE1C72961500502023 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = "Metric TimeTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.adriancedwards.Metric-TimeTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Metric Time.app/Metric Time";
-			};
-			name = Debug;
-		};
-		3AD7E3FF1C72961500502023 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = "Metric TimeTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.adriancedwards.Metric-TimeTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Metric Time.app/Metric Time";
-			};
-			name = Release;
-		};
-		3AD7E4011C72961500502023 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = "Metric TimeUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.adriancedwards.Metric-TimeUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = "Metric Time";
-				USES_XCTRUNNER = YES;
-			};
-			name = Debug;
-		};
-		3AD7E4021C72961500502023 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = "Metric TimeUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.adriancedwards.Metric-TimeUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = "Metric Time";
-				USES_XCTRUNNER = YES;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -533,24 +336,6 @@
 			buildConfigurations = (
 				3AD7E3FB1C72961500502023 /* Debug */,
 				3AD7E3FC1C72961500502023 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3AD7E3FD1C72961500502023 /* Build configuration list for PBXNativeTarget "Metric TimeTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3AD7E3FE1C72961500502023 /* Debug */,
-				3AD7E3FF1C72961500502023 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		3AD7E4001C72961500502023 /* Build configuration list for PBXNativeTarget "Metric TimeUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3AD7E4011C72961500502023 /* Debug */,
-				3AD7E4021C72961500502023 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

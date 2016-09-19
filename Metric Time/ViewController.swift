@@ -19,13 +19,13 @@ class ViewController: UIViewController {
     var longPressGestureRecognizerView: UIView!
     
     
-    var components = NSCalendar.currentCalendar().components( [.Hour, .Minute, .Second], fromDate: NSDate())
+    var components = (Calendar.current as NSCalendar).components( [.hour, .minute, .second], from: Date())
     //var timer = NSTimer();
     
-    private var displayLink:CADisplayLink?
-    var lastCall:NSDate?
+    fileprivate var displayLink:CADisplayLink?
+    var lastCall:Date?
     
-    let color = UIColor.greenColor();
+    let color = UIColor.green;
     let font = UIFont(name: "Calculator", size: 52.0);
     
     
@@ -56,12 +56,12 @@ class ViewController: UIViewController {
         
         //get current hour, minute and second
         
-        components = NSCalendar.currentCalendar().components([ .Hour, .Minute, .Second, .Nanosecond], fromDate: NSDate())
+        components = (Calendar.current as NSCalendar).components([ .hour, .minute, .second, .nanosecond], from: Date())
         
-        actualTime[0] = components.hour;
-        actualTime[1] = components.minute;
-        actualTime[2] = components.second;
-        self.seconds = Double(components.second) + Double(components.nanosecond)/1000000000.0
+        actualTime[0] = components.hour!;
+        actualTime[1] = components.minute!;
+        actualTime[2] = components.second!;
+        self.seconds = Double(components.second!) + Double(components.nanosecond!)/1000000000.0
         
         
         if let lastTimeCalled = self.lastCall
@@ -74,7 +74,7 @@ class ViewController: UIViewController {
             actualTime[2] += 0
         }
 
-        self.lastCall = NSDate()
+        self.lastCall = Date()
         
         calculateMetricTime()
         
@@ -115,7 +115,7 @@ class ViewController: UIViewController {
     
     
     
-    func rotateHands(view : UIView, rotation:(hour:CGFloat,minute:CGFloat,second:CGFloat)){
+    func rotateHands(_ view : UIView, rotation:(hour:CGFloat,minute:CGFloat,second:CGFloat)){
         
         hourLayer.transform = CATransform3DMakeRotation(rotation.hour, 0, 0, 1)
         minuteLayer.transform = CATransform3DMakeRotation(rotation.minute, 0, 0, 1)
@@ -123,14 +123,14 @@ class ViewController: UIViewController {
         
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
     
     
     
-    func handleLongPressGestures(sender: UILongPressGestureRecognizer){
-        self.performSegueWithIdentifier("moveToConversionView", sender: nil)
+    func handleLongPressGestures(_ sender: UILongPressGestureRecognizer){
+        self.performSegue(withIdentifier: "moveToConversionView", sender: nil)
         
         //remove the gesture recogniser so it doesnt get called while the Convertion view is segue-ing in...
         longPressGestureRecognizerView.removeGestureRecognizer(longPressGestureRecognizer)
@@ -140,7 +140,7 @@ class ViewController: UIViewController {
         super.init(coder: aDecoder)!
         
         //longPressGestureRecognizerView = UIView.
-        longPressGestureRecognizerView = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height))
+        longPressGestureRecognizerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         
         /* First create the gesture recognizer */
         longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(ViewController.handleLongPressGestures(_:)))
@@ -156,7 +156,7 @@ class ViewController: UIViewController {
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         //re-add the gesture recognizer so the convertion screen can be re-accessed...
         longPressGestureRecognizerView.addGestureRecognizer(longPressGestureRecognizer)
     }
@@ -187,11 +187,11 @@ class ViewController: UIViewController {
         self.view.addSubview(clockView)
         clockView.translatesAutoresizingMaskIntoConstraints = false
         
-        clockView.centerYAnchor.constraintEqualToAnchor(self.view.centerYAnchor, constant: 0.0).active = false
-        clockView.topAnchor.constraintEqualToAnchor(self.view.topAnchor, constant: 15.0).active = true
-        clockView.centerXAnchor.constraintEqualToAnchor(self.view.centerXAnchor, constant: 0.0).active = true
-        clockView.widthAnchor.constraintEqualToConstant(230.0).active = true
-        clockView.heightAnchor.constraintEqualToConstant(230.0).active = true
+        clockView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: 0.0).isActive = false
+        clockView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 15.0).isActive = true
+        clockView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0.0).isActive = true
+        clockView.widthAnchor.constraint(equalToConstant: 230.0).isActive = true
+        clockView.heightAnchor.constraint(equalToConstant: 230.0).isActive = true
         
         
         
@@ -207,17 +207,17 @@ class ViewController: UIViewController {
         minuteLayer.frame = clockView.frame
         secondLayer.frame = clockView.frame
         
-        let path = CGPathCreateMutable()
-        let minutePath = CGPathCreateMutable()
-        let secondPath = CGPathCreateMutable()
+        let path = CGMutablePath()
+        let minutePath = CGMutablePath()
+        let secondPath = CGMutablePath()
         
         //all hands start off in vertical position.
-        CGPathMoveToPoint(path, nil, CGRectGetMidX(clockView.frame), CGRectGetMidY(clockView.frame))
-        CGPathMoveToPoint(minutePath, nil, CGRectGetMidX(clockView.frame), CGRectGetMidY(clockView.frame))
-        CGPathMoveToPoint(secondPath, nil, CGRectGetMidX(clockView.frame), CGRectGetMidY(clockView.frame))
-        CGPathAddLineToPoint(path, nil, CGRectGetMidX(clockView.frame), CGRectGetMidY(clockView.frame)-50)
-        CGPathAddLineToPoint(minutePath, nil, CGRectGetMidX(clockView.frame), CGRectGetMidY(clockView.frame)-62.5)
-        CGPathAddLineToPoint(secondPath, nil, CGRectGetMidX(clockView.frame), CGRectGetMidY(clockView.frame)-75)
+        CGPathMoveToPoint(path, nil, clockView.frame.midX, clockView.frame.midY)
+        CGPathMoveToPoint(minutePath, nil, clockView.frame.midX, clockView.frame.midY)
+        CGPathMoveToPoint(secondPath, nil, clockView.frame.midX, clockView.frame.midY)
+        CGPathAddLineToPoint(path, nil, clockView.frame.midX, clockView.frame.midY-50)
+        CGPathAddLineToPoint(minutePath, nil, clockView.frame.midX, clockView.frame.midY-62.5)
+        CGPathAddLineToPoint(secondPath, nil, clockView.frame.midX, clockView.frame.midY-75)
         
         hourLayer.path = path
         minuteLayer.path = minutePath
@@ -231,14 +231,14 @@ class ViewController: UIViewController {
         minuteLayer.lineCap = kCALineCapRound
         secondLayer.lineCap = kCALineCapRound
         
-        hourLayer.strokeColor = UIColor.whiteColor().CGColor
-        minuteLayer.strokeColor = UIColor.whiteColor().CGColor
-        secondLayer.strokeColor = UIColor.redColor().CGColor
+        hourLayer.strokeColor = UIColor.white.cgColor
+        minuteLayer.strokeColor = UIColor.white.cgColor
+        secondLayer.strokeColor = UIColor.red.cgColor
         
         
-        hourLayer.rasterizationScale = UIScreen.mainScreen().scale;
-        minuteLayer.rasterizationScale = UIScreen.mainScreen().scale;
-        secondLayer.rasterizationScale = UIScreen.mainScreen().scale;
+        hourLayer.rasterizationScale = UIScreen.main.scale;
+        minuteLayer.rasterizationScale = UIScreen.main.scale;
+        secondLayer.rasterizationScale = UIScreen.main.scale;
         
         hourLayer.shouldRasterize = true
         minuteLayer.shouldRasterize = true
@@ -247,9 +247,9 @@ class ViewController: UIViewController {
         
         let endAngle = CGFloat(2*M_PI)
         
-        let circle = UIBezierPath(arcCenter: CGPoint(x:CGRectGetMidX(clockView.frame),y:CGRectGetMidX(clockView.frame)), radius: 2.75, startAngle: 0, endAngle: endAngle, clockwise: true)
-        centerPiece.path = circle.CGPath
-        centerPiece.fillColor = UIColor.grayColor().CGColor
+        let circle = UIBezierPath(arcCenter: CGPoint(x:clockView.frame.midX,y:clockView.frame.midX), radius: 2.75, startAngle: 0, endAngle: endAngle, clockwise: true)
+        centerPiece.path = circle.cgPath
+        centerPiece.fillColor = UIColor.gray.cgColor
         
         
         
@@ -261,10 +261,10 @@ class ViewController: UIViewController {
         //add gesture recognizer view to view
         view.addSubview(longPressGestureRecognizerView)
         longPressGestureRecognizerView.translatesAutoresizingMaskIntoConstraints = false
-        longPressGestureRecognizerView.topAnchor.constraintEqualToAnchor(self.view.topAnchor, constant: 0.0).active = true
-        longPressGestureRecognizerView.bottomAnchor.constraintEqualToAnchor(self.view.bottomAnchor, constant: 0.0).active = true
-        longPressGestureRecognizerView.leftAnchor.constraintEqualToAnchor(self.view.leftAnchor, constant: 0.0).active = true
-        longPressGestureRecognizerView.rightAnchor.constraintEqualToAnchor(self.view.rightAnchor, constant: 0.0).active = true
+        longPressGestureRecognizerView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0.0).isActive = true
+        longPressGestureRecognizerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0.0).isActive = true
+        longPressGestureRecognizerView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 0.0).isActive = true
+        longPressGestureRecognizerView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: 0.0).isActive = true
         
         
         /* Add this gesture recognizer to our view */
@@ -277,7 +277,7 @@ class ViewController: UIViewController {
         //It is better to use an CADisplayLink for timing related to animation. This is why you have an issue with dropping ticks/frames.
         //NSTimer executes when it's convenient for the run loop could be before or after the display has been rendered. CADisplayLink will always be executed prior to pixels being pushed to the screen. For more on this watch the video here: https://developer.apple.com/videos/play/wwdc2014/236/
         self.displayLink = CADisplayLink(target: self, selector: #selector(self.updateTime))
-        self.displayLink?.addToRunLoop(NSRunLoop.currentRunLoop(), forMode: NSRunLoopCommonModes)
+        self.displayLink?.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
         
         
     }
@@ -285,7 +285,7 @@ class ViewController: UIViewController {
 
 
 // MARK: Calculate coordinates of time
-func getHandsPosition( h:Int, m:Int, s:Double)->(h:CGFloat,m:CGFloat,s:CGFloat) {
+func getHandsPosition( _ h:Int, m:Int, s:Double)->(h:CGFloat,m:CGFloat,s:CGFloat) {
     
     
     var minutesAngle = (Double(m)/100 + Double(s)/10000.0)
@@ -300,7 +300,7 @@ func getHandsPosition( h:Int, m:Int, s:Double)->(h:CGFloat,m:CGFloat,s:CGFloat) 
     return (h: degree2radian(CGFloat(hoursAngle)),m: degree2radian(CGFloat(minutesAngle)),s: degree2radian(CGFloat(secondsAngle)))
 }
 
-func circleCircumferencePoints(sides:Int,x:CGFloat,y:CGFloat,radius:CGFloat,adjustment:CGFloat=0)->[CGPoint] {
+func circleCircumferencePoints(_ sides:Int,x:CGFloat,y:CGFloat,radius:CGFloat,adjustment:CGFloat=0)->[CGPoint] {
     let angle = degree2radian(360/CGFloat(sides))
     let cx = x // x origin
     let cy = y // y origin
@@ -320,17 +320,17 @@ func circleCircumferencePoints(sides:Int,x:CGFloat,y:CGFloat,radius:CGFloat,adju
 
 
 
-func addMarkersandText(rect:CGRect, context:CGContextRef, x:CGFloat, y:CGFloat, radius:CGFloat, sides:Int, sides2:Int, tickTextcolor:UIColor) {
+func addMarkersandText(_ rect:CGRect, context:CGContext, x:CGFloat, y:CGFloat, radius:CGFloat, sides:Int, sides2:Int, tickTextcolor:UIColor) {
     
     // retrieve points
     let points = circleCircumferencePoints(sides,x: x,y: y,radius: radius)
     // create path
-    let path1 = CGPathCreateMutable()
+    let path1 = CGMutablePath()
     // determine length of marker as a fraction of the total radius
     var divider:CGFloat = 1/16
     
     //add the tick marks
-    for p in points.enumerate() {
+    for p in points.enumerated() {
         //tick marks every 5
         if p.index % 10 == 0 {
             divider = 1/8
@@ -350,26 +350,26 @@ func addMarkersandText(rect:CGRect, context:CGContextRef, x:CGFloat, y:CGFloat, 
         // build path
         CGPathMoveToPoint(path1, nil, p.element.x, p.element.y)
         CGPathAddLineToPoint(path1, nil, xn, yn)
-        CGPathCloseSubpath(path1)
+        path1.closeSubpath()
         // add path to context
-        CGContextAddPath(context, path1)
+        context.addPath(path1)
         
         
     }
     
     // set path color
-    let cgcolor = tickTextcolor.CGColor
-    CGContextSetStrokeColorWithColor(context,cgcolor)
-    CGContextSetLineWidth(context, 3.0)
-    CGContextStrokePath(context)
+    let cgcolor = tickTextcolor.cgColor
+    context.setStrokeColor(cgcolor)
+    context.setLineWidth(3.0)
+    context.strokePath()
     
     
     
     
     
     // Flip text co-ordinate space, see: http://blog.spacemanlabs.com/2011/08/quick-tip-drawing-core-text-right-side-up/
-    CGContextTranslateCTM(context, 0.0, CGRectGetHeight(rect))
-    CGContextScaleCTM(context, 1.0, -1.0)
+    context.translateBy(x: 0.0, y: rect.height)
+    context.scaleBy(x: 1.0, y: -1.0)
     
     // dictates on how inset the ring of numbers will be
     let inset:CGFloat = radius/3.2
@@ -378,23 +378,23 @@ func addMarkersandText(rect:CGRect, context:CGContextRef, x:CGFloat, y:CGFloat, 
     // multiplier enables correcting numbering when fewer than 12 numbers are featured, e.g. 4 sides will display 12, 3, 6, 9
     let multiplier = 12/sides2
     
-    for p in textPoints.enumerate() {
+    for p in textPoints.enumerated() {
         if p.index > 0 {
             // Font name must be written exactly the same as the system stores it (some names are hyphenated, some aren't) and must exist on the user's device. Otherwise there will be a crash. (In real use checks and fallbacks would be created.) For a list of iOS 7 fonts see here: http://support.apple.com/en-us/ht5878
             let aFont = UIFont(name: "DamascusBold", size: radius/5)
             // create a dictionary of attributes to be applied to the string
-            let attr:CFDictionaryRef = [NSFontAttributeName:aFont!,NSForegroundColorAttributeName:tickTextcolor]
+            let attr:CFDictionary = [NSFontAttributeName:aFont!,NSForegroundColorAttributeName:tickTextcolor]
             // create the attributed string
             let str = String(p.index*multiplier)
             let text = CFAttributedStringCreate(nil, str, attr)
             // create the line of text
             let line = CTLineCreateWithAttributedString(text)
             // retrieve the bounds of the text
-            let bounds = CTLineGetBoundsWithOptions(line, CTLineBoundsOptions.UseOpticalBounds)
+            let bounds = CTLineGetBoundsWithOptions(line, CTLineBoundsOptions.useOpticalBounds)
             // set the line width to stroke the text with
-            CGContextSetLineWidth(context, 1.5)
+            context.setLineWidth(1.5)
             // set the drawing mode to stroke
-            CGContextSetTextDrawingMode(context, CGTextDrawingMode.Stroke)
+            context.setTextDrawingMode(CGTextDrawingMode.stroke)
             // Set text position and draw the line into the graphics context, text length and height is adjusted for
             let xn = p.element.x - bounds.width/2
             let yn = p.element.y - bounds.midY
@@ -408,7 +408,7 @@ func addMarkersandText(rect:CGRect, context:CGContextRef, x:CGFloat, y:CGFloat, 
 
 
 
-func degree2radian(a:CGFloat)->CGFloat {
+func degree2radian(_ a:CGFloat)->CGFloat {
     let b = CGFloat(M_PI) * a/180
     return b
 }
@@ -418,7 +418,7 @@ func degree2radian(a:CGFloat)->CGFloat {
 class View: UIView {
     
     
-    override func drawRect(rect:CGRect) {
+    override func draw(_ rect:CGRect) {
         //assemble all pieces
         
         let context = UIGraphicsGetCurrentContext()
@@ -426,12 +426,12 @@ class View: UIView {
         // set properties
         
         
-        let radius = CGRectGetWidth(rect)/2
+        let radius = rect.width/2
         
         let endAngle = CGFloat(2*M_PI)
         
         //add circle
-        CGContextAddArc(context, CGRectGetMidX(rect), CGRectGetMidY(rect), radius, 0, endAngle, 1)
+        CGContextAddArc(context, rect.midX, rect.midY, radius, 0, endAngle, 1)
         
         //set circle properties
         // CGContextSetFillColorWithColor(context,UIColor.grayColor().CGColor)
@@ -439,9 +439,9 @@ class View: UIView {
         // CGContextSetLineWidth(context, 4.0)
         
         //draw path
-        CGContextDrawPath(context, CGPathDrawingMode.FillStroke);
+        context?.drawPath(using: CGPathDrawingMode.fillStroke);
         
-        addMarkersandText(rect, context: context!, x: CGRectGetMidX(rect), y: CGRectGetMidY(rect), radius: radius, sides: 100, sides2: 10, tickTextcolor: UIColor.greenColor())
+        addMarkersandText(rect, context: context!, x: rect.midX, y: rect.midY, radius: radius, sides: 100, sides2: 10, tickTextcolor: UIColor.green)
         
     }
     
