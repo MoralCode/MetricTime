@@ -7,10 +7,9 @@
 //
 
 import UIKit
-import Buglife
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate,  BuglifeDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
@@ -18,10 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,  BuglifeDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-//        Buglife.sharedBuglife().startWithAPIKey("QYIjFXEqihrPzldO3NGzLAtt")
-//        Buglife.sharedBuglife().invocationOptions = [.Shake, .Screenshot]
-//        Buglife.sharedBuglife().delegate = self
-//        
         return true
     }
 

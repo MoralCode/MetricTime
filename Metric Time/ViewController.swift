@@ -212,12 +212,13 @@ class ViewController: UIViewController {
         let secondPath = CGMutablePath()
         
         //all hands start off in vertical position.
-        CGPathMoveToPoint(path, nil, clockView.frame.midX, clockView.frame.midY)
-        CGPathMoveToPoint(minutePath, nil, clockView.frame.midX, clockView.frame.midY)
-        CGPathMoveToPoint(secondPath, nil, clockView.frame.midX, clockView.frame.midY)
-        CGPathAddLineToPoint(path, nil, clockView.frame.midX, clockView.frame.midY-50)
-        CGPathAddLineToPoint(minutePath, nil, clockView.frame.midX, clockView.frame.midY-62.5)
-        CGPathAddLineToPoint(secondPath, nil, clockView.frame.midX, clockView.frame.midY-75)
+        path.move(to: CGPoint(x: clockView.frame.midX, y: clockView.frame.midY))
+        minutePath.move(to: CGPoint(x: clockView.frame.midX, y: clockView.frame.midY))
+        secondPath.move(to: CGPoint(x: clockView.frame.midX, y: clockView.frame.midY))
+        
+        path.addLine(to: CGPoint(x: clockView.frame.midX, y: clockView.frame.midY-50))
+        minutePath.addLine(to: CGPoint(x: clockView.frame.midX, y: clockView.frame.midY-62.5))
+        secondPath.addLine(to: CGPoint(x: clockView.frame.midX, y: clockView.frame.midY-75))
         
         hourLayer.path = path
         minuteLayer.path = minutePath
@@ -332,12 +333,12 @@ func addMarkersandText(_ rect:CGRect, context:CGContext, x:CGFloat, y:CGFloat, r
     //add the tick marks
     for p in points.enumerated() {
         //tick marks every 5
-        if p.index % 10 == 0 {
+        if p.offset % 10 == 0 {
             divider = 1/8
             
         }
             //tick marks every 10
-        else if p.index % 5 == 0 {
+        else if p.offset % 5 == 0 {
             divider = 3/16
         }
             //tick marks every 1
@@ -348,9 +349,11 @@ func addMarkersandText(_ rect:CGRect, context:CGContext, x:CGFloat, y:CGFloat, r
         let xn = p.element.x + divider*(x-p.element.x)
         let yn = p.element.y + divider*(y-p.element.y)
         // build path
-        CGPathMoveToPoint(path1, nil, p.element.x, p.element.y)
-        CGPathAddLineToPoint(path1, nil, xn, yn)
-        path1.closeSubpath()
+        //CGPathMoveToPoint(path1, nil, p.element.x, p.element.y)
+        context.move(to: CGPoint(x: p.element.x, y: p.element.y))
+        //CGPathAddLineToPoint(path1, nil, xn, yn)
+        context.addLine(to: CGPoint(x: xn, y: yn))
+        //path1.closeSubpath() //this breaks something
         // add path to context
         context.addPath(path1)
         
@@ -379,16 +382,16 @@ func addMarkersandText(_ rect:CGRect, context:CGContext, x:CGFloat, y:CGFloat, r
     let multiplier = 12/sides2
     
     for p in textPoints.enumerated() {
-        if p.index > 0 {
+        if p.offset > 0 {
             // Font name must be written exactly the same as the system stores it (some names are hyphenated, some aren't) and must exist on the user's device. Otherwise there will be a crash. (In real use checks and fallbacks would be created.) For a list of iOS 7 fonts see here: http://support.apple.com/en-us/ht5878
             let aFont = UIFont(name: "DamascusBold", size: radius/5)
             // create a dictionary of attributes to be applied to the string
-            let attr:CFDictionary = [NSFontAttributeName:aFont!,NSForegroundColorAttributeName:tickTextcolor]
+            let attr:CFDictionary = [NSFontAttributeName:aFont!, NSForegroundColorAttributeName:tickTextcolor] as CFDictionary
             // create the attributed string
-            let str = String(p.index*multiplier)
-            let text = CFAttributedStringCreate(nil, str, attr)
+            let str = String(p.offset * multiplier)
+            let text = CFAttributedStringCreate(nil, str as CFString!, attr)
             // create the line of text
-            let line = CTLineCreateWithAttributedString(text)
+            let line = CTLineCreateWithAttributedString(text!)
             // retrieve the bounds of the text
             let bounds = CTLineGetBoundsWithOptions(line, CTLineBoundsOptions.useOpticalBounds)
             // set the line width to stroke the text with
@@ -398,7 +401,7 @@ func addMarkersandText(_ rect:CGRect, context:CGContext, x:CGFloat, y:CGFloat, r
             // Set text position and draw the line into the graphics context, text length and height is adjusted for
             let xn = p.element.x - bounds.width/2
             let yn = p.element.y - bounds.midY
-            CGContextSetTextPosition(context, xn, yn)
+            context.textPosition = CGPoint(x: xn, y: yn)
             // the line of text is drawn - see https://developer.apple.com/library/ios/DOCUMENTATION/StringsTextFonts/Conceptual/CoreText_Programming/LayoutOperations/LayoutOperations.html
             // draw the line of text
             CTLineDraw(line, context)
@@ -431,7 +434,8 @@ class View: UIView {
         let endAngle = CGFloat(2*M_PI)
         
         //add circle
-        CGContextAddArc(context, rect.midX, rect.midY, radius, 0, endAngle, 1)
+       // CGContextAddArc(context, , radius, 0, endAngle, 1)
+        context?.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: radius, startAngle: 0, endAngle: endAngle, clockwise: true)
         
         //set circle properties
         // CGContextSetFillColorWithColor(context,UIColor.grayColor().CGColor)
