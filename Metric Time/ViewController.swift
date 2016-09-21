@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     @IBOutlet var metricTimeDisplay:UILabel?
     
     var longPressGestureRecognizer: UILongPressGestureRecognizer!
-    var longPressGestureRecognizerView: UIView!
+   // var longPressGestureRecognizerView: UIView!
     
     
     var components = (Calendar.current as NSCalendar).components( [.hour, .minute, .second], from: Date())
@@ -133,14 +133,16 @@ class ViewController: UIViewController {
         self.performSegue(withIdentifier: "moveToConversionView", sender: nil)
         
         //remove the gesture recogniser so it doesnt get called while the Convertion view is segue-ing in...
-        longPressGestureRecognizerView.removeGestureRecognizer(longPressGestureRecognizer)
+        view.removeGestureRecognizer(longPressGestureRecognizer)
+        clockView.removeGestureRecognizer(longPressGestureRecognizer)
+      //  metricTimeDisplay?.removeGestureRecognizer(longPressGestureRecognizer)
     }
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
         
         //longPressGestureRecognizerView = UIView.
-        longPressGestureRecognizerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+       // longPressGestureRecognizerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         
         /* First create the gesture recognizer */
         longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(ViewController.handleLongPressGestures(_:)))
@@ -152,13 +154,17 @@ class ViewController: UIViewController {
         //longPressGestureRecognizer.allowableMovement = 50
         
         /* The user must press 2 fingers (numberOfTouchesRequired) for at least 1 second for the gesture to be recognized */
-        longPressGestureRecognizer.minimumPressDuration = 2
+        longPressGestureRecognizer.minimumPressDuration = 1.5
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
         //re-add the gesture recognizer so the convertion screen can be re-accessed...
-        longPressGestureRecognizerView.addGestureRecognizer(longPressGestureRecognizer)
+        //longPressGestureRecognizerView.addGestureRecognizer(longPressGestureRecognizer)
+        view.addGestureRecognizer(longPressGestureRecognizer)
+        clockView.addGestureRecognizer(longPressGestureRecognizer)
+       // metricTimeDisplay?.addGestureRecognizer(longPressGestureRecognizer)
+        
     }
     
     override func viewDidLoad() {
@@ -260,7 +266,7 @@ class ViewController: UIViewController {
         clockView.layer.addSublayer(centerPiece)
         
         //add gesture recognizer view to view
-        view.addSubview(longPressGestureRecognizerView)
+        /*view.addSubview(longPressGestureRecognizerView)
         longPressGestureRecognizerView.translatesAutoresizingMaskIntoConstraints = false
         longPressGestureRecognizerView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0.0).isActive = true
         longPressGestureRecognizerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0.0).isActive = true
@@ -269,7 +275,7 @@ class ViewController: UIViewController {
         
         
         /* Add this gesture recognizer to our view */
-        longPressGestureRecognizerView.addGestureRecognizer(longPressGestureRecognizer)
+        longPressGestureRecognizerView.addGestureRecognizer(longPressGestureRecognizer)*/
         
         
         //by not calling updatetime() here, we get the cool aanimation of the clock setting the time after startup...
