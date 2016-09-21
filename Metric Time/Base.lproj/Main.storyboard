@@ -28,6 +28,10 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <accessibility key="accessibilityConfiguration">
+                            <accessibilityTraits key="traits" notEnabled="YES"/>
+                            <bool key="isElement" value="NO"/>
+                        </accessibility>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="DCN-vF-qMD" secondAttribute="trailing" constant="20" id="EXd-WZ-BmZ"/>
                             <constraint firstItem="DCN-vF-qMD" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FBY-v2-hP9"/>
@@ -37,7 +41,7 @@
                     </view>
                     <connections>
                         <outlet property="metricTimeDisplay" destination="DCN-vF-qMD" id="bAz-Hn-LQP"/>
-                        <segue destination="S3a-F5-HS0" kind="show" identifier="moveToConversionView" id="5bK-Ui-As5"/>
+                        <segue destination="S3a-F5-HS0" kind="show" identifier="moveToConversionView" id="Eth-Es-coZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
