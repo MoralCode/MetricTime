@@ -12,7 +12,6 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet var timeDisplay:UILabel?
     @IBOutlet var metricTimeDisplay:UILabel?
     
     var longPressGestureRecognizer: UILongPressGestureRecognizer!
@@ -83,7 +82,6 @@ class ViewController: UIViewController {
         let positions = getHandsPosition(metricTime[0], m: metricTime[1], s: self.convertedSeconds)
         rotateHands(clockView, rotation: (positions.h, positions.m, positions.s) )
         
-        timeDisplay?.text = String(format: "%02d : %02d : %02d", actualTime[0], actualTime[1], actualTime[2])
         metricTimeDisplay?.text = String(format: "%01d : %02d : %02d", metricTime[0], metricTime[1], metricTime[2])
         
         
@@ -123,6 +121,8 @@ class ViewController: UIViewController {
         
     }
     
+    
+    
     override var prefersStatusBarHidden : Bool {
         return true
     }
@@ -154,7 +154,7 @@ class ViewController: UIViewController {
         //longPressGestureRecognizer.allowableMovement = 50
         
         /* The user must press 2 fingers (numberOfTouchesRequired) for at least 1 second for the gesture to be recognized */
-        longPressGestureRecognizer.minimumPressDuration = 1.5
+        longPressGestureRecognizer.minimumPressDuration = 2
         
     }
     
@@ -173,9 +173,7 @@ class ViewController: UIViewController {
         
         
         //load the font and color the text boxes
-        timeDisplay?.font = font
         metricTimeDisplay?.font = font
-        timeDisplay?.textColor = color
         metricTimeDisplay?.textColor = color
         
         
@@ -266,6 +264,7 @@ class ViewController: UIViewController {
         clockView.layer.addSublayer(centerPiece)
         
         //add gesture recognizer view to view
+        view.addGestureRecognizer(longPressGestureRecognizer)
         /*view.addSubview(longPressGestureRecognizerView)
         longPressGestureRecognizerView.translatesAutoresizingMaskIntoConstraints = false
         longPressGestureRecognizerView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0.0).isActive = true

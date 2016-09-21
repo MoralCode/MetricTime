@@ -26,13 +26,6 @@
                                 <color key="textColor" red="0.0" green="1" blue="0.14984990070000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ndb-Ws-vvu">
-                                <frame key="frameInset" minX="40" minY="410" width="520" height="75"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <color key="textColor" red="0.0" green="1" blue="0.14984990070000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -41,15 +34,9 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="DCN-vF-qMD" secondAttribute="bottom" constant="20" id="NuF-kC-8KV"/>
                             <constraint firstItem="DCN-vF-qMD" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="u3L-Cw-ZCN"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="ndb-Ws-vvu"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="metricTimeDisplay" destination="DCN-vF-qMD" id="bAz-Hn-LQP"/>
-                        <outlet property="timeDisplay" destination="ndb-Ws-vvu" id="fpI-8b-za3"/>
                         <segue destination="S3a-F5-HS0" kind="show" identifier="moveToConversionView" id="5bK-Ui-As5"/>
                     </connections>
                 </viewController>
