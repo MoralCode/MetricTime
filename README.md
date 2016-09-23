@@ -5,7 +5,22 @@ An app to display Metric Time for taking trips to countries that use the metric 
 Once downloaded to your Phone, you may view the current time in both analog metric and digital metric right on the main screen. From there, you can long-press anywhere on screen to access the handy convertion feature so you can convert any time to or from metric.
 
 ## Converting Times
-If you would like just the raw time-convertion functionality of this app to bulk-convert any input time to "Metric", please see [this gist](https://gist.github.com/DeveloperACE/edd2c3b68f240022d4a799c1c3f99645). there is also a built-in Metric-time-converter that is opened by long-pressing anywhere on the initial opening screen.
+Here is a short table of approximate conversion values for reference. There is also a built-in time-convertion feature that can be opened by long-pressing anywhere on the main metric time screen.
+
+Normal Time | Metric Time
+------------ | -------------
+30 seconds | ~34 metric seconds
+1 minute | ~69 metric seconds
+5 minutes | ~3 min 47 sec
+10 minutes | ~6 min 34 sec
+30 minutes | ~20 min 83 sec
+1 hour | ~41 min 66 sec
+6 hours (1/4 day) | 2 hours 50 min
+12 hours (1/2 day) | 5 hours
+18 hours (3/4 day) | 7 hours 50 min
+24 hours (1 day) | 10 hours
+
+If you would like just the raw time-convertion functionality of this app to bulk-convert any input time to "Metric", please see [this gist](https://gist.github.com/DeveloperACE/edd2c3b68f240022d4a799c1c3f99645). 
 
 
 ###A note on images
