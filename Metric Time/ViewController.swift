@@ -133,10 +133,11 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         
         //remove the gesture recogniser so it doesnt get called while the Convertion view is segue-ing in...
         view.removeGestureRecognizer(gesture)
-       // clockView.removeGestureRecognizer(gesture)
-       // metricTimeDisplay?.removeGestureRecognizer(gesture)
+                
+        let conversionView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "conversionView")
         
-        self.performSegue(withIdentifier: "moveToConversionView", sender: nil)
+        // and then present it modally
+        show(conversionView, sender: nil)
         
     }
     
