@@ -1,9 +1,12 @@
 # MetricTime
-An prank app that displays "Metric Time" so you can prank your friends on cross-country road trips or other international vacations.
+An app that displays "Metric Time", so you can pull pranks on your friends and eliminate all the complex math when solving problems that involve time.
 Based on @2012rcampion's answer to this question: http://worldbuilding.stackexchange.com/questions/35808/how-to-make-this-base-10-metric-time-concept-work
 
+## What ***is*** MetricTime?
+MetricTime is a base-10 timekeeping system has both serious and prank applications. It is designed to be mostly base 10 for easy math and provides a great alternative to regular timekeeping and having to manage all those timezones! In MetricTime, there are 10 hours in a day, 100 minutes in an hour and 100 seconds in a minute to make your life easier!
+
 ## How To Use
-Once downloaded to your Phone, you may view the current time in both analog metric and digital metric right on the main screen. From there, you can long-press anywhere on screen to access the handy convertion feature so you can convert any time to or from metric.
+Once downloaded to your phone, you may view the current metric time in both analog and digital right on the main screen. From there, you can long-press anywhere on screen to access the handy convertion feature so you can convert any time to or from metric.
 
 ## Converting Times
 Here is a short table of approximate conversion values for reference. There is also a built-in time-convertion feature that can be opened by long-pressing anywhere on the main metric time screen.
@@ -22,6 +25,9 @@ Normal Time | Metric Time
 24 hours (1 day) | 10 hours
 
 If you would like just the raw time-convertion functionality of this app to bulk-convert any input time to "Metric", please see [this gist](https://gist.github.com/DeveloperACE/edd2c3b68f240022d4a799c1c3f99645). 
+
+
+
 
 
 ###A note on images
