@@ -1,5 +1,6 @@
 # MetricTime
-An app to display Metric Time for taking trips to countries that use the metric system. Based on @2012rcampion's answer to this question: http://worldbuilding.stackexchange.com/questions/35808/how-to-make-this-base-10-metric-time-concept-work
+An prank app that displays "Metric Time" so you can prank your friends on cross-country road trips or other international vacations.
+Based on @2012rcampion's answer to this question: http://worldbuilding.stackexchange.com/questions/35808/how-to-make-this-base-10-metric-time-concept-work
 
 ## How To Use
 Once downloaded to your Phone, you may view the current time in both analog metric and digital metric right on the main screen. From there, you can long-press anywhere on screen to access the handy convertion feature so you can convert any time to or from metric.
