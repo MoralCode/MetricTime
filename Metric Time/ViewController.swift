@@ -128,17 +128,17 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     
     
     
-    func handleGesture(){
+    func handleGesture(sender: UILongPressGestureRecognizer){
         
-        
-        //remove the gesture recogniser so it doesnt get called while the Convertion view is segue-ing in...
-        view.removeGestureRecognizer(gesture)
+        if sender.state == UIGestureRecognizerState.began {
+            //remove the gesture recogniser so it doesnt get called while the Convertion view is segue-ing in...
+            view.removeGestureRecognizer(gesture)
                 
-        let conversionView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "conversionView")
-        
-        // and then present it modally
-        show(conversionView, sender: nil)
-        
+            let conversionView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "conversionView")
+            
+            // and then present it modally
+            show(conversionView, sender: nil)
+        }
     }
     
 //    required init(coder aDecoder: NSCoder) {
