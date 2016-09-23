@@ -191,11 +191,17 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         self.view.addSubview(clockView)
         clockView.translatesAutoresizingMaskIntoConstraints = false
         
-        clockView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: 0.0).isActive = false
-        clockView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 15.0).isActive = true
-        clockView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0.0).isActive = true
-        clockView.widthAnchor.constraint(equalToConstant: 230.0).isActive = true
-        clockView.heightAnchor.constraint(equalToConstant: 230.0).isActive = true
+        if #available(iOS 9.0, *) {
+            clockView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: 0.0).isActive = false
+            
+            clockView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 15.0).isActive = true
+            clockView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0.0).isActive = true
+            clockView.widthAnchor.constraint(equalToConstant: 230.0).isActive = true
+            clockView.heightAnchor.constraint(equalToConstant: 230.0).isActive = true
+        } else {
+            //TODO: Fallback on earlier versions
+        }
+        
         
         
         
