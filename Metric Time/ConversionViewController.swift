@@ -14,9 +14,11 @@ class ConversionViewController: UIViewController {
     @IBOutlet weak var inputTimePicker: UISegmentedControl!
     @IBOutlet weak var outputLabel: UILabel!
     @IBOutlet weak var inputLabel: UILabel!
+    @IBOutlet weak var IMTSFlag: UILabel!
+
     
     let color = UIColor.green;
-    let font = UIFont(name: "Calculator", size: 52.0);
+    let font = UIFont(name: "Calculator", size: 70.0);
     
     var inputTime: [Int] = [0, 0, 0];
     var outputTime: [Int] = [0, 0, 0];
@@ -145,6 +147,8 @@ class ConversionViewController: UIViewController {
             minutesMax = 60
             secondsMax = 60
             
+            IMTSFlag.isHidden = false
+            
             
         } else if sender.selectedSegmentIndex == 1 { //convert to normal
             
@@ -157,6 +161,9 @@ class ConversionViewController: UIViewController {
             hoursMax = 10
             minutesMax = 100
             secondsMax = 100
+            
+            IMTSFlag.isHidden = true
+
             
         }
         
