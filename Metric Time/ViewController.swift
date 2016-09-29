@@ -24,7 +24,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     var lastCall:Date?
     
     let color = UIColor.green;
-    let font = UIFont(name: "Calculator", size: 70.0);
+    let font = UIFont(name: "Calculator", size: 58.0);
     
     
     //  the actual time that normal humans use (in millitary time) (actualTime[0] = hour, actualTime[1] = minute, actualTime[2] = second)
