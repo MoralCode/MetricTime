@@ -87,37 +87,79 @@
                                 <color key="tintColor" red="0.0" green="1" blue="0.14984990070000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bX3-OI-vii">
-                                <state key="normal" image="Minus Filled-100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="33" id="4Wd-Cr-Kel"/>
+                                    <constraint firstAttribute="height" constant="33" id="x74-Fr-jz4"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="45"/>
+                                <state key="normal" title="-">
+                                    <color key="titleColor" red="0.0" green="1" blue="0.14901960780000001" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="minusHours:" destination="S3a-F5-HS0" eventType="touchUpInside" id="c21-gp-JES"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uET-Ov-7L2">
-                                <state key="normal" image="Plus Filled-100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="33" id="Qbz-Ko-29J"/>
+                                    <constraint firstAttribute="height" constant="33" id="r7o-0L-gj0"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="45"/>
+                                <state key="normal" title="+">
+                                    <color key="titleColor" red="0.0" green="1" blue="0.14901960780000001" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="plusHours:" destination="S3a-F5-HS0" eventType="touchUpInside" id="4hl-9G-PPq"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69e-Um-xI2">
-                                <state key="normal" image="Minus Filled-100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="33" id="WYI-ZQ-vG8"/>
+                                    <constraint firstAttribute="height" constant="33" id="pw6-ri-pcG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="45"/>
+                                <state key="normal" title="-">
+                                    <color key="titleColor" red="0.0" green="1" blue="0.14901960780000001" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="minusMinutes:" destination="S3a-F5-HS0" eventType="touchUpInside" id="dqN-4l-k3w"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kqY-Pq-RNM">
-                                <state key="normal" image="Plus Filled-100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="33" id="CiD-gb-NUp"/>
+                                    <constraint firstAttribute="height" constant="33" id="wkZ-6A-9vo"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="45"/>
+                                <state key="normal" title="+">
+                                    <color key="titleColor" red="0.0" green="1" blue="0.14901960780000001" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="plusMinutes:" destination="S3a-F5-HS0" eventType="touchUpInside" id="5IT-qb-ciU"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jTn-35-XBN">
-                                <state key="normal" image="Minus Filled-100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="33" id="0NU-DV-zE0"/>
+                                    <constraint firstAttribute="height" constant="33" id="xxX-MY-HvP"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="45"/>
+                                <state key="normal" title="-">
+                                    <color key="titleColor" red="0.0" green="1" blue="0.14901960780000001" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="minusSeconds:" destination="S3a-F5-HS0" eventType="touchUpInside" id="3Pq-vQ-hEH"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kh8-yK-Gvi">
-                                <state key="normal" image="Plus Filled-100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="33" id="5gm-Gy-RDm"/>
+                                    <constraint firstAttribute="height" constant="33" id="llN-n1-mvp"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="45"/>
+                                <state key="normal" title="+">
+                                    <color key="titleColor" red="0.0" green="1" blue="0.14901960780000001" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="plusSeconds:" destination="S3a-F5-HS0" eventType="touchUpInside" id="zeu-Dk-hDY"/>
                                 </connections>
@@ -228,7 +270,5 @@
     </scenes>
     <resources>
         <image name="Delete Filled-100" width="33" height="33"/>
-        <image name="Minus Filled-100" width="33" height="33"/>
-        <image name="Plus Filled-100" width="33" height="33"/>
     </resources>
 </document>
