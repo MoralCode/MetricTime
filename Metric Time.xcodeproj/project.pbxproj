@@ -82,13 +82,13 @@
 				3A88A4C41D94D05700DD2951 /* clock-face.png */,
 				3AD7E3D51C72961500502023 /* AppDelegate.swift */,
 				3AD7E3D71C72961500502023 /* ViewController.swift */,
+				3A88A4C61D9E23D600DD2951 /* MetricTime.swift */,
 				3A47BD631CCD5F9E0073D8E8 /* ConversionViewController.swift */,
 				3AD7E3D91C72961500502023 /* Main.storyboard */,
 				3AD7E3DC1C72961500502023 /* Assets.xcassets */,
 				3AD7E3DE1C72961500502023 /* LaunchScreen.storyboard */,
 				3A50755B1C86525600CC6860 /* Calculator.ttf */,
 				3AD7E3E11C72961500502023 /* Info.plist */,
-				3A88A4C61D9E23D600DD2951 /* MetricTime.swift */,
 			);
 			path = "Metric Time";
 			sourceTree = "<group>";
