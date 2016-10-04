@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		3A47BD641CCD5F9E0073D8E8 /* ConversionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A47BD631CCD5F9E0073D8E8 /* ConversionViewController.swift */; };
 		3A50755C1C86525600CC6860 /* Calculator.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A50755B1C86525600CC6860 /* Calculator.ttf */; };
-		3A5AD0351CB9B3CF00F1EB27 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A5AD0341CB9B3CF00F1EB27 /* CoreTelephony.framework */; };
-		3A5AD0371CB9B3F400F1EB27 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A5AD0361CB9B3F400F1EB27 /* SystemConfiguration.framework */; };
 		3A88A4C51D94D05700DD2951 /* clock-face.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A88A4C41D94D05700DD2951 /* clock-face.png */; };
 		3A88A4C71D9E23D600DD2951 /* MetricTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A88A4C61D9E23D600DD2951 /* MetricTime.swift */; };
 		3AD7E3D61C72961500502023 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD7E3D51C72961500502023 /* AppDelegate.swift */; };
@@ -18,13 +16,12 @@
 		3AD7E3DB1C72961500502023 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AD7E3D91C72961500502023 /* Main.storyboard */; };
 		3AD7E3DD1C72961500502023 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3AD7E3DC1C72961500502023 /* Assets.xcassets */; };
 		3AD7E3E01C72961500502023 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AD7E3DE1C72961500502023 /* LaunchScreen.storyboard */; };
+		3AEAE5DA1DA3170E00A09E0A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEAE5D91DA3170E00A09E0A /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3A47BD631CCD5F9E0073D8E8 /* ConversionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversionViewController.swift; sourceTree = "<group>"; };
 		3A50755B1C86525600CC6860 /* Calculator.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Calculator.ttf; sourceTree = "<group>"; };
-		3A5AD0341CB9B3CF00F1EB27 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
-		3A5AD0361CB9B3F400F1EB27 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3A88A4C41D94D05700DD2951 /* clock-face.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clock-face.png"; sourceTree = "<group>"; };
 		3A88A4C61D9E23D600DD2951 /* MetricTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetricTime.swift; sourceTree = "<group>"; };
 		3AD7E3D21C72961500502023 /* Metric Time.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Metric Time.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -34,6 +31,7 @@
 		3AD7E3DC1C72961500502023 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3AD7E3DF1C72961500502023 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3AD7E3E11C72961500502023 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3AEAE5D91DA3170E00A09E0A /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,29 +39,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A5AD0371CB9B3F400F1EB27 /* SystemConfiguration.framework in Frameworks */,
-				3A5AD0351CB9B3CF00F1EB27 /* CoreTelephony.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3A5AD0311CB9B22100F1EB27 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				3A5AD0341CB9B3CF00F1EB27 /* CoreTelephony.framework */,
-				3A5AD0361CB9B3F400F1EB27 /* SystemConfiguration.framework */,
-			);
-			name = Frameworks;
-			path = "Metric Time";
-			sourceTree = "<group>";
-		};
 		3AD7E3C91C72961500502023 = {
 			isa = PBXGroup;
 			children = (
 				3AD7E3D41C72961500502023 /* Metric Time */,
-				3A5AD0311CB9B22100F1EB27 /* Frameworks */,
 				3AD7E3D31C72961500502023 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -82,6 +67,7 @@
 				3A88A4C41D94D05700DD2951 /* clock-face.png */,
 				3AD7E3D51C72961500502023 /* AppDelegate.swift */,
 				3AD7E3D71C72961500502023 /* ViewController.swift */,
+				3AEAE5D91DA3170E00A09E0A /* MainViewController.swift */,
 				3A88A4C61D9E23D600DD2951 /* MetricTime.swift */,
 				3A47BD631CCD5F9E0073D8E8 /* ConversionViewController.swift */,
 				3AD7E3D91C72961500502023 /* Main.storyboard */,
@@ -172,6 +158,7 @@
 				3A47BD641CCD5F9E0073D8E8 /* ConversionViewController.swift in Sources */,
 				3A88A4C71D9E23D600DD2951 /* MetricTime.swift in Sources */,
 				3AD7E3D61C72961500502023 /* AppDelegate.swift in Sources */,
+				3AEAE5DA1DA3170E00A09E0A /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

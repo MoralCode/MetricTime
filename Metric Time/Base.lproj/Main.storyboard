@@ -12,6 +12,62 @@
         </array>
     </customFonts>
     <scenes>
+        <!--Main View Controller-->
+        <scene sceneID="nxR-kO-mDF">
+            <objects>
+                <viewController storyboardIdentifier="testView" id="9aD-f1-5WI" customClass="MainViewController" customModule="Metric_Time" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="FjL-5F-If0"/>
+                        <viewControllerLayoutGuide type="bottom" id="uhj-v2-Ucq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="r90-Gl-jMS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00 : 00 : 00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1e5-pe-KH6">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="tJi-60-CJ8"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Calculator" family="Calculator" pointSize="58"/>
+                                <color key="textColor" red="0.0" green="1" blue="0.14984990070000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0v7-M3-cGd">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="0Su-Q6-PMH">
+                                        <variation key="widthClass=compact" constant="50"/>
+                                    </constraint>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="4Xe-YY-1WU"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="C3V-rI-GZv"/>
+                                    <constraint firstAttribute="height" constant="50" id="pbB-D7-dz5"/>
+                                </constraints>
+                                <state key="normal" image="Delete Filled-100">
+                                    <color key="titleColor" red="0.0" green="1" blue="0.14984990070000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="backPressed:" destination="S3a-F5-HS0" eventType="touchUpInside" id="Luz-NA-lVj"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" id="Kku-lV-xhw"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="0v7-M3-cGd" firstAttribute="top" secondItem="FjL-5F-If0" secondAttribute="bottom" id="5sS-fN-Bhc"/>
+                            <constraint firstItem="0v7-M3-cGd" firstAttribute="leading" secondItem="r90-Gl-jMS" secondAttribute="leadingMargin" id="BIJ-Bc-60C"/>
+                            <constraint firstItem="1e5-pe-KH6" firstAttribute="centerX" secondItem="r90-Gl-jMS" secondAttribute="centerX" id="EaG-RU-3xz"/>
+                            <constraint firstItem="1e5-pe-KH6" firstAttribute="leading" secondItem="r90-Gl-jMS" secondAttribute="leadingMargin" constant="20" id="NSI-Uq-pPk"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="1e5-pe-KH6" secondAttribute="trailing" constant="20" id="QyB-le-Jul"/>
+                            <constraint firstItem="uhj-v2-Ucq" firstAttribute="top" secondItem="1e5-pe-KH6" secondAttribute="bottom" constant="20" id="kwM-bk-sTC"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="metricTimeDisplay" destination="1e5-pe-KH6" id="fvg-hz-sHV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ccW-ie-aZB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="446" y="-301"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -33,7 +89,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <accessibility key="accessibilityConfiguration">
                             <accessibilityTraits key="traits" notEnabled="YES"/>
                             <bool key="isElement" value="NO"/>
@@ -51,7 +107,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="448" y="428"/>
+            <point key="canvasLocation" x="444" y="521"/>
         </scene>
         <!--Conversion View Controller-->
         <scene sceneID="Poi-IE-Kr1">
@@ -218,7 +274,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="UCJ-ch-FDb" firstAttribute="centerY" secondItem="zVk-di-qZv" secondAttribute="centerY" id="2vt-q9-vkZ"/>
                             <constraint firstItem="VFi-Jz-qcc" firstAttribute="leading" secondItem="eIS-2Q-HbX" secondAttribute="trailing" constant="8" id="38R-wW-DAJ"/>
@@ -265,7 +321,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BPZ-38-HsW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1215" y="426.76056338028167"/>
+            <point key="canvasLocation" x="1116" y="521"/>
         </scene>
     </scenes>
     <resources>

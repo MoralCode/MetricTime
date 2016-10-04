@@ -133,11 +133,11 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         if sender.state == UIGestureRecognizerState.began {
             //remove the gesture recogniser so it doesnt get called while the Convertion view is segue-ing in...
             view.removeGestureRecognizer(gesture)
-                
-            let conversionView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "conversionView")
+            
+            let newView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "testView")//conversionView
             
             // and then present it modally
-            show(conversionView, sender: nil)
+            show(newView, sender: nil)
         }
     }
     
@@ -163,8 +163,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidAppear(_ animated: Bool) {
         //re-add the gesture recognizer so the convertion screen can be re-accessed...
         view.addGestureRecognizer(gesture)
-       // clockView.addGestureRecognizer(gesture)
-      //  metricTimeDisplay?.addGestureRecognizer(gesture)
+
     }
     
     override func viewDidLoad() {
@@ -209,11 +208,11 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         
         
         
-        hourLayer.name = "hourHand"
-        minuteLayer.name = "minuteHand"
-        secondLayer.name = "secondHand"
-        centerPiece.name = "centerPiece"
-        
+//        hourLayer.name = "hourHand"
+//        minuteLayer.name = "minuteHand"
+//        secondLayer.name = "secondHand"
+//        centerPiece.name = "centerPiece"
+//        
         hourLayer.frame = clockView.frame
         minuteLayer.frame = clockView.frame
         secondLayer.frame = clockView.frame
@@ -227,6 +226,8 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         minutePath.move(to: CGPoint(x: clockView.frame.midX, y: clockView.frame.midY))
         secondPath.move(to: CGPoint(x: clockView.frame.midX, y: clockView.frame.midY))
         
+        
+        //TODO: redesign watch hands.
         path.addLine(to: CGPoint(x: clockView.frame.midX, y: clockView.frame.midY-50))
         minutePath.addLine(to: CGPoint(x: clockView.frame.midX, y: clockView.frame.midY-62.5))
         secondPath.addLine(to: CGPoint(x: clockView.frame.midX, y: clockView.frame.midY-75))
@@ -238,6 +239,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         hourLayer.lineWidth = 4
         minuteLayer.lineWidth = 3
         secondLayer.lineWidth = 1
+   
         
         hourLayer.lineCap = kCALineCapRound
         minuteLayer.lineCap = kCALineCapRound
