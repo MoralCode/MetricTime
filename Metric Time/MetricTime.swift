@@ -37,7 +37,7 @@ class MetricTime {
     
 
     
-   public func drawAnalogClock() -> UIView {
+    func drawAnalogClock() -> UIView {
         
         var clockView = View(frame: CGRect(x: 0, y: 0, width: 230, height: 230))
         
@@ -119,12 +119,31 @@ class MetricTime {
         
     }
     
-    
-    func setHandsAngle(hour:CGFloat, minute:CGFloat, second:CGFloat) {
+    func updateHandsPosition(metricTime: (hour: Int, minute: Int, second: Int)) {
         
-         hourLayer.transform = CATransform3DMakeRotation(hour, 0, 0, 1)
-         minuteLayer.transform = CATransform3DMakeRotation(minute, 0, 0, 1)
-         secondLayer.transform = CATransform3DMakeRotation(second, 0, 0, 1)
+        setHandsAngle(handDegrees: getHandsPosition(metricTime: (hour: metricTime.hour, minute: metricTime.minute, second: metricTime.second)))
+    }
+    
+    func getHandsPosition(metricTime: (hour: Int, minute: Int, second: Int)) -> (hAngle:CGFloat, mAngle:CGFloat, sAngle:CGFloat) {
+        
+        var secondsAngle = (Double(metricTime.second)/100)
+        var minutesAngle = (Double(metricTime.minute)/100 + Double(metricTime.second)/10000.0)
+        var hoursAngle = (Double(metricTime.hour)/10) + minutesAngle/10 //this line must come after minutesAngle Calculation... (feels hacky to me)
+        
+        hoursAngle = hoursAngle*360
+        minutesAngle = minutesAngle*360
+        secondsAngle = secondsAngle*360
+        
+        
+        return (hAngle: degree2radian(CGFloat(hoursAngle)),mAngle: degree2radian(CGFloat(minutesAngle)),sAngle: degree2radian(CGFloat(secondsAngle)))
+    }
+
+    
+    func setHandsAngle(handDegrees: (hAngle:CGFloat, mAngle:CGFloat, sAngle:CGFloat)) {
+        
+         hourLayer.transform = CATransform3DMakeRotation(handDegrees.hAngle, 0, 0, 1)
+         minuteLayer.transform = CATransform3DMakeRotation(handDegrees.mAngle, 0, 0, 1)
+         secondLayer.transform = CATransform3DMakeRotation(handDegrees.sAngle, 0, 0, 1)
         
         
     }
@@ -182,23 +201,10 @@ class MetricTime {
     
     
     
-    /*
+    
  
-     func getHandsPosition( _ h:Int, m:Int, s:Double)->(h:CGFloat,m:CGFloat,s:CGFloat) {
-     
-     
-     var minutesAngle = (Double(m)/100 + Double(s)/10000.0)
-     var hoursAngle = (Double(h)/10) + minutesAngle/10 //this line must come after minutesAngle Calculation...
-     var secondsAngle = (Double(s)/100)
-     
-     hoursAngle = hoursAngle*360
-     minutesAngle = minutesAngle*360
-     secondsAngle = secondsAngle*360
-     
-     
-     return (h: degree2radian(CGFloat(hoursAngle)),m: degree2radian(CGFloat(minutesAngle)),s: degree2radian(CGFloat(secondsAngle)))
-     }
-     
+    
+    /*
      func circleCircumferencePoints(_ sides:Int,x:CGFloat,y:CGFloat,radius:CGFloat,adjustment:CGFloat=0)->[CGPoint] {
      let angle = degree2radian(360/CGFloat(sides))
      let cx = x // x origin

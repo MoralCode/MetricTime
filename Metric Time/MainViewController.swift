@@ -46,7 +46,8 @@ class MainViewController: UIViewController, UIGestureRecognizerDelegate {
         
         
         //update clock
-      //  let positions = getHandsPosition(metricTime[0], m: metricTime[1], s: self.convertedSeconds)
+        metricTime.updateHandsPosition(metricTime: (hour: currentMetricTime.hour, minute: currentMetricTime.minute, second: currentMetricTime.second))
+
   //      rotateHands(clockView, rotation: (positions.h, positions.m, positions.s) )
         
         metricTimeDisplay?.text = String(format: "%01d : %02d : %02d", currentMetricTime.hour, currentMetricTime.minute, currentMetricTime.second)
