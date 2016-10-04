@@ -36,11 +36,17 @@ class MainViewController: UIViewController, UIGestureRecognizerDelegate {
     let metricTime:MetricTime = MetricTime()
    
     
+    var lastCall:Date?
+
     
  
     func updateTime() {
         
         components = (Calendar.current as NSCalendar).components([ .hour, .minute, .second, .nanosecond], from: Date())
+        
+            
+        
+        
         
         let currentMetricTime = metricTime.getCurrentMetricTime(currentTime: components)
         

@@ -24,6 +24,7 @@ class MetricTime {
     let centerPiece = CAShapeLayer()
     
     var lastCall:Date?
+    let clockShouldTick = true
     
     //  the actual time that normal humans use (in millitary time) (actualTime[0] = hour, actualTime[1] = minute, actualTime[2] = second)
     var actualTime: [Int] = [0, 0, 0];
@@ -151,7 +152,25 @@ class MetricTime {
     
     
     
-    func getCurrentMetricTime(currentTime:DateComponents) -> (hour: Int, minute: Int, second: Int) {
+    func getCurrentMetricTime(currentTime:DateComponents, shouldTick:Bool = false) -> (hour: Int, minute: Int, second: Int) {
+        
+        
+        if !clockShouldTick {
+            
+            self.seconds = Double(currentTime.second!) + Double(currentTime.nanosecond!)/1000000000.0
+            
+            
+            if let lastTimeCalled = self.lastCall //unwrap
+            {
+                //actualTime[2] += Int(0.0 * lastTimeCalled.timeIntervalSinceNow * 60.0 * -1.0)
+                self.seconds += 0.0 * lastTimeCalled.timeIntervalSinceNow * 60.0 * -1.0
+            }
+                        
+            self.lastCall = Date()
+            
+        }
+
+        
         
         //calculate metric "hours", "minutes", and "seconds"
         //var millisecondsSinceToday = Double(actualTime[0] * 3600000 /*milliseconds per hour*/) + Double(actualTime[1] * 60000 /* milliseconds per minute*/) + Double(self.seconds * 1000.0 /*milliseconds per second*/)
