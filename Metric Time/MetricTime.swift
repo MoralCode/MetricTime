@@ -8,7 +8,7 @@
 
 
 
-/* This file contains the
+/* This file contains the core functionality of metrictime, drawing the analog clock, converting times, moving the hands(?) .etc
  
  
  */
@@ -23,12 +23,23 @@ class MetricTime {
     let secondLayer = CAShapeLayer()
     let centerPiece = CAShapeLayer()
     
-
+    var lastCall:Date?
+    
+    //  the actual time that normal humans use (in millitary time) (actualTime[0] = hour, actualTime[1] = minute, actualTime[2] = second)
+    var actualTime: [Int] = [0, 0, 0];
+    
+    
+    //the converted "metric time"
+    var metricTime = (hour: 0, minute: 0, second: 0) //used in getCurrentMetricTime and smth else...
+    var seconds = 0.0
+    var convertedSeconds = 0.0
 
     
-   public func drawAnalogClock(width:CGFloat = 230, height:CGFloat = 230) -> UIView {
+
+    
+   public func drawAnalogClock() -> UIView {
         
-        var clockView = View(frame: CGRect(x: 0, y: 0, width: width, height: height))
+        var clockView = View(frame: CGRect(x: 0, y: 0, width: 230, height: 230))
         
         let hourPath = CGMutablePath()
         let minutePath = CGMutablePath()
@@ -121,63 +132,55 @@ class MetricTime {
     
     
     
-    func getCurrentMetricTime() {
+    func getCurrentMetricTime(currentTime:DateComponents) -> (hour: Int, minute: Int, second: Int) {
         
-        /*
-         //calculate metric "hours", "minutes", and "seconds"
-         millisecondsSinceToday = 0.0
-         millisecondsSinceToday = Double(actualTime[0] * 3600000 /*milliseconds per hour*/) + Double(actualTime[1] * 60000 /* milliseconds per minute*/) + Double(self.seconds * 1000.0 /*milliseconds per second*/)
+        //calculate metric "hours", "minutes", and "seconds"
+        //var millisecondsSinceToday = Double(actualTime[0] * 3600000 /*milliseconds per hour*/) + Double(actualTime[1] * 60000 /* milliseconds per minute*/) + Double(self.seconds * 1000.0 /*milliseconds per second*/)
+        
+        var millisecondsSinceToday = Double(currentTime.hour! * 3600000 /*milliseconds per hour*/) + Double(currentTime.minute! * 60000 /* milliseconds per minute*/) + Double((Double(currentTime.second!) + Double(currentTime.nanosecond!)/1000000000.0) * 1000.0 /*milliseconds per second*/)
+        
+        
+        metricTime.hour = Int(millisecondsSinceToday / 8640000)
          
+        millisecondsSinceToday -= Double(metricTime.hour*8640000)
          
-         metricTime[0] = Int(millisecondsSinceToday / 8640000)
+        metricTime.minute = Int(millisecondsSinceToday / 86400)
+        
+        millisecondsSinceToday -= Double(metricTime.minute*86400)
          
-         millisecondsSinceToday -= Double(metricTime[0]*8640000)
-         
-         metricTime[1] = Int(millisecondsSinceToday / 86400)
-         
-         millisecondsSinceToday -= Double(metricTime[1]*86400)
-         
-         metricTime[2] = Int(millisecondsSinceToday / 864)
-         self.convertedSeconds = Double(millisecondsSinceToday / 864)
+        metricTime.second = Int(millisecondsSinceToday / 864)
+        self.convertedSeconds = Double(millisecondsSinceToday / 864)
+        
+        
+        return metricTime
          
  
- */
+ 
     }
     
     
-    
-    func convertToMetricTime(_ time:[Int]) -> [Int] {
+    func convertTime(inputTime: (hour: Int, minute: Int, second: Int), toMetric:Bool = true) -> (hour: Int, minute: Int, second: Int) {
         
-        var millisecondsSinceToday = (time[0] * 3600000 /*milliseconds per hour*/) + (time[1] * 60000 /* milliseconds per minute*/) + (time[2] * 1000 /*milliseconds per second*/)
+        var millisecondsSinceToday = 0
         
-        var convertedTime: [Int] = [0, 0, 0];
+        if toMetric {
+            millisecondsSinceToday = (inputTime.hour * 3600000 /*milliseconds per hour*/) + (inputTime.minute * 60000 /* milliseconds per minute*/) + (inputTime.second * 1000 /*milliseconds per second*/)
+        } else {
+            millisecondsSinceToday = (inputTime.hour * 8640000 /*metric milliseconds per hour*/) + (inputTime.minute * 86400 /* metric milliseconds per minute*/) + (inputTime.second * 864 /*milliseconds per second*/)
+        }
+        var convertedTime = (hour: 0, minute: 0, second: 0)
         
-        convertedTime[0] = Int(millisecondsSinceToday / 8640000)
-        millisecondsSinceToday -= (convertedTime[0]*8640000)
-        convertedTime[1] = Int(millisecondsSinceToday / 86400)
-        millisecondsSinceToday -= (convertedTime[1]*86400)
-        convertedTime[2] = Int(millisecondsSinceToday / 864)
-        
+        convertedTime.hour = Int(millisecondsSinceToday / 8640000)
+        millisecondsSinceToday -= (convertedTime.hour*8640000)
+        convertedTime.minute = Int(millisecondsSinceToday / 86400)
+        millisecondsSinceToday -= (convertedTime.minute*86400)
+        convertedTime.second = Int(millisecondsSinceToday / 864)
+        //screw milliseconds
         
         return convertedTime
     }
     
     
-    func convertToNormalTime(_ time:[Int]) -> [Int] {
-        
-        var millisecondsSinceToday = (time[0] * 8640000 /*metric milliseconds per hour*/) + (time[1] * 86400 /* metric milliseconds per minute*/) + (time[2] * 864 /*milliseconds per second*/)
-        
-        var convertedTime: [Int] = [0, 0, 0];
-        
-        convertedTime[0] = Int(millisecondsSinceToday / 3600000)
-        millisecondsSinceToday -= (convertedTime[0]*3600000)
-        convertedTime[1] = Int(millisecondsSinceToday / 60000)
-        millisecondsSinceToday -= (convertedTime[1]*60000)
-        convertedTime[2] = Int(millisecondsSinceToday / 1000)
-        
-        
-        return convertedTime
-    }
     
     /*
  

@@ -23,16 +23,34 @@ import UIKit
 
 class MainViewController: UIViewController, UIGestureRecognizerDelegate {
 
-    fileprivate var displayLink:CADisplayLink?
     
-    var gesture: UILongPressGestureRecognizer = UILongPressGestureRecognizer()
     @IBOutlet var metricTimeDisplay:UILabel?
 
     
+    fileprivate var displayLink:CADisplayLink?
+    
+    var gesture: UILongPressGestureRecognizer = UILongPressGestureRecognizer()
+    
+    var components = (Calendar.current as NSCalendar).components( [.hour, .minute, .second], from: Date())
+    
+    let metricTime:MetricTime = MetricTime()
+   
     
     
  
- 
+    func updateTime() {
+        
+        components = (Calendar.current as NSCalendar).components([ .hour, .minute, .second, .nanosecond], from: Date())
+        
+        let currentMetricTime = metricTime.getCurrentMetricTime(currentTime: components)
+        
+        
+        //update clock
+      //  let positions = getHandsPosition(metricTime[0], m: metricTime[1], s: self.convertedSeconds)
+  //      rotateHands(clockView, rotation: (positions.h, positions.m, positions.s) )
+        
+        metricTimeDisplay?.text = String(format: "%01d : %02d : %02d", currentMetricTime.hour, currentMetricTime.minute, currentMetricTime.second)
+    }
  
  
     func handleGesture(sender: UILongPressGestureRecognizer){
@@ -56,7 +74,7 @@ class MainViewController: UIViewController, UIGestureRecognizerDelegate {
         
         super.viewDidLoad()
         
-        let clock:UIView = MetricTime().drawAnalogClock(width: 230, height: 230)
+        let clock:UIView = metricTime.drawAnalogClock()
        
         //is this needed?
         view.isUserInteractionEnabled = true
@@ -79,8 +97,8 @@ class MainViewController: UIViewController, UIGestureRecognizerDelegate {
         
         //It is better to use an CADisplayLink for timing related to animation. This is why you have an issue with dropping ticks/frames.
         //NSTimer executes when it's convenient for the run loop could be before or after the display has been rendered. CADisplayLink will always be executed prior to pixels being pushed to the screen. For more on this watch the video here: https://developer.apple.com/videos/play/wwdc2014/236/
-//        self.displayLink = CADisplayLink(target: self, selector: #selector(self.updateTime))
-//        self.displayLink?.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
+        self.displayLink = CADisplayLink(target: self, selector: #selector(self.updateTime))
+        self.displayLink?.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
         
     }
     
