@@ -24,7 +24,7 @@ class MetricTime {
     let centerPiece = CAShapeLayer()
     
     var lastCall:Date?
-    let clockShouldTick = true
+    let clockShouldTick = false
     
     //  the actual time that normal humans use (in millitary time) (actualTime[0] = hour, actualTime[1] = minute, actualTime[2] = second)
     var actualTime: [Int] = [0, 0, 0];
@@ -36,7 +36,15 @@ class MetricTime {
     var convertedSeconds = 0.0
 
     
+    
+    /*
+        STYLING
+    */
+    let clockRadius = 0;
+    
 
+    
+    
     
     func drawAnalogClock() -> UIView {
         
@@ -154,28 +162,31 @@ class MetricTime {
     
     func getCurrentMetricTime(currentTime:DateComponents, shouldTick:Bool = false) -> (hour: Int, minute: Int, second: Int) {
         
-        
+        //why wont this work with smoothing out the clock...
         if !clockShouldTick {
             
-            self.seconds = Double(currentTime.second!) + Double(currentTime.nanosecond!)/1000000000.0
+            seconds = Double(currentTime.second!) + Double(currentTime.nanosecond!)/1000000000.0
             
             
-            if let lastTimeCalled = self.lastCall //unwrap
+            if let lastTimeCalled = lastCall //unwrap
             {
                 //actualTime[2] += Int(0.0 * lastTimeCalled.timeIntervalSinceNow * 60.0 * -1.0)
-                self.seconds += 0.0 * lastTimeCalled.timeIntervalSinceNow * 60.0 * -1.0
+                seconds += 0.0 * lastTimeCalled.timeIntervalSinceNow * 60.0 * -1.0
             }
-                        
-            self.lastCall = Date()
             
+            lastCall = Date()
+            
+        } else {
+            
+            seconds = Double(currentTime.second!)
         }
 
         
         
         //calculate metric "hours", "minutes", and "seconds"
         //var millisecondsSinceToday = Double(actualTime[0] * 3600000 /*milliseconds per hour*/) + Double(actualTime[1] * 60000 /* milliseconds per minute*/) + Double(self.seconds * 1000.0 /*milliseconds per second*/)
-        
-        var millisecondsSinceToday = Double(currentTime.hour! * 3600000 /*milliseconds per hour*/) + Double(currentTime.minute! * 60000 /* milliseconds per minute*/) + Double((Double(currentTime.second!) + Double(currentTime.nanosecond!)/1000000000.0) * 1000.0 /*milliseconds per second*/)
+        var millisecondsSinceToday = Double(currentTime.hour! * 3600000 /*milliseconds per hour*/) + Double(currentTime.minute! * 60000 /* milliseconds per minute*/) + Double(seconds * 1000.0 /*milliseconds per second*/)
+
         
         
         metricTime.hour = Int(millisecondsSinceToday / 8640000)
@@ -187,7 +198,7 @@ class MetricTime {
         millisecondsSinceToday -= Double(metricTime.minute*86400)
          
         metricTime.second = Int(millisecondsSinceToday / 864)
-        self.convertedSeconds = Double(millisecondsSinceToday / 864)
+        convertedSeconds = Double(millisecondsSinceToday / 864) //?
         
         
         return metricTime
@@ -200,18 +211,22 @@ class MetricTime {
     func convertTime(inputTime: (hour: Int, minute: Int, second: Int), toMetric:Bool = true) -> (hour: Int, minute: Int, second: Int) {
         
         var millisecondsSinceToday = 0
+        var convertedTime = (hour: 0, minute: 0, second: 0)
+        
         
         if toMetric {
             millisecondsSinceToday = (inputTime.hour * 3600000 /*milliseconds per hour*/) + (inputTime.minute * 60000 /* milliseconds per minute*/) + (inputTime.second * 1000 /*milliseconds per second*/)
         } else {
             millisecondsSinceToday = (inputTime.hour * 8640000 /*metric milliseconds per hour*/) + (inputTime.minute * 86400 /* metric milliseconds per minute*/) + (inputTime.second * 864 /*milliseconds per second*/)
         }
-        var convertedTime = (hour: 0, minute: 0, second: 0)
+        
         
         convertedTime.hour = Int(millisecondsSinceToday / 8640000)
         millisecondsSinceToday -= (convertedTime.hour*8640000)
+        
         convertedTime.minute = Int(millisecondsSinceToday / 86400)
         millisecondsSinceToday -= (convertedTime.minute*86400)
+        
         convertedTime.second = Int(millisecondsSinceToday / 864)
         //screw milliseconds
         
@@ -221,117 +236,120 @@ class MetricTime {
     
     
     
- 
     
-    /*
-     func circleCircumferencePoints(_ sides:Int,x:CGFloat,y:CGFloat,radius:CGFloat,adjustment:CGFloat=0)->[CGPoint] {
-     let angle = degree2radian(360/CGFloat(sides))
-     let cx = x // x origin
-     let cy = y // y origin
-     let r  = radius // radius of circle
-     var i = sides
-     var points = [CGPoint]()
-     while points.count <= sides {
-     let xpo = cx - r * cos(angle * CGFloat(i)+degree2radian(adjustment))
-     let ypo = cy - r * sin(angle * CGFloat(i)+degree2radian(adjustment))
-     points.append(CGPoint(x: xpo, y: ypo))
-     i -= 1;
-     }
-     return points
-     }
-     
-     
-     
-     
+    
+    
+    
+    
+    func circleCircumferencePoints(_ sides:Int,x:CGFloat,y:CGFloat,radius:CGFloat,adjustment:CGFloat=0)->[CGPoint] {
+        let angle = degree2radian(360/CGFloat(sides))
+        let cx = x // x origin
+        let cy = y // y origin
+        let r  = radius // radius of circle
+        var i = sides
+        var points = [CGPoint]()
+        while points.count <= sides {
+            //complex maths... dont touch...
+            let xpo = cx - r * cos(angle * CGFloat(i)+degree2radian(adjustment))
+            let ypo = cy - r * sin(angle * CGFloat(i)+degree2radian(adjustment))
+            points.append(CGPoint(x: xpo, y: ypo))
+            i -= 1;
+        }
+        return points
+    }
+    
      
      func addMarkersandText(_ rect:CGRect, context:CGContext, x:CGFloat, y:CGFloat, radius:CGFloat, sides:Int, sides2:Int, tickTextcolor:UIColor) {
      
-     // retrieve points
-     let points = circleCircumferencePoints(sides,x: x,y: y,radius: radius)
-     // create path
-     let path1 = CGMutablePath()
-     // determine length of marker as a fraction of the total radius
-     var divider:CGFloat = 1/16
+        // retrieve points
+        let points = circleCircumferencePoints(sides,x: x,y: y,radius: radius)
+        // create path
+        let path1 = CGMutablePath()
+        // determine length of marker as a fraction of the total radius
+        var divider:CGFloat = 1/16
      
-     //add the tick marks
-     for p in points.enumerated() {
-     //tick marks every 5
-     if p.offset % 10 == 0 {
-     divider = 1/8
+        //add the tick marks
+        for p in points.enumerated() {
+            if p.offset % 10 == 0 { //tick marks every 5
+                divider = 1/8
+            } else if p.offset % 5 == 0 { //tick marks every 10
+                divider = 3/16
+            } else {//tick marks every 1
+                divider = 1/16
+            }
      
-     }
-     //tick marks every 10
-     else if p.offset % 5 == 0 {
-     divider = 3/16
-     }
-     //tick marks every 1
-     else {
-     divider = 1/16
-     }
-     
-     let xn = p.element.x + divider*(x-p.element.x)
-     let yn = p.element.y + divider*(y-p.element.y)
-     // build path
-     //CGPathMoveToPoint(path1, nil, p.element.x, p.element.y)
-     context.move(to: CGPoint(x: p.element.x, y: p.element.y))
-     //CGPathAddLineToPoint(path1, nil, xn, yn)
-     context.addLine(to: CGPoint(x: xn, y: yn))
-     //path1.closeSubpath() //this breaks something
-     // add path to context
-     context.addPath(path1)
+            let xn = p.element.x + divider*(x-p.element.x)
+            let yn = p.element.y + divider*(y-p.element.y)
+            // build path
+            //CGPathMoveToPoint(path1, nil, p.element.x, p.element.y)
+            context.move(to: CGPoint(x: p.element.x, y: p.element.y))
+            //CGPathAddLineToPoint(path1, nil, xn, yn)
+            context.addLine(to: CGPoint(x: xn, y: yn))
+            //path1.closeSubpath() //this breaks something
+            // add path to context
+            context.addPath(path1)
      
      
-     }
+        }
      
-     // set path color
-     let cgcolor = tickTextcolor.cgColor
-     context.setStrokeColor(cgcolor)
-     context.setLineWidth(3.0)
-     context.strokePath()
+        // set path color
+        let cgcolor = tickTextcolor.cgColor
+        context.setStrokeColor(cgcolor)
+        context.setLineWidth(3.0)
+        context.strokePath()
      
      
      
      
      
-     // Flip text co-ordinate space, see: http://blog.spacemanlabs.com/2011/08/quick-tip-drawing-core-text-right-side-up/
-     context.translateBy(x: 0.0, y: rect.height)
-     context.scaleBy(x: 1.0, y: -1.0)
+        // Flip text co-ordinate space, see: http://blog.spacemanlabs.com/2011/08/quick-tip-drawing-core-text-right-side-up/
+        context.translateBy(x: 0.0, y: rect.height)
+        context.scaleBy(x: 1.0, y: -1.0)
      
-     // dictates on how inset the ring of numbers will be
-     let inset:CGFloat = radius/3.2
-     // An adjustment of 270 degrees to position numbers correctly
-     let textPoints = circleCircumferencePoints(sides2,x: x,y: y,radius: radius-inset,adjustment:270)
-     // multiplier enables correcting numbering when fewer than 12 numbers are featured, e.g. 4 sides will display 12, 3, 6, 9
-     let multiplier = 12/sides2
+        // dictates on how inset the ring of numbers will be
+        let inset:CGFloat = radius/3.2
+        // An adjustment of 270 degrees to position numbers correctly
+        let textPoints = circleCircumferencePoints(sides2,x: x,y: y,radius: radius-inset,adjustment:270)
+        // multiplier enables correcting numbering when fewer than 12 numbers are featured, e.g. 4 sides will display 12, 3, 6, 9
+        let multiplier = 12/sides2
      
-     for p in textPoints.enumerated() {
-     if p.offset > 0 {
-     // Font name must be written exactly the same as the system stores it (some names are hyphenated, some aren't) and must exist on the user's device. Otherwise there will be a crash. (In real use checks and fallbacks would be created.) For a list of iOS 7 fonts see here: http://support.apple.com/en-us/ht5878
-     let aFont = UIFont(name: "DamascusBold", size: radius/5)
-     // create a dictionary of attributes to be applied to the string
-     let attr:CFDictionary = [NSFontAttributeName:aFont!, NSForegroundColorAttributeName:tickTextcolor] as CFDictionary
-     // create the attributed string
-     let str = String(p.offset * multiplier)
-     let text = CFAttributedStringCreate(nil, str as CFString!, attr)
-     // create the line of text
-     let line = CTLineCreateWithAttributedString(text!)
-     // retrieve the bounds of the text
-     let bounds = CTLineGetBoundsWithOptions(line, CTLineBoundsOptions.useOpticalBounds)
-     // set the line width to stroke the text with
-     context.setLineWidth(1.5)
-     // set the drawing mode to stroke
-     context.setTextDrawingMode(CGTextDrawingMode.stroke)
-     // Set text position and draw the line into the graphics context, text length and height is adjusted for
-     let xn = p.element.x - bounds.width/2
-     let yn = p.element.y - bounds.midY
-     context.textPosition = CGPoint(x: xn, y: yn)
-     // the line of text is drawn - see https://developer.apple.com/library/ios/DOCUMENTATION/StringsTextFonts/Conceptual/CoreText_Programming/LayoutOperations/LayoutOperations.html
-     // draw the line of text
-     CTLineDraw(line, context)
-     }
-     }
-
- 
- */
-
+        for p in textPoints.enumerated() {
+            if p.offset > 0 {
+                // Font name must be written exactly the same as the system stores it (some names are hyphenated, some aren't) and must exist on the user's device. Otherwise there will be a crash. (In real use checks and fallbacks would be created.) For a list of iOS 7 fonts see here: http://support.apple.com/en-us/ht5878
+                let aFont = UIFont(name: "DamascusBold", size: radius/5)
+                // create a dictionary of attributes to be applied to the string
+                let attr:CFDictionary = [NSFontAttributeName:aFont!, NSForegroundColorAttributeName:tickTextcolor] as CFDictionary
+                // create the attributed string
+                let str = String(p.offset * multiplier)
+                let text = CFAttributedStringCreate(nil, str as CFString!, attr)
+                // create the line of text
+                let line = CTLineCreateWithAttributedString(text!)
+                // retrieve the bounds of the text
+                let bounds = CTLineGetBoundsWithOptions(line, CTLineBoundsOptions.useOpticalBounds)
+                // set the line width to stroke the text with
+                context.setLineWidth(1.5)
+                // set the drawing mode to stroke
+                context.setTextDrawingMode(CGTextDrawingMode.stroke)
+                // Set text position and draw the line into the graphics context, text length and height is adjusted for
+                let xn = p.element.x - bounds.width/2
+                let yn = p.element.y - bounds.midY
+                context.textPosition = CGPoint(x: xn, y: yn)
+                // the line of text is drawn - see https://developer.apple.com/library/ios/DOCUMENTATION/StringsTextFonts/Conceptual/CoreText_Programming/LayoutOperations/LayoutOperations.html
+                // draw the line of text
+                CTLineDraw(line, context)
+            }
+        }
+    }
+    
+    
+    func addTickMarks() {
+     //TODO
+    }
+    
+    func addNumbers() {
+        //TODO
+    }
+    
+    
+    
 }
