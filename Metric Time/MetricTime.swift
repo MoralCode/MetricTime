@@ -41,7 +41,7 @@ class MetricTime {
         STYLING
     */
     let clockRadius = 0;
-    
+    //let clockCenter: CGPoint = CGPoint(x: rect.midx, y: rect.midy)
 
     
     
@@ -147,7 +147,6 @@ class MetricTime {
         return (hAngle: degree2radian(CGFloat(hoursAngle)),mAngle: degree2radian(CGFloat(minutesAngle)),sAngle: degree2radian(CGFloat(secondsAngle)))
     }
 
-    
     func setHandsAngle(handDegrees: (hAngle:CGFloat, mAngle:CGFloat, sAngle:CGFloat)) {
         
          hourLayer.transform = CATransform3DMakeRotation(handDegrees.hAngle, 0, 0, 1)
@@ -157,9 +156,6 @@ class MetricTime {
         
     }
 
-    
-    
-    
     func getCurrentMetricTime(currentTime:DateComponents, shouldTick:Bool = false) -> (hour: Int, minute: Int, second: Int) {
         
         //why wont this work with smoothing out the clock...
@@ -207,7 +203,6 @@ class MetricTime {
  
     }
     
-    
     func convertTime(inputTime: (hour: Int, minute: Int, second: Int), toMetric:Bool = true) -> (hour: Int, minute: Int, second: Int) {
         
         var millisecondsSinceToday = 0
@@ -233,13 +228,40 @@ class MetricTime {
         return convertedTime
     }
     
+    func addTickMarks() {
+        //TODO
+    }
+    
+    func addNumbers() {
+        //TODO
+    }
+    private func getTickMarkLocations(clockView:UIView) {
+        let clockPoints = 100 /* total number of tick marks on the clock */
+        let tickSpacing = degree2radian(360/CGFloat(clockPoints))
+        let clockCenter = (x: clockView.bounds.midX, y: clockView.bounds.midY)
+        let clockRadius = clockView.bounds.width/2
+        var points = [CGPoint]()
+        
+        
+        while points.count <= clockPoints {
+            //complex maths... dont touch...
+            let xpo = clockCenter.x - clockRadius * cos(angle * CGFloat(clockPoints)+degree2radian(adjustment))
+            let ypo = clockCenter.y - clockRadius * sin(angle * CGFloat(clockPoints)+degree2radian(adjustment))
+            points.append(CGPoint(x: xpo, y: ypo))
+            clockPoints -= 1;
+        }
+        return points
+        
+    }
     
     
-    
-    
-    
-    
-    
+    /*
+        Below this comment is a big, menny pile of copy-pasted, un-edited garbage </joke>
+     
+        I really need to make this cleaner and more readable...
+     */
+
+    //clock-drawing functionality from http://sketchytech.blogspot.co.uk/2014/11/swift-how-to-draw-clock-face-using_12.html
     
     func circleCircumferencePoints(_ sides:Int,x:CGFloat,y:CGFloat,radius:CGFloat,adjustment:CGFloat=0)->[CGPoint] {
         let angle = degree2radian(360/CGFloat(sides))
@@ -342,13 +364,7 @@ class MetricTime {
     }
     
     
-    func addTickMarks() {
-     //TODO
-    }
-    
-    func addNumbers() {
-        //TODO
-    }
+  
     
     
     
