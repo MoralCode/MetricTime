@@ -235,20 +235,22 @@ class MetricTime {
     func addNumbers() {
         //TODO
     }
-    private func getTickMarkLocations(clockView:UIView) {
+    private func getTickMarkLocations(clockView:UIView) -> [CGPoint] {
         let clockPoints = 100 /* total number of tick marks on the clock */
+        var counter = clockPoints
         let tickSpacing = degree2radian(360/CGFloat(clockPoints))
         let clockCenter = (x: clockView.bounds.midX, y: clockView.bounds.midY)
         let clockRadius = clockView.bounds.width/2
+        let adjustment:CGFloat = 0 //idk what this does, but i dont wanna remove it ciz' i may break the math...
         var points = [CGPoint]()
         
         
         while points.count <= clockPoints {
             //complex maths... dont touch...
-            let xpo = clockCenter.x - clockRadius * cos(angle * CGFloat(clockPoints)+degree2radian(adjustment))
-            let ypo = clockCenter.y - clockRadius * sin(angle * CGFloat(clockPoints)+degree2radian(adjustment))
+            let xpo = clockCenter.x - clockRadius * cos(tickSpacing * CGFloat(counter)+degree2radian(adjustment))
+            let ypo = clockCenter.y - clockRadius * sin(tickSpacing * CGFloat(counter)+degree2radian(adjustment))
             points.append(CGPoint(x: xpo, y: ypo))
-            clockPoints -= 1;
+            counter -= 1;
         }
         return points
         
