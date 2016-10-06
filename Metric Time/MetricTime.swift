@@ -35,20 +35,29 @@ class MetricTime {
     var seconds = 0.0
     var convertedSeconds = 0.0
 
-    
+    var clockView = View()
+    let clockContext = UIGraphicsGetCurrentContext()
     
     /*
         STYLING
     */
     let clockRadius = 0;
     //let clockCenter: CGPoint = CGPoint(x: rect.midx, y: rect.midy)
+    let clockColor:CGColor = UIColor.green.cgColor
 
     
     
     
+    init() {
+        
+        print("init-ed")
+    }
+    
+    func getContext() -> CGContext { return self.clockContext!}
+    
     func drawAnalogClock() -> UIView {
         
-        var clockView = View(frame: CGRect(x: 0, y: 0, width: 230, height: 230))
+        clockView = View(frame: CGRect(x: 0, y: 0, width: 230, height: 230))
         
         let hourPath = CGMutablePath()
         let minutePath = CGMutablePath()
@@ -228,13 +237,9 @@ class MetricTime {
         return convertedTime
     }
     
-    func addTickMarks() {
-        //TODO
-    }
     
-    func addNumbers() {
-        //TODO
-    }
+    
+    
     private func getTickMarkLocations(clockView:UIView) -> [CGPoint] {
         let clockPoints = 100 /* total number of tick marks on the clock */
         var counter = clockPoints
@@ -254,6 +259,44 @@ class MetricTime {
         }
         return points
         
+    }
+    
+    func addTickMarks(points:[CGPoint]) {
+        let tickPath = CGMutablePath()
+        var tickLength: CGFloat
+        
+        for point in points.enumerated() {
+            
+            if point.offset % 10 == 0 {//if the "index" of the point is divisible by 10 w/o remainder
+                tickLength = 2/16
+            } else if point.offset % 5 == 0 {//if the "index" of the point is divisible by 5 w/o remainder
+                tickLength = 3/16
+            } else {
+                tickLength = 1/16
+            }
+            
+            let tickEndPoint = (x: point.element.x + tickLength*(clockView.bounds.midX - point.element.x), y: point.element.y + tickLength*(clockView.bounds.midY - point.element.y))
+            
+            clockContext?.move(to: CGPoint(x: point.element.x, y: point.element.y))
+            clockContext?.addLine(to: CGPoint(x: tickEndPoint.x, y: tickEndPoint.y))
+            clockContext?.addPath(tickPath)
+            
+        }
+        
+        clockContext?.setStrokeColor(clockColor)
+        clockContext?.setLineWidth(3.0)
+        clockContext?.strokePath()
+        
+    }
+    
+    func addNumbers() {
+        
+        let inset = 5/16 //clockView.bounds.width/2 //determines spacing between numbers and tick marks
+        
+        
+        // Flip text co-ordinate space, see: http://blog.spacemanlabs.com/2011/08/quick-tip-drawing-core-text-right-side-up/
+        clockContext?.translateBy(x: 0.0, y: clockView.bounds.height)
+        clockContext?.scaleBy(x: 1.0, y: -1.0)
     }
     
     
@@ -282,7 +325,6 @@ class MetricTime {
         return points
     }
     
-     
      func addMarkersandText(_ rect:CGRect, context:CGContext, x:CGFloat, y:CGFloat, radius:CGFloat, sides:Int, sides2:Int, tickTextcolor:UIColor) {
      
         // retrieve points
@@ -295,7 +337,7 @@ class MetricTime {
         //add the tick marks
         for p in points.enumerated() {
             if p.offset % 10 == 0 { //tick marks every 5
-                divider = 1/8
+                divider = 2/16
             } else if p.offset % 5 == 0 { //tick marks every 10
                 divider = 3/16
             } else {//tick marks every 1
