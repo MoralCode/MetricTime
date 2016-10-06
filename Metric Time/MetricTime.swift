@@ -35,7 +35,7 @@ class MetricTime {
     var seconds = 0.0
     var convertedSeconds = 0.0
 
-    var clockView = View()
+    var clockView = Clock()
     let clockContext = UIGraphicsGetCurrentContext()
     
     /*
@@ -57,7 +57,7 @@ class MetricTime {
     
     func drawAnalogClock() -> UIView {
         
-        clockView = View(frame: CGRect(x: 0, y: 0, width: 230, height: 230))
+        clockView = Clock(frame: CGRect(x: 0, y: 0, width: 230, height: 230))
         
         let hourPath = CGMutablePath()
         let minutePath = CGMutablePath()
@@ -411,5 +411,15 @@ class MetricTime {
   
     
     
+    
+}
+
+class Clock: UIView {
+    
+    override func draw(_ rect: CGRect) {
+        
+        //do things as soon as a new Clock object is created?????
+        
+    }
     
 }
