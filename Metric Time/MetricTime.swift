@@ -35,7 +35,7 @@ class MetricTime {
     var seconds = 0.0
     var convertedSeconds = 0.0
 
-    var clockView = Clock()
+    var clockView = UIView()
     let clockContext = UIGraphicsGetCurrentContext()
     
     /*
@@ -44,7 +44,7 @@ class MetricTime {
     let clockRadius = 0;
     //let clockCenter: CGPoint = CGPoint(x: rect.midx, y: rect.midy)
     let clockColor:CGColor = UIColor.green.cgColor
-
+    let numbersFont = UIFont(name: "DamascusBold", size: 23.0)//manually calculated size from radius/2
     
     
     
@@ -57,7 +57,7 @@ class MetricTime {
     
     func drawAnalogClock() -> UIView {
         
-        clockView = Clock(frame: CGRect(x: 0, y: 0, width: 230, height: 230))
+        clockView = UIView(frame: CGRect(x: 0, y: 0, width: 230, height: 230))
         
         let hourPath = CGMutablePath()
         let minutePath = CGMutablePath()
@@ -240,8 +240,8 @@ class MetricTime {
     
     
     
-    private func getTickMarkLocations(clockView:UIView) -> [CGPoint] {
-        let clockPoints = 100 /* total number of tick marks on the clock */
+    private func getTickMarkLocations(clockView:UIView, forNumbers:Bool = false) -> [CGPoint] {
+        var clockPoints = 100 /* total number of tick marks on the clock */
         var counter = clockPoints
         let tickSpacing = degree2radian(360/CGFloat(clockPoints))
         let clockCenter = (x: clockView.bounds.midX, y: clockView.bounds.midY)
@@ -249,6 +249,7 @@ class MetricTime {
         let adjustment:CGFloat = 0 //idk what this does, but i dont wanna remove it ciz' i may break the math...
         var points = [CGPoint]()
         
+        if forNumbers { clockPoints = 10; counter = clockPoints}
         
         while points.count <= clockPoints {
             //complex maths... dont touch...
@@ -257,6 +258,7 @@ class MetricTime {
             points.append(CGPoint(x: xpo, y: ypo))
             counter -= 1;
         }
+        
         return points
         
     }
@@ -293,10 +295,14 @@ class MetricTime {
         
         let inset = 5/16 //clockView.bounds.width/2 //determines spacing between numbers and tick marks
         
+        let positions = getTickMarkLocations(clockView: clockView, forNumbers: true)
         
         // Flip text co-ordinate space, see: http://blog.spacemanlabs.com/2011/08/quick-tip-drawing-core-text-right-side-up/
         clockContext?.translateBy(x: 0.0, y: clockView.bounds.height)
         clockContext?.scaleBy(x: 1.0, y: -1.0)
+        
+        
+        
     }
     
     
@@ -413,13 +419,14 @@ class MetricTime {
     
     
 }
-
+/*
 class Clock: UIView {
     
     override func draw(_ rect: CGRect) {
         
         //do things as soon as a new Clock object is created?????
+        //probably dont need?
         
     }
     
-}
+}*/
