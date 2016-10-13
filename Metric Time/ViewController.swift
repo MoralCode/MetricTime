@@ -379,7 +379,7 @@ func addMarkersandText(_ rect:CGRect, context:CGContext, x:CGFloat, y:CGFloat, r
     // dictates on how inset the ring of numbers will be
     let inset:CGFloat = radius/3.2
     // An adjustment of 270 degrees to position numbers correctly
-    let textPoints = circleCircumferencePoints(sides2,x: x,y: y,radius: radius-inset,adjustment:270)
+    let textPoints = circleCircumferencePoints(sides2,x: x,y: y,radius: radius-inset,adjustment:-90)//270) //negative because of flipped coord space, same as 270
     // multiplier enables correcting numbering when fewer than 12 numbers are featured, e.g. 4 sides will display 12, 3, 6, 9
     let multiplier = 12/sides2
     

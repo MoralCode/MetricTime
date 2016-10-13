@@ -301,6 +301,35 @@ class MetricTime {
         clockContext?.translateBy(x: 0.0, y: clockView.bounds.height)
         clockContext?.scaleBy(x: 1.0, y: -1.0)
         
+        let textAttributes = [NSFontAttributeName:numbersFont!, NSForegroundColorAttributeName:clockColor] as CFDictionary
+        // multiplier enables correcting numbering when fewer than 12 numbers are featured, e.g. 4 sides will display 12, 3, 6, 9 (formerly preceeded by a 270 degree adjustment... qué?
+
+        let multiplier = 12/10
+
+        
+        for point in positions.enumerated() {
+            
+       /*     // create the attributed string
+            let str = String(point.offset * multiplier)
+            let text = CFAttributedStringCreate(nil, str as CFString!, attr)
+            // create the line of text
+            let line = CTLineCreateWithAttributedString(text!)
+            // retrieve the bounds of the text
+            let bounds = CTLineGetBoundsWithOptions(line, CTLineBoundsOptions.useOpticalBounds)
+            // set the line width to stroke the text with
+            clockContext.setLineWidth(1.5)
+            // set the drawing mode to stroke
+            clockContext.setTextDrawingMode(CGTextDrawingMode.stroke)
+            // Set text position and draw the line into the graphics context, text length and height is adjusted for
+            let xn = p.element.x - bounds.width/2
+            let yn = p.element.y - bounds.midY
+            clockContext.textPosition = CGPoint(x: xn, y: yn)
+            // the line of text is drawn - see https://developer.apple.com/library/ios/DOCUMENTATION/StringsTextFonts/Conceptual/CoreText_Programming/LayoutOperations/LayoutOperations.html
+            // draw the line of text
+            CTLineDraw(line, context)
+*/
+            
+        }
         
         
     }
@@ -370,7 +399,7 @@ class MetricTime {
         context.setLineWidth(3.0)
         context.strokePath()
      
-     
+        
      
      
      
@@ -390,7 +419,7 @@ class MetricTime {
                 // Font name must be written exactly the same as the system stores it (some names are hyphenated, some aren't) and must exist on the user's device. Otherwise there will be a crash. (In real use checks and fallbacks would be created.) For a list of iOS 7 fonts see here: http://support.apple.com/en-us/ht5878
                 let aFont = UIFont(name: "DamascusBold", size: radius/5)
                 // create a dictionary of attributes to be applied to the string
-                let attr:CFDictionary = [NSFontAttributeName:aFont!, NSForegroundColorAttributeName:tickTextcolor] as CFDictionary
+                let attr:CFDictionary = [NSFontAttributeName:aFont!, NSForegroundColorAttributeName:clockColor] as CFDictionary
                 // create the attributed string
                 let str = String(p.offset * multiplier)
                 let text = CFAttributedStringCreate(nil, str as CFString!, attr)
