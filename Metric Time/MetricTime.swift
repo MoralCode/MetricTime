@@ -10,7 +10,6 @@
 
 /* This file contains the core functionality of metrictime, drawing the analog clock, converting times, moving the hands(?) .etc
  
- 
  */
 
 import Foundation
@@ -36,7 +35,7 @@ class MetricTime {
     var convertedSeconds = 0.0
 
     var clockView = UIView(frame: CGRect(x: 0, y: 0, width: 230, height: 230))
-    let clockContext = UIGraphicsGetCurrentContext()
+    let clockContext:CGContext? = UIGraphicsGetCurrentContext()
     
     /*
         STYLING
@@ -58,8 +57,6 @@ class MetricTime {
     func drawAnalogClock() -> UIView {
         
         print(clockContext)
-        print(clockView)
-        print(UIGraphicsGetCurrentContext())
         
         drawClockFace()
         //drawClockHands()
@@ -71,12 +68,12 @@ class MetricTime {
     func drawClockFace() /*-> UIView */{
         
         clockContext?.addArc(center: CGPoint(x: clockView.bounds.midX, y: clockView.bounds.midY), radius: clockView.bounds.width/2, startAngle: 0, endAngle: CGFloat(2*M_PI), clockwise: true)
-       print(clockContext)
-        
+        print(clockContext)
+        clockContext?.drawPath(using: CGPathDrawingMode.fillStroke)
         if clockContext != nil {
             clockContext!.setStrokeColor(UIColor.white.cgColor)
             clockContext!.setLineWidth(4.0)
-            clockContext?.drawPath(using: CGPathDrawingMode.fillStroke)
+            
         }
         print(clockContext)
     }
