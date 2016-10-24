@@ -35,7 +35,7 @@ class MetricTime {
     var seconds = 0.0
     var convertedSeconds = 0.0
 
-    var clockView = UIView()
+    var clockView = UIView(frame: CGRect(x: 0, y: 0, width: 230, height: 230))
     let clockContext = UIGraphicsGetCurrentContext()
     
     /*
@@ -50,14 +50,40 @@ class MetricTime {
     
     init() {
         
-        print("init-ed")
+        print("init-ed")//func not needed
     }
     
     func getContext() -> CGContext { return self.clockContext!}
     
     func drawAnalogClock() -> UIView {
         
-        clockView = UIView(frame: CGRect(x: 0, y: 0, width: 230, height: 230))
+        print(clockContext)
+        print(clockView)
+        print(UIGraphicsGetCurrentContext())
+        
+        drawClockFace()
+        //drawClockHands()
+        
+        return clockView
+        
+    }
+    
+    func drawClockFace() /*-> UIView */{
+        
+        clockContext?.addArc(center: CGPoint(x: clockView.bounds.midX, y: clockView.bounds.midY), radius: clockView.bounds.width/2, startAngle: 0, endAngle: CGFloat(2*M_PI), clockwise: true)
+       print(clockContext)
+        
+        if clockContext != nil {
+            clockContext!.setStrokeColor(UIColor.white.cgColor)
+            clockContext!.setLineWidth(4.0)
+            clockContext?.drawPath(using: CGPathDrawingMode.fillStroke)
+        }
+        print(clockContext)
+    }
+    
+    func drawClockHands() -> UIView {
+        
+       // clockView = UIView(frame: CGRect(x: 0, y: 0, width: 230, height: 230))
         
         let hourPath = CGMutablePath()
         let minutePath = CGMutablePath()
@@ -122,7 +148,7 @@ class MetricTime {
          let circle = UIBezierPath(arcCenter: CGPoint(x:clockView.frame.midX,y:clockView.frame.midX), radius: 2.75, startAngle: 0, endAngle: endAngle, clockwise: true)
          centerPiece.path = circle.cgPath
          centerPiece.fillColor = UIColor.gray.cgColor
-         
+        
          
          
          clockView.layer.addSublayer(hourLayer)
@@ -293,9 +319,9 @@ class MetricTime {
     
     func addNumbers() {
         
-        let inset = 5/16 //clockView.bounds.width/2 //determines spacing between numbers and tick marks
+        let inset = 5/16 //clockView.bounds.width/2 //determines spacing between numbers and edge of the clock
         
-        let positions = getTickMarkLocations(clockView: clockView, forNumbers: true)
+        let numberPositions = getTickMarkLocations(clockView: clockView, forNumbers: true)
         
         // Flip text co-ordinate space, see: http://blog.spacemanlabs.com/2011/08/quick-tip-drawing-core-text-right-side-up/
         clockContext?.translateBy(x: 0.0, y: clockView.bounds.height)
@@ -307,7 +333,7 @@ class MetricTime {
         let multiplier = 12/10
 
         
-        for point in positions.enumerated() {
+        for point in numberPositions.enumerated() {
             
        /*     // create the attributed string
             let str = String(point.offset * multiplier)
