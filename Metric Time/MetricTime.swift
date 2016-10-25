@@ -8,7 +8,7 @@
 
 
 
-/* This file contains the core functionality of metrictime, drawing the analog clock, converting times, moving the hands(?) .etc
+/* This file contains the core functionality of metrictime, drawing the analog clock, converting times, setting/changing the rotation of the hands .etc
  
  */
 

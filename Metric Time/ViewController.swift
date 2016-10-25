@@ -284,7 +284,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         
         
     }
-}
+}//why the actual is this here? im rewriting this anyway but whay didnt i put it just befor the "View" class? i hate myself from a year ago...
 
 
 // MARK: Calculate coordinates of time
@@ -427,7 +427,7 @@ class View: UIView {
         //assemble all pieces
         
         let context = UIGraphicsGetCurrentContext()
-        
+        print(context)
         // set properties
         
         
