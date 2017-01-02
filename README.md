@@ -12,7 +12,7 @@ In MetricTime:
 ## Converting Times
 Here is a short table of approximate conversion values for reference.
 
-Normal Time | Metric Time
+Normal Time | "Metric" Time
 ------------ | -------------
 30 seconds | ~34 metric seconds
 1 minute | ~69 metric seconds
@@ -27,10 +27,6 @@ Normal Time | Metric Time
 
 ##Contributing
 Currently, MetricTime is only an iOS app. If you would like to make MetricTime compatible with another device, feel free to fork this repository and submit a pull request!
-
-### iOS
-
-
 
 
 
