@@ -46,7 +46,17 @@ class MetricTime {
     
     
     
+    
+    
+    
+    /// - returns: The CGContext that is being used by the current instance of MetricTime()
     func getContext() -> CGContext { return self.clockContext!}
+    
+    /// - returns: The current instance of MetricTime()
+    func getInstance() -> MetricTime { return self }
+    
+    /// - returns: The clockView object from the current instance of MetricTime()
+    func getAnalogClock() -> UIView { return clockView }
     
     /*
     THESE FUNCTIONS ARE CALLED WHENEVER A NEW Clock() VIEW IS CREATED
