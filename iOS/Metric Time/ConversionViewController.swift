@@ -20,9 +20,9 @@ class ConversionViewController: UIViewController {
     let color = UIColor.green;
     let font = UIFont(name: "Calculator", size: 70.0);
     
-    var inputTime: [Int] = [0, 0, 0];
-    var outputTime: [Int] = [0, 0, 0];
 
+    var inputTime: (hour: Int, minute: Int, second: Int) = (0,0,0)
+    var outputTime: (hour: Int, minute: Int, second: Int) = (0,0,0)
     
     var hoursMax: Int = 24
     var minutesMax: Int = 60
@@ -31,38 +31,38 @@ class ConversionViewController: UIViewController {
     
     
     @IBAction func plusHours(_ sender: UIButton) {
-        inputTime[0] += 1
-        if inputTime[0] >= hoursMax {inputTime[0] = 0}
+        inputTime.hour += 1
+        if inputTime.hour >= hoursMax {inputTime.hour = 0}
         updateTime()
     }
 
     @IBAction func minusHours(_ sender: UIButton) {
-        inputTime[0] -= 1
-        if inputTime[0] == -1 {inputTime[0] = hoursMax-1}
+        inputTime.hour -= 1
+        if inputTime.hour == -1 {inputTime.hour = hoursMax-1}
         updateTime()
     }
     
     @IBAction func plusMinutes(_ sender: UIButton) {
-        inputTime[1] += 1
-        if inputTime[1] >= minutesMax {inputTime[1] = 0}
+        inputTime.minute += 1
+        if inputTime.minute >= minutesMax {inputTime.minute = 0}
         updateTime()
     }
     
     @IBAction func minusMinutes(_ sender: UIButton) {
-        inputTime[1] -= 1
-        if inputTime[1] == -1 {inputTime[1] = minutesMax-1}
+        inputTime.minute -= 1
+        if inputTime.minute == -1 {inputTime.minute = minutesMax-1}
         updateTime()
     }
     
     @IBAction func plusSeconds(_ sender: UIButton) {
-        inputTime[2] += 1
-        if inputTime[2] >= secondsMax {inputTime[2] = 0}
+        inputTime.second += 1
+        if inputTime.second >= secondsMax {inputTime.second = 0}
         updateTime()
     }
     
     @IBAction func minusSeconds(_ sender: UIButton) {
-        inputTime[2] -= 1
-        if inputTime[2] == -1 {inputTime[2] = secondsMax-1}
+        inputTime.second -= 1
+        if inputTime.second == -1 {inputTime.second = secondsMax-1}
         updateTime()
     }
     
@@ -73,9 +73,9 @@ class ConversionViewController: UIViewController {
     func updateLabels() {
 
         
-        inputLabel.text = String(format: "%02d:%02d:%02d", inputTime[0], inputTime[1], inputTime[2])
+        inputLabel.text = String(format: "%02d:%02d:%02d", inputTime.hour, inputTime.minute, inputTime.second)
         
-        outputLabel.text = String(format: "%02d:%02d:%02d", outputTime[0], outputTime[1], outputTime[2])
+        outputLabel.text = String(format: "%02d:%02d:%02d", outputTime.hour, outputTime.minute, outputTime.second)
         
     }
     
@@ -84,53 +84,15 @@ class ConversionViewController: UIViewController {
         
         if inputTimePicker.selectedSegmentIndex == 0 {
             
-            outputTime = convertToMetricTime(inputTime)
+            outputTime = MetricTime().convertTime(inputTime: inputTime, toMetric: true)
             
         } else if inputTimePicker.selectedSegmentIndex == 1 {
             
-            outputTime = convertToNormalTime(inputTime)
+            outputTime = MetricTime().convertTime(inputTime: inputTime, toMetric: false)
         }
         
         updateLabels()
     }
-    
-    
-
-    
-    func convertToMetricTime(_ time:[Int]) -> [Int] {
-        
-       var millisecondsSinceToday = (time[0] * 3600000 /*milliseconds per hour*/) + (time[1] * 60000 /* milliseconds per minute*/) + (time[2] * 1000 /*milliseconds per second*/)
-        
-         var convertedTime: [Int] = [0, 0, 0];
-        
-        convertedTime[0] = Int(millisecondsSinceToday / 8640000)
-        millisecondsSinceToday -= (convertedTime[0]*8640000)
-        convertedTime[1] = Int(millisecondsSinceToday / 86400)
-        millisecondsSinceToday -= (convertedTime[1]*86400)
-        convertedTime[2] = Int(millisecondsSinceToday / 864)
-        
-        
-        return convertedTime
-    }
-    
-    
-    func convertToNormalTime(_ time:[Int]) -> [Int] {
-        
-        var millisecondsSinceToday = (time[0] * 8640000 /*metric milliseconds per hour*/) + (time[1] * 86400 /* metric milliseconds per minute*/) + (time[2] * 864 /*milliseconds per second*/)
-        
-        var convertedTime: [Int] = [0, 0, 0];
-        
-        convertedTime[0] = Int(millisecondsSinceToday / 3600000)
-        millisecondsSinceToday -= (convertedTime[0]*3600000)
-        convertedTime[1] = Int(millisecondsSinceToday / 60000)
-        millisecondsSinceToday -= (convertedTime[1]*60000)
-        convertedTime[2] = Int(millisecondsSinceToday / 1000)
-        
-        
-        return convertedTime
-    }
-    
-    
     
     
     
@@ -139,7 +101,7 @@ class ConversionViewController: UIViewController {
         if sender.selectedSegmentIndex == 0 { //convert to metric
             
             //clear values from input/output labels
-            inputTime = [0, 0, 0]
+            inputTime = (0, 0, 0)
             updateTime()
             
             //accept normal time as input
@@ -154,7 +116,7 @@ class ConversionViewController: UIViewController {
             
           
             //clear values from input/output labels
-            inputTime = [0, 0, 0]
+            inputTime = (0, 0, 0)
             updateTime()
             
             //accept metric time as input
