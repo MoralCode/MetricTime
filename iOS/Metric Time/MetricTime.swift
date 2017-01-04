@@ -74,7 +74,7 @@ class MetricTime {
     }
     /// Calculates the x and y values for the specified number of points around the circle
     ///
-    /// - parameter forNumbers: Boolean value that is used when calculating the points at which to render the numbers
+    /// - parameter forNumbers: Boolean value that is used as a flag to indicate when calculating the points at which to render the numbers
     /// - returns: An array of CGPoint's
     private func getPointsOnCircle(forNumbers:Bool = false) -> [CGPoint] {
         
@@ -138,6 +138,7 @@ class MetricTime {
     }
     
     //INCOMPLETE!
+    /// draws the numbers around the clock face
     func addNumbers() {
         
         
@@ -192,6 +193,7 @@ class MetricTime {
     
     
     
+    /// creates and adds the hands of the clock as CALayer's to clockView
     func addClockHands() {
         
         
@@ -304,6 +306,12 @@ class MetricTime {
     }
 
     func getCurrentMetricTime(currentTime:DateComponents) -> (hour: Int, minute: Int, second: Int) {
+    
+    /// Gets the current time and converts it to metric
+    ///
+    /// - returns: The current metric time in (hour: Int, minute: Int, second: Int) format
+    func getCurrentMetricTime() -> (hour: Int, minute: Int, second: Int) {
+    
         
 //        //why wont this work with smoothing out the clock...
 //        if !clockShouldTick {
@@ -354,6 +362,12 @@ class MetricTime {
  
     }
     
+    
+    /// Calculates the x and y values for the specified number of points around the circle
+    ///
+    /// - parameter inputTime: The time to convert from in (hour: Int, minute: Int, second: Int) format
+    /// - parameter toMetric: A boolean value that determines if thr functions should convert to metric or from metric. Defaults to true (AKA convert to metric)
+    /// - returns: The converted time in (hour: Int, minute: Int, second: Int) format
     func convertTime(inputTime: (hour: Int, minute: Int, second: Int), toMetric:Bool = true) -> (hour: Int, minute: Int, second: Int) {
         
         var inputTimeMillis = 0
