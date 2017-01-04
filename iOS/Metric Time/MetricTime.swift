@@ -17,31 +17,28 @@ import UIKit
 
 class MetricTime {
     
+    //SETTINGS
+    let clockShouldTick = false //setting. not fully implemented
+
     
-    var lastCall:Date?
-    let clockShouldTick = false
     //ANALOG CLOCK
     let clockContext:CGContext? = UIGraphicsGetCurrentContext()
     var clockView = Clock(frame: CGRect(x: 0, y: 0, width: 230, height: 230))
 
     
-    //  the actual time that normal humans use (in millitary time) (actualTime[0] = hour, actualTime[1] = minute, actualTime[2] = second)
-    var actualTime: [Int] = [0, 0, 0];
-    
-    
-    //the converted "metric time"
-    var metricTime = (hour: 0, minute: 0, second: 0) //used in getCurrentMetricTime and smth else...
-    var seconds = 0.0
-    var convertedSeconds = 0.0
-
-    
-    /*
-        STYLING
-    */
-    let clockRadius = 0;
-    //let clockCenter: CGPoint = CGPoint(x: rect.midx, y: rect.midy)
+    let clockViewRadius = 0;//unused
     let clockColor:CGColor = UIColor.green.cgColor
     let numbersFont = UIFont(name: "DamascusBold", size: 23.0)//manually calculated size from radius/2
+    let numberInset:CGFloat = 3.2
+    
+    
+    //CONVERTING TIME
+
+    var lastCall:Date?
+    
+  
+
+    
     
     
     
