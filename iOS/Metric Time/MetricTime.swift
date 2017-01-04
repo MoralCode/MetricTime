@@ -108,6 +108,7 @@ class MetricTime {
         
     }
 
+    /// Draws the tick marks on the clock face
     func addTickMarks() {
         let points = getPointsOnCircle()
         let tickPath = CGMutablePath()
