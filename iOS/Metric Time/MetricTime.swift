@@ -304,8 +304,12 @@ class MetricTime {
         
         
     }
-
-    func getCurrentMetricTime(currentTime:DateComponents) -> (hour: Int, minute: Int, second: Int) {
+    
+    
+    
+    
+    
+    
     
     /// Gets the current time and converts it to metric
     ///
@@ -313,6 +317,8 @@ class MetricTime {
     func getCurrentMetricTime() -> (hour: Int, minute: Int, second: Int) {
     
         
+        var currentTime = (Calendar.current as NSCalendar).components([ .hour, .minute, .second, .nanosecond], from: Date())
+
 //        //why wont this work with smoothing out the clock...
 //        if !clockShouldTick {
 //            

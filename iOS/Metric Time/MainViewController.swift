@@ -31,7 +31,6 @@ class MainViewController: UIViewController, UIGestureRecognizerDelegate {
     
     var gesture: UILongPressGestureRecognizer = UILongPressGestureRecognizer()
     
-    var components = (Calendar.current as NSCalendar).components( [.hour, .minute, .second], from: Date())
     
     let metricTime:MetricTime = MetricTime() //allows us to use the same instance of metricTime
     var clock:UIView!
@@ -42,7 +41,6 @@ class MainViewController: UIViewController, UIGestureRecognizerDelegate {
  
     func updateTime() {
         
-        components = (Calendar.current as NSCalendar).components([ .hour, .minute, .second, .nanosecond], from: Date())
         
             
         
