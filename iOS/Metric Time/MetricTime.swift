@@ -217,19 +217,21 @@ class MetricTime {
 
         
         
-        metricTime.hour = Int(millisecondsSinceToday / 8640000)
-         
-        millisecondsSinceToday -= Double(metricTime.hour*8640000)
-         
-        metricTime.minute = Int(millisecondsSinceToday / 86400)
         
-        millisecondsSinceToday -= Double(metricTime.minute*86400)
+        //convert current time in milliseconds to metric
+        currentMetricTime.hour = Int(millisecondsSinceToday / 8640000)
          
-        metricTime.second = Int(millisecondsSinceToday / 864)
+        millisecondsSinceToday -= Double(currentMetricTime.hour*8640000)
+         
+        currentMetricTime.minute = Int(millisecondsSinceToday / 86400)
+        
+        millisecondsSinceToday -= Double(currentMetricTime.minute*86400)
+         
+        currentMetricTime.second = Int(millisecondsSinceToday / 864)
         convertedSeconds = Double(millisecondsSinceToday / 864) //?
         
         
-        return metricTime
+        return currentMetricTime
          
  
  
@@ -237,25 +239,25 @@ class MetricTime {
     
     func convertTime(inputTime: (hour: Int, minute: Int, second: Int), toMetric:Bool = true) -> (hour: Int, minute: Int, second: Int) {
         
-        var millisecondsSinceToday = 0
+        var inputTimeMillis = 0
         var convertedTime = (hour: 0, minute: 0, second: 0)
         
         
         if toMetric {
-            millisecondsSinceToday = (inputTime.hour * 3600000 /*milliseconds per hour*/) + (inputTime.minute * 60000 /* milliseconds per minute*/) + (inputTime.second * 1000 /*milliseconds per second*/)
+            inputTimeMillis = (inputTime.hour * 3600000 /*milliseconds per hour*/) + (inputTime.minute * 60000 /* milliseconds per minute*/) + (inputTime.second * 1000 /*milliseconds per second*/)
         } else {
-            millisecondsSinceToday = (inputTime.hour * 8640000 /*metric milliseconds per hour*/) + (inputTime.minute * 86400 /* metric milliseconds per minute*/) + (inputTime.second * 864 /*milliseconds per second*/)
+            inputTimeMillis = (inputTime.hour * 8640000 /*metric milliseconds per hour*/) + (inputTime.minute * 86400 /* metric milliseconds per minute*/) + (inputTime.second * 864 /*milliseconds per second*/)
         }
         
         
-        convertedTime.hour = Int(millisecondsSinceToday / 8640000)
-        millisecondsSinceToday -= (convertedTime.hour*8640000)
+        convertedTime.hour = Int(inputTimeMillis / 8640000)
+        inputTimeMillis -= (convertedTime.hour*8640000)
         
-        convertedTime.minute = Int(millisecondsSinceToday / 86400)
-        millisecondsSinceToday -= (convertedTime.minute*86400)
+        convertedTime.minute = Int(inputTimeMillis / 86400)
+        inputTimeMillis -= (convertedTime.minute*86400)
         
-        convertedTime.second = Int(millisecondsSinceToday / 864)
-        //screw milliseconds
+        convertedTime.second = Int(inputTimeMillis / 864)
+        //screw milliseconds, convertions dont need to be THAT accurate do they?
         
         return convertedTime
     }
