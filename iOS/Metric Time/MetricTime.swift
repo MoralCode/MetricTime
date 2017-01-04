@@ -47,10 +47,6 @@ class MetricTime {
     
     
     
-    init() {
-        
-        print("init-ed")//func not needed
-    }
     
     func getContext() -> CGContext { return self.clockContext!}
     
@@ -68,14 +64,12 @@ class MetricTime {
     func drawClockFace() /*-> UIView */{
         
         clockContext?.addArc(center: CGPoint(x: clockView.bounds.midX, y: clockView.bounds.midY), radius: clockView.bounds.width/2, startAngle: 0, endAngle: CGFloat(2*M_PI), clockwise: true)
-        print(clockContext)
         clockContext?.drawPath(using: CGPathDrawingMode.fillStroke)
         if clockContext != nil {
             clockContext!.setStrokeColor(UIColor.white.cgColor)
             clockContext!.setLineWidth(4.0)
             
         }
-        print(clockContext)
     }
     
     func drawClockHands() -> UIView {
@@ -87,11 +81,6 @@ class MetricTime {
         let secondPath = CGMutablePath()
         
         
-         //set names (is this needed? (no))
-        // hourLayer.name = "hourHand"
-        // minuteLayer.name = "minuteHand"
-        // secondLayer.name = "secondHand"
-        // centerPiece.name = "centerPiece"
         
         //set the views to the same size (is this needed? ?(yes)) [views are a little big tho...]
          hourLayer.frame = clockView.frame
@@ -364,7 +353,8 @@ class MetricTime {
     
     
 }
-/*
+
+
 class Clock: UIView {
     
     override func draw(_ rect: CGRect) {
@@ -374,8 +364,4 @@ class Clock: UIView {
         
     }
     
-}*/
-
-
-
-
+}
