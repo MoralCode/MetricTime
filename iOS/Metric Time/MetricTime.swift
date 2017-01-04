@@ -95,7 +95,7 @@ class MetricTime {
         
         var points = [CGPoint]()
         
-        while points.count <= desiredNumberOfPoints {
+        while points.count < desiredNumberOfPoints {
             //complex maths... modify at own risk...
             let x = clockView.bounds.midX - desiredPointRadius * cos(tickSpacing * CGFloat(counter)+degree2radian(adjustment))
             let y = clockView.bounds.midY - desiredPointRadius * sin(tickSpacing * CGFloat(counter)+degree2radian(adjustment))
