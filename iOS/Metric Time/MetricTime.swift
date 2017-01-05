@@ -193,12 +193,11 @@ class MetricTime {
     
     
     
-    
     /// creates and adds the hands of the clock as CALayer's to clockView
-    func addClockHands() {
+    /// - returns: a UIView object containing the layers of the hands
+    func getHandLayers() -> (hourHand: CAShapeLayer, minuteHand: CAShapeLayer, secondHand: CAShapeLayer, center: CAShapeLayer) {
         
-        
-        
+        let handsView = UIView()
         
         let hourPath = CGMutablePath()
         let minutePath = CGMutablePath()
@@ -264,26 +263,38 @@ class MetricTime {
         centerPiece.fillColor = UIColor.gray.cgColor
         
         
-        //add all the layers to clockView as subviews
-        clockView.layer.addSublayer(hourLayer)
-        clockView.layer.addSublayer(minuteLayer)
-        clockView.layer.addSublayer(secondLayer)
-        clockView.layer.addSublayer(centerPiece)
+//        //add all the layers to clockView as subviews
+//        handsView.layer.addSublayer(hourLayer)
+//        handsView.layer.addSublayer(minuteLayer)
+//        handsView.layer.addSublayer(secondLayer)
+//        handsView.layer.addSublayer(centerPiece)
         
+        return (hourHand: hourLayer, minuteHand: minuteLayer, secondHand: secondLayer, center: centerPiece)
         
     }
     
 
     
+//    
+//    //INCOMPLETE!
+//    func updateHandsPosition(metricTime: (hour: Int, minute: Int, second: Int)) {
+//        
+//        setHandsAngle(handDegrees: getHandsPosition(metricTime: (hour: metricTime.hour, minute: metricTime.minute, second: metricTime.second)))
+//    }
+//    //INCOMPLETE!
+//    func setHandsAngle(handDegrees: (hAngle:CGFloat, mAngle:CGFloat, sAngle:CGFloat)) {
+//        
+//
+//        
+//    }
+//
+//    
     
-    //INCOMPLETE!
-
     func updateHandsPosition(metricTime: (hour: Int, minute: Int, second: Int)) {
-        
-        setHandsAngle(handDegrees: getHandsPosition(metricTime: (hour: metricTime.hour, minute: metricTime.minute, second: metricTime.second)))
+        setHandAngles(handAngles: calculateNewHandAngles(metricTime: metricTime))
     }
-    //WHAT?
-    func getHandsPosition(metricTime: (hour: Int, minute: Int, second: Int)) -> (hAngle:CGFloat, mAngle:CGFloat, sAngle:CGFloat) {
+    
+    func calculateNewHandAngles(metricTime: (hour: Int, minute: Int, second: Int)) -> (hourAngle:CGFloat, minuteAngle:CGFloat, secondAngle:CGFloat) {
         
         var secondsAngle = (Double(metricTime.second)/100)
         var minutesAngle = (Double(metricTime.minute)/100 + Double(metricTime.second)/10000.0)
@@ -294,21 +305,14 @@ class MetricTime {
         secondsAngle = secondsAngle*360
         
         
-        return (hAngle: degree2radian(CGFloat(hoursAngle)),mAngle: degree2radian(CGFloat(minutesAngle)),sAngle: degree2radian(CGFloat(secondsAngle)))
-    }
-
-    func setHandsAngle(handDegrees: (hAngle:CGFloat, mAngle:CGFloat, sAngle:CGFloat)) {
-        
-         hourLayer.transform = CATransform3DMakeRotation(handDegrees.hAngle, 0, 0, 1)
-         minuteLayer.transform = CATransform3DMakeRotation(handDegrees.mAngle, 0, 0, 1)
-         secondLayer.transform = CATransform3DMakeRotation(handDegrees.sAngle, 0, 0, 1)
-        
-        
+        return (hourAngle: degree2radian(CGFloat(hoursAngle)), minuteAngle: degree2radian(CGFloat(minutesAngle)), secondAngle: degree2radian(CGFloat(secondsAngle)))
     }
     
-    
-    
-    
+    func setHandAngles(handAngles: (hourAngle:CGFloat, minuteAngle:CGFloat, secondAngle:CGFloat)) {
+        //hourLayer.transform = CATransform3DMakeRotation(handAngles.hourAngle, 0, 0, 1)
+        //minuteLayer.transform = CATransform3DMakeRotation(handAngles.minuteAngle, 0, 0, 1)
+        //secondLayer.transform = CATransform3DMakeRotation(handAngles.secondAngle, 0, 0, 1)
+    }
     
     
     
