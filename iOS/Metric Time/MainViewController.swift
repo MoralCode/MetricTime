@@ -32,7 +32,7 @@ class MainViewController: UIViewController, UIGestureRecognizerDelegate {
     var gesture: UILongPressGestureRecognizer = UILongPressGestureRecognizer()
     
     
-    let metricTime:MetricTime = MetricTime() //allows us to use the same instance of metricTime
+    let metricTime = MetricTime() //allows us to use the same instance of metricTime
     var clock:UIView!
    
     var lastCall:Date?
@@ -46,7 +46,7 @@ class MainViewController: UIViewController, UIGestureRecognizerDelegate {
         
         
         
-        let currentMetricTime = metricTime.getCurrentMetricTime(currentTime: components)
+        let currentMetricTime = metricTime.getCurrentMetricTime()
         
         
         //update clock
@@ -54,6 +54,8 @@ class MainViewController: UIViewController, UIGestureRecognizerDelegate {
 
   //      rotateHands(clockView, rotation: (positions.h, positions.m, positions.s) )
         
+        
+        //why wont this update?!
         metricTimeDisplay?.text = String(format: "%01d : %02d : %02d", currentMetricTime.hour, currentMetricTime.minute, currentMetricTime.second)
     }
  
