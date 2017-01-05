@@ -101,10 +101,8 @@ class MetricTime {
             let y = clockView.bounds.midY - desiredPointRadius * sin(tickSpacing * CGFloat(counter)+degree2radian(adjustment))
             points.append(CGPoint(x: x, y: y))
             counter -= 1;
-            print(counter)
         }
-        print("cut")
-        return points
+       return points
         
     }
 
@@ -138,12 +136,11 @@ class MetricTime {
         
     }
     
-    //INCOMPLETE!
     /// draws the numbers around the clock face
     func addNumbers() {
         
         
-        let numberPositions = getPointsOnCircle(forNumbers: true) //inset determines spacing between numbers and edge of the clock
+        let numberPositions = getPointsOnCircle(forNumbers: true)
         
         // Flip text co-ordinate space, see: http://blog.spacemanlabs.com/2011/08/quick-tip-drawing-core-text-right-side-up/
         clockContext?.translateBy(x: 0.0, y: clockView.bounds.height)
