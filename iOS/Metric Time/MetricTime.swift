@@ -428,9 +428,14 @@ class Clock: UIView {
         metricTime.drawClockCircle()
         metricTime.addTickMarks()
         metricTime.addNumbers()
-        metricTime.addClockHands()
         
+        let hands = metricTime.getHandLayers()
         
+        self.layer.addSublayer(hands.hourHand)
+        self.layer.addSublayer(hands.minuteHand)
+        self.layer.addSublayer(hands.secondHand)
+        self.layer.addSublayer(hands.center)
+
         
     }
     
