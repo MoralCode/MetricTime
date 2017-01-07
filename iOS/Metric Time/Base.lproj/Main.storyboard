@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="9aD-f1-5WI">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -18,7 +18,7 @@
         <!--Main View Controller-->
         <scene sceneID="nxR-kO-mDF">
             <objects>
-                <viewController storyboardIdentifier="testView" id="9aD-f1-5WI" customClass="MainViewController" customModule="Metric_Time" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="9aD-f1-5WI" customClass="MainViewController" customModule="Metric_Time" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="FjL-5F-If0"/>
                         <viewControllerLayoutGuide type="bottom" id="uhj-v2-Ucq"/>
@@ -27,24 +27,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0v7-M3-cGd">
-                                <rect key="frame" x="16" y="20" width="50" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="0Su-Q6-PMH">
-                                        <variation key="widthClass=compact" constant="50"/>
-                                    </constraint>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="4Xe-YY-1WU"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="C3V-rI-GZv"/>
-                                    <constraint firstAttribute="height" constant="50" id="pbB-D7-dz5"/>
-                                </constraints>
-                                <state key="normal" image="Delete Filled-100">
-                                    <color key="titleColor" red="0.0" green="1" blue="0.14984990070000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="backPressed:" destination="S3a-F5-HS0" eventType="touchUpInside" id="Luz-NA-lVj"/>
-                                    <segue destination="BYZ-38-t0r" kind="show" id="Kku-lV-xhw"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IMTS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NMw-xT-fEU">
                                 <rect key="frame" x="299" y="617" width="60" height="30"/>
                                 <constraints>
@@ -68,8 +50,6 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="uhj-v2-Ucq" firstAttribute="top" secondItem="NMw-xT-fEU" secondAttribute="bottom" constant="20" id="28g-YK-2eg"/>
-                            <constraint firstItem="0v7-M3-cGd" firstAttribute="top" secondItem="FjL-5F-If0" secondAttribute="bottom" id="5sS-fN-Bhc"/>
-                            <constraint firstItem="0v7-M3-cGd" firstAttribute="leading" secondItem="r90-Gl-jMS" secondAttribute="leadingMargin" id="BIJ-Bc-60C"/>
                             <constraint firstItem="1e5-pe-KH6" firstAttribute="centerX" secondItem="r90-Gl-jMS" secondAttribute="centerX" id="EaG-RU-3xz"/>
                             <constraint firstItem="1e5-pe-KH6" firstAttribute="leading" secondItem="r90-Gl-jMS" secondAttribute="leadingMargin" constant="20" id="NSI-Uq-pPk"/>
                             <constraint firstAttribute="trailingMargin" secondItem="1e5-pe-KH6" secondAttribute="trailing" constant="20" id="QyB-le-Jul"/>
@@ -85,52 +65,10 @@
             </objects>
             <point key="canvasLocation" x="446" y="-301"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
-            <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Metric_Time" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00 : 00 : 00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DCN-vF-qMD">
-                                <rect key="frame" x="36" y="587" width="303" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="Wt1-4n-LGD"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Calculator" family="Calculator" pointSize="58"/>
-                                <color key="textColor" red="0.0" green="1" blue="0.14984990070000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        <accessibility key="accessibilityConfiguration">
-                            <accessibilityTraits key="traits" notEnabled="YES"/>
-                            <bool key="isElement" value="NO"/>
-                        </accessibility>
-                        <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="DCN-vF-qMD" secondAttribute="trailing" constant="20" id="EXd-WZ-BmZ"/>
-                            <constraint firstItem="DCN-vF-qMD" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FBY-v2-hP9"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="DCN-vF-qMD" secondAttribute="bottom" constant="20" id="NuF-kC-8KV"/>
-                            <constraint firstItem="DCN-vF-qMD" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="u3L-Cw-ZCN"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="metricTimeDisplay" destination="DCN-vF-qMD" id="bAz-Hn-LQP"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="444" y="521"/>
-        </scene>
         <!--Conversion View Controller-->
         <scene sceneID="Poi-IE-Kr1">
             <objects>
-                <viewController storyboardIdentifier="conversionView" id="S3a-F5-HS0" customClass="ConversionViewController" customModule="Metric_Time" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="conversionView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="S3a-F5-HS0" customClass="ConversionViewController" customModule="Metric_Time" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DaS-WH-uWC"/>
                         <viewControllerLayoutGuide type="bottom" id="Vv1-Pd-MFZ"/>
@@ -352,7 +290,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BPZ-38-HsW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1116" y="521"/>
+            <point key="canvasLocation" x="1156" y="-302"/>
         </scene>
     </scenes>
     <resources>

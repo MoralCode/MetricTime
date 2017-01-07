@@ -29,7 +29,7 @@ class MainViewController: UIViewController, UIGestureRecognizerDelegate {
     
     fileprivate var displayLink:CADisplayLink?
     
-   // var gesture: UILongPressGestureRecognizer = UILongPressGestureRecognizer()
+    var gesture: UILongPressGestureRecognizer = UILongPressGestureRecognizer()
     
     
     let metricTime = MetricTime() //allows us to use the same instance of metricTime
@@ -56,18 +56,16 @@ class MainViewController: UIViewController, UIGestureRecognizerDelegate {
  
         
  
-//    func handleGesture(sender: UILongPressGestureRecognizer){
-//        
-//        if sender.state == UIGestureRecognizerState.began {
-//            //remove the gesture recogniser so it doesnt get called while the Convertion view is segue-ing in...
-//            view.removeGestureRecognizer(gesture)
-//            
-//            let conversionView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "conversionView")
-//            
-//            // and then present it modally
-//            show(conversionView, sender: nil)
-//        }
-//    }
+    func handleGesture(sender: UILongPressGestureRecognizer){
+        if sender.state == UIGestureRecognizerState.began {
+            //remove the gesture recogniser so it doesnt get called while the Convertion view is segue-ing in...
+            view.removeGestureRecognizer(gesture)
+            let conversionView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "conversionView")
+            
+            // and then present it modally
+            show(conversionView, sender: nil)
+        }
+    }
     
     override var prefersStatusBarHidden:Bool { return true }
     
@@ -79,6 +77,9 @@ class MainViewController: UIViewController, UIGestureRecognizerDelegate {
        
         //is this needed for the gesture recogniser to work when the user long-presses the clock face?
         view.isUserInteractionEnabled = true
+        
+        gesture.addTarget(self, action: #selector(ViewController.handleGesture))
+
         
         //position clock view
         self.view.addSubview(clock)
@@ -107,11 +108,11 @@ class MainViewController: UIViewController, UIGestureRecognizerDelegate {
         
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        //re-add the gesture recognizer so the convertion screen can be re-accessed...
-//        view.addGestureRecognizer(gesture)
-//        
-//    }
+    override func viewDidAppear(_ animated: Bool) {
+        //re-add the gesture recognizer so the convertion screen can be re-accessed...
+        view.addGestureRecognizer(gesture)
+        
+    }
     
 
 }
