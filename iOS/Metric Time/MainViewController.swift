@@ -34,8 +34,6 @@ class MainViewController: UIViewController, UIGestureRecognizerDelegate {
     
     let metricTime = MetricTime() //allows us to use the same instance of metricTime
    
-    var lastCall:Date?
-
     
  
     func updateTime() {
