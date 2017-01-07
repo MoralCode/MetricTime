@@ -264,20 +264,6 @@ class MetricTime {
     
 
     
-//    
-//    //INCOMPLETE!
-//    func updateHandsPosition(metricTime: (hour: Int, minute: Int, second: Int)) {
-//        
-//        setHandsAngle(handDegrees: getHandsPosition(metricTime: (hour: metricTime.hour, minute: metricTime.minute, second: metricTime.second)))
-//    }
-//    //INCOMPLETE!
-//    func setHandsAngle(handDegrees: (hAngle:CGFloat, mAngle:CGFloat, sAngle:CGFloat)) {
-//        
-//
-//        
-//    }
-//
-//    
     
     func updateHandsPosition(metricTime: (hour: Int, minute: Int, second: Int)) {
         setHandAngles(handAngles: calculateNewHandAngles(metricTime: metricTime))
