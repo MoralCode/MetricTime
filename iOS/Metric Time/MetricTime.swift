@@ -314,40 +314,19 @@ class MetricTime {
     /// Gets the current time and converts it to metric
     ///
     /// - returns: The current metric time in (hour: Int, minute: Int, second: Int) format
-    func getCurrentMetricTime() -> (hour: Int, minute: Int, second: Int) {
+    func getCurrentMetricTime() -> (hour: Int, minute: Int, second: Int, millisecond: Int) {
     
         
         var currentTime = (Calendar.current as NSCalendar).components([ .hour, .minute, .second, .nanosecond], from: Date())
+        var currentMetricTime = (hour: 0, minute: 0, second: 0, millisecond: 0)
+    
+        
+        let hoursInMillis = Double(currentTime.hour! * 3600000 /*milliseconds per hour*/)
+        let minsInMillis = Double(currentTime.minute! * 60000 /* milliseconds per minute*/)
+        let secsInMillis = Double(currentTime.second! * 1000 /*milliseconds per second*/)
 
-//        //why wont this work with smoothing out the clock...
-//        if !clockShouldTick {
-//            
-//            seconds = Double(currentTime.second!) + Double(currentTime.nanosecond!)/1000000000.0
-//            
-//            
-//            if let lastTimeCalled = lastCall //unwrap
-//            {
-//                //actualTime[2] += Int(0.0 * lastTimeCalled.timeIntervalSinceNow * 60.0 * -1.0)
-//                seconds += 0.0 * lastTimeCalled.timeIntervalSinceNow * 60.0 * -1.0
-//            }
-//            
-//            lastCall = Date()
-//            
-//        } else { seconds = Double(currentTime.second!) }
-//
-//        
-        
-        //remind me what the f these do again?
-         var seconds = 0.0
-        var convertedSeconds = 0.0
+        var millisecondsSinceToday = hoursInMillis + minsInMillis + secsInMillis + Double((currentTime.nanosecond!/1000000) as Int)
 
-        
-        //convert current time to milliseconds
-        var millisecondsSinceToday = Double(currentTime.hour! * 3600000 /*milliseconds per hour*/) + Double(currentTime.minute! * 60000 /* milliseconds per minute*/) + Double(seconds * 1000.0 /*milliseconds per second*/)
-
-        
-        var currentMetricTime = (hour: 0, minute: 0, second: 0)
-        
         
         //convert current time in milliseconds to metric
         currentMetricTime.hour = Int(millisecondsSinceToday / 8640000)
@@ -359,9 +338,12 @@ class MetricTime {
         millisecondsSinceToday -= Double(currentMetricTime.minute*86400)
          
         currentMetricTime.second = Int(millisecondsSinceToday / 864)
-        convertedSeconds = Double(millisecondsSinceToday / 864) //?
         
+        millisecondsSinceToday -= Double(currentMetricTime.second*864)
         
+        currentMetricTime.millisecond = Int(millisecondsSinceToday)
+
+        //print((currentTime.nanosecond!/1000000) as Int)
         return currentMetricTime
          
  
