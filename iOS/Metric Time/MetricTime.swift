@@ -303,9 +303,10 @@ class MetricTime {
     }
     
     func setHandAngles(handAngles: (hourAngle:CGFloat, minuteAngle:CGFloat, secondAngle:CGFloat)) {
-        //hourLayer.transform = CATransform3DMakeRotation(handAngles.hourAngle, 0, 0, 1)
-        //minuteLayer.transform = CATransform3DMakeRotation(handAngles.minuteAngle, 0, 0, 1)
-        //secondLayer.transform = CATransform3DMakeRotation(handAngles.secondAngle, 0, 0, 1)
+        let layers = self.clockView.layer.sublayers
+        layers?[0].transform = CATransform3DMakeRotation(handAngles.hourAngle, 0, 0, 1)
+        layers?[1].transform = CATransform3DMakeRotation(handAngles.minuteAngle, 0, 0, 1)
+        layers?[2].transform = CATransform3DMakeRotation(handAngles.secondAngle, 0, 0, 1)
     }
     
     
