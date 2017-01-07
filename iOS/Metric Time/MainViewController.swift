@@ -55,7 +55,6 @@ class MainViewController: UIViewController, UIGestureRecognizerDelegate {
     }
  
         
-    }
  
 //    func handleGesture(sender: UILongPressGestureRecognizer){
 //        
