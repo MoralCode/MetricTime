@@ -33,7 +33,6 @@ class MainViewController: UIViewController, UIGestureRecognizerDelegate {
     
     
     let metricTime = MetricTime() //allows us to use the same instance of metricTime
-    var clock:UIView!
    
     var lastCall:Date?
 
@@ -81,7 +80,7 @@ class MainViewController: UIViewController, UIGestureRecognizerDelegate {
         
         super.viewDidLoad()
         
-        clock = metricTime.getAnalogClock()
+        let clock = metricTime.getAnalogClock()
        
         //is this needed for the gesture recogniser to work when the user long-presses the clock face?
         view.isUserInteractionEnabled = true
