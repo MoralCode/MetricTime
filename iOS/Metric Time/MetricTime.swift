@@ -378,6 +378,10 @@ class MetricTime {
     
 }
 
+func degree2radian(_ a:CGFloat)->CGFloat {
+    let b = CGFloat(M_PI) * a/180
+    return b
+}
 
 class Clock: UIView {
     
