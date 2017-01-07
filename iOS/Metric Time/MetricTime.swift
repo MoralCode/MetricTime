@@ -285,13 +285,18 @@ class MetricTime {
     
     func calculateNewHandAngles(metricTime: (hour: Int, minute: Int, second: Int)) -> (hourAngle:CGFloat, minuteAngle:CGFloat, secondAngle:CGFloat) {
         
-        var secondsAngle = (Double(metricTime.second)/100)
-        var minutesAngle = (Double(metricTime.minute)/100 + Double(metricTime.second)/10000.0)
-        var hoursAngle = (Double(metricTime.hour)/10) + minutesAngle/10 //this line must come after minutesAngle Calculation... (feels hacky to me)
+        //example metric time: 5:25:16
         
-        hoursAngle = hoursAngle*360
-        minutesAngle = minutesAngle*360
-        secondsAngle = secondsAngle*360
+        var secondsAngle = (Double(metricTime.second)/100)// ADD MILLIS HERE // 16/100 = .16
+        var minutesAngle = (Double(metricTime.minute)/100 + secondsAngle/100)// 25/100 = .25; .16/100 = .0016; total: .2516
+        var hoursAngle = (Double(metricTime.hour)/10 + Double(metricTime.minute)/1000) // 5/10 = .5; .25/10 = .025; total: .525 //seconds are unneccesary
+        
+        //get the angle of the hands in degrees by multiplying the decimal/percentages by the total (360)
+        hoursAngle = hoursAngle*360 //.52516 * 360
+        minutesAngle = minutesAngle*360 //.2516 * 360
+        secondsAngle = secondsAngle*360 //.16 * 360
+        
+       //print(secondsAngle, minutesAngle, hoursAngle)
         
         
         return (hourAngle: degree2radian(CGFloat(hoursAngle)), minuteAngle: degree2radian(CGFloat(minutesAngle)), secondAngle: degree2radian(CGFloat(secondsAngle)))
