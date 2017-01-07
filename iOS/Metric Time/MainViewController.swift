@@ -76,7 +76,7 @@ class MainViewController: UIViewController, UIGestureRecognizerDelegate {
         //is this needed for the gesture recogniser to work when the user long-presses the clock face?
         view.isUserInteractionEnabled = true
         
-        gesture.addTarget(self, action: #selector(ViewController.handleGesture))
+        gesture.addTarget(self, action: #selector(MainViewController.handleGesture))
 
         
         //position clock view
