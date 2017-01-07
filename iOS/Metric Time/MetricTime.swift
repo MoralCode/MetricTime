@@ -194,8 +194,6 @@ class MetricTime {
     /// - returns: a UIView object containing the layers of the hands
     func getHandLayers() -> (hourHand: CAShapeLayer, minuteHand: CAShapeLayer, secondHand: CAShapeLayer, center: CAShapeLayer) {
         
-        let handsView = UIView()
-        
         let hourPath = CGMutablePath()
         let minutePath = CGMutablePath()
         let secondPath = CGMutablePath()
@@ -259,12 +257,6 @@ class MetricTime {
         centerPiece.path = UIBezierPath(arcCenter: CGPoint(x:clockView.frame.midX,y:clockView.frame.midX), radius: 2.75, startAngle: 0, endAngle: CGFloat(2*M_PI), clockwise: true).cgPath
         centerPiece.fillColor = UIColor.gray.cgColor
         
-        
-//        //add all the layers to clockView as subviews
-//        handsView.layer.addSublayer(hourLayer)
-//        handsView.layer.addSublayer(minuteLayer)
-//        handsView.layer.addSublayer(secondLayer)
-//        handsView.layer.addSublayer(centerPiece)
         
         return (hourHand: hourLayer, minuteHand: minuteLayer, secondHand: secondLayer, center: centerPiece)
         
