@@ -63,7 +63,7 @@ class MetricTime {
     func drawClockCircle() {
         
         //draw the circle
-        clockContext?.addArc(center: CGPoint(x: clockView.bounds.midX, y: clockView.bounds.midY), radius: clockView.bounds.width/2, startAngle: 0, endAngle: CGFloat(2*M_PI), clockwise: true)
+        clockContext?.addArc(center: CGPoint(x: clockView.bounds.midX, y: clockView.bounds.midY), radius: clockView.bounds.width/2, startAngle: 0, endAngle: CGFloat(2*Double.pi), clockwise: true)
         
         clockContext?.drawPath(using: CGPathDrawingMode.fillStroke)
         
@@ -254,7 +254,7 @@ class MetricTime {
         //finally add the center piece
         
        // let circle = UIBezierPath(arcCenter: CGPoint(x:clockView.frame.midX,y:clockView.frame.midX), radius: 2.75, startAngle: 0, endAngle: CGFloat(2*M_PI), clockwise: true)
-        centerPiece.path = UIBezierPath(arcCenter: CGPoint(x:clockView.frame.midX,y:clockView.frame.midX), radius: 2.75, startAngle: 0, endAngle: CGFloat(2*M_PI), clockwise: true).cgPath
+        centerPiece.path = UIBezierPath(arcCenter: CGPoint(x:clockView.frame.midX,y:clockView.frame.midX), radius: 2.75, startAngle: 0, endAngle: CGFloat(2*Double.pi), clockwise: true).cgPath
         centerPiece.fillColor = UIColor.gray.cgColor
         
         
@@ -379,7 +379,7 @@ class MetricTime {
 }
 
 func degree2radian(_ a:CGFloat)->CGFloat {
-    let b = CGFloat(M_PI) * a/180
+    let b = CGFloat(Double.pi) * a/180
     return b
 }
 
