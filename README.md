@@ -1,3 +1,8 @@
+<p align="center">
+    <img src="https://raw.githubusercontent.com/DeveloperACE/MetricTime/master/iOS/Metric%20Time/Assets.xcassets/ClockFace.imageset/clock-face.png">
+</p>
+
+
 # MetricTime
 MetricTime is designed to be one universal timekeeping system that eliminates the hassle of calculating time since most of its convertions as simple as converting meters to centimeters!
 
