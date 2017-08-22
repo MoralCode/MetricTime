@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/DeveloperACE/MetricTime/master/iOS/Metric%20Time/Assets.xcassets/ClockFace.imageset/clock-face.png">
+    <img src="simpleicon3.png">
 </p>
 
 
