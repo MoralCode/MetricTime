@@ -16,20 +16,49 @@ import Foundation
 import UIKit
 
 class MetricTime {
+    //Constants
+    let MILLISECONDS_PER_HOUR = 1000*60*60 //3,600,000
+    let MILLISECONDS_PER_MINUTE = 1000*60 //60,000
+    let MILLISECONDS_PER_SECOND = 1000 //really? do I have to comment the value of this?
+    
+    let METRIC_MILLISECONDS_PER_HOUR = 864*100*100 //8,640,00
+    let METRIC_MILLISECONDS_PER_MINUTE = 864*100 //86,400
+    let METRIC_MILLISECONDS_PER_SECOND = 864 //youre kidding me.
+    
+    let DEGREES_IN_A_CIRCLE = 360
+    let RADIANS_IN_A_CIRCLE = 2*Double.pi
+    
+    
     
     //SETTINGS
-    let clockShouldTick = false //setting. not fully implemented
+    let CLOCK_TICKS = false //setting. not fully implemented
 
     
     //ANALOG CLOCK
-    let clockContext:CGContext? = UIGraphicsGetCurrentContext()
+    let clockContext:CGContext? = UIGraphicsGetCurrentContext() //why is this a constant?
     var clockView = Clock(frame: CGRect(x: 0, y: 0, width: 230, height: 230))
 
     
-    let clockViewRadius = 0;//unused
-    let clockColor:CGColor = UIColor.green.cgColor
-    let numbersFont = UIFont(name: "DamascusBold", size: 23.0)//manually calculated size from radius/2
-    let numberInset:CGFloat = 3.2
+    //UI
+    let CENTER_PIECE_RADIUS = 2.75
+    
+    let HOUR_HAND_THICKNESS = 4
+    let MINUTE_HAND_THICKNESS = 3
+    let SECOND_HAND_THICKNESS = 1
+    
+    let HOUR_HAND_LENGTH = 50
+    let MINUTE_HAND_LENGTH = 62.5
+    let SECOND_HAND_LENGTH = 75
+    
+    let HOUR_HAND_COLOR = UIColor.white.cgColor
+    let MINUTE_HAND_COLOR = UIColor.white.cgColor
+    let SECOND_HAND_COLOR = UIColor.red.cgColor
+    let CENTER_PIECE_COLOR = UIColor.gray.cgColor
+    
+    //let clockViewRadius = 0;//unused
+    let CLOCK_TEXT_COLOR:CGColor = UIColor.green.cgColor
+    let NUMBER_FONT = UIFont(name: "DamascusBold", size: 23.0)//manually calculated size from radius/2
+    let NUMBER_INSET:CGFloat = 3.2
     
     
     //CONVERTING TIME
@@ -63,7 +92,7 @@ class MetricTime {
     func drawClockCircle() {
         
         //draw the circle
-        clockContext?.addArc(center: CGPoint(x: clockView.bounds.midX, y: clockView.bounds.midY), radius: clockView.bounds.width/2, startAngle: 0, endAngle: CGFloat(2*Double.pi), clockwise: true)
+        clockContext?.addArc(center: CGPoint(x: clockView.bounds.midX, y: clockView.bounds.midY), radius: clockView.bounds.width/2, startAngle: 0, endAngle: CGFloat(RADIANS_IN_A_CIRCLE), clockwise: true)
         
         clockContext?.drawPath(using: CGPathDrawingMode.fillStroke)
         
@@ -85,12 +114,12 @@ class MetricTime {
     
         if forNumbers {
             desiredNumberOfPoints = 10
-            inset = (clockView.bounds.width/2)/numberInset
+            inset = (clockView.bounds.width/2)/NUMBER_INSET
             adjustment = -90 //same as 270
         }
         
         var counter = desiredNumberOfPoints //this must stay as is. dont remove the counter variable
-        let tickSpacing = degree2radian(360/CGFloat(desiredNumberOfPoints))
+        let tickSpacing = degree2radian(CGFloat(DEGREES_IN_A_CIRCLE)/CGFloat(desiredNumberOfPoints))
         let desiredPointRadius = (clockView.bounds.width/2)-inset //the difference between this and the actual radius of the clock is the inset value
         
         var points = [CGPoint]()
@@ -130,7 +159,7 @@ class MetricTime {
             
         }
         
-        clockContext?.setStrokeColor(clockColor)
+        clockContext?.setStrokeColor(CLOCK_TEXT_COLOR)
         clockContext?.setLineWidth(3.0)
         clockContext?.strokePath()
         
@@ -146,7 +175,7 @@ class MetricTime {
         clockContext?.translateBy(x: 0.0, y: clockView.bounds.height)
         clockContext?.scaleBy(x: 1.0, y: -1.0)
         
-        let textAttributes = [NSFontAttributeName:numbersFont!, NSForegroundColorAttributeName:clockColor] as CFDictionary
+        let textAttributes = [NSFontAttributeName:NUMBER_FONT!, NSForegroundColorAttributeName:CLOCK_TEXT_COLOR] as CFDictionary
         
         // multiplier enables correcting numbering when fewer than 12 numbers are featured, e.g. 4 sides will display 12, 3, 6, 9 (formerly preceeded by a 270 degree adjustment... qué?)
         let multiplier = 12/10
@@ -204,9 +233,9 @@ class MetricTime {
         secondPath.move(to: CGPoint(x: clockView.frame.midX, y: clockView.frame.midY))
         
         //draw line straight up at specified lengths
-        hourPath.addLine(to: CGPoint(x: clockView.frame.midX, y: clockView.frame.midY-50))
-        minutePath.addLine(to: CGPoint(x: clockView.frame.midX, y: clockView.frame.midY-62.5))
-        secondPath.addLine(to: CGPoint(x: clockView.frame.midX, y: clockView.frame.midY-75))
+        hourPath.addLine(to: CGPoint(x: clockView.frame.midX, y: clockView.frame.midY - CGFloat(HOUR_HAND_LENGTH)))
+        minutePath.addLine(to: CGPoint(x: clockView.frame.midX, y: clockView.frame.midY - CGFloat(MINUTE_HAND_LENGTH)))
+        secondPath.addLine(to: CGPoint(x: clockView.frame.midX, y: clockView.frame.midY - CGFloat(SECOND_HAND_LENGTH)))
         
         //layers are then rotated from these vertical positions
         
@@ -226,9 +255,9 @@ class MetricTime {
         secondLayer.path = secondPath
         
         //set line thicknesses
-        hourLayer.lineWidth = 4
-        minuteLayer.lineWidth = 3
-        secondLayer.lineWidth = 1
+        hourLayer.lineWidth = CGFloat(HOUR_HAND_THICKNESS)
+        minuteLayer.lineWidth = CGFloat(MINUTE_HAND_THICKNESS)
+        secondLayer.lineWidth = CGFloat(SECOND_HAND_THICKNESS)
         
         //set line ending
         hourLayer.lineCap = kCALineCapRound
@@ -237,9 +266,9 @@ class MetricTime {
     
         
         //set color
-        hourLayer.strokeColor = UIColor.white.cgColor
-        minuteLayer.strokeColor = UIColor.white.cgColor
-        secondLayer.strokeColor = UIColor.red.cgColor
+        hourLayer.strokeColor = HOUR_HAND_COLOR
+        minuteLayer.strokeColor = MINUTE_HAND_COLOR
+        secondLayer.strokeColor = SECOND_HAND_COLOR
         
         
         hourLayer.rasterizationScale = UIScreen.main.scale;
@@ -254,8 +283,8 @@ class MetricTime {
         //finally add the center piece
         
        // let circle = UIBezierPath(arcCenter: CGPoint(x:clockView.frame.midX,y:clockView.frame.midX), radius: 2.75, startAngle: 0, endAngle: CGFloat(2*M_PI), clockwise: true)
-        centerPiece.path = UIBezierPath(arcCenter: CGPoint(x:clockView.frame.midX,y:clockView.frame.midX), radius: 2.75, startAngle: 0, endAngle: CGFloat(2*Double.pi), clockwise: true).cgPath
-        centerPiece.fillColor = UIColor.gray.cgColor
+        centerPiece.path = UIBezierPath(arcCenter: CGPoint(x:clockView.frame.midX,y:clockView.frame.midX), radius: CGFloat(CENTER_PIECE_RADIUS), startAngle: 0, endAngle: CGFloat(RADIANS_IN_A_CIRCLE), clockwise: true).cgPath
+        centerPiece.fillColor = CENTER_PIECE_COLOR
         
         
         return (hourHand: hourLayer, minuteHand: minuteLayer, secondHand: secondLayer, center: centerPiece)
@@ -275,12 +304,12 @@ class MetricTime {
         
         var secondsAngle = (Double(metricTime.second)/100)// ADD MILLIS HERE // 16/100 = .16
         var minutesAngle = (Double(metricTime.minute)/100 + secondsAngle/100)// 25/100 = .25; .16/100 = .0016; total: .2516
-        var hoursAngle = (Double(metricTime.hour)/10 + Double(metricTime.minute)/1000) // 5/10 = .5; .25/10 = .025; total: .525 //seconds are unneccesary
+        var hoursAngle = (Double(metricTime.hour)/10 + Double(metricTime.minute)/Double(MILLISECONDS_PER_SECOND)) // 5/10 = .5; .25/10 = .025; total: .525 //seconds are unneccesary
         
         //get the angle of the hands in degrees by multiplying the decimal/percentages by the total (360)
-        hoursAngle = hoursAngle*360 //.52516 * 360
-        minutesAngle = minutesAngle*360 //.2516 * 360
-        secondsAngle = secondsAngle*360 //.16 * 360
+        hoursAngle = hoursAngle*Double(DEGREES_IN_A_CIRCLE) //.52516 * 360
+        minutesAngle = minutesAngle*Double(DEGREES_IN_A_CIRCLE) //.2516 * 360
+        secondsAngle = secondsAngle*Double(DEGREES_IN_A_CIRCLE) //.16 * 360
         
        //print(secondsAngle, minutesAngle, hoursAngle)
         
@@ -307,29 +336,29 @@ class MetricTime {
         var currentMetricTime = (hour: 0, minute: 0, second: 0, millisecond: 0)
     
         
-        let hoursInMillis = Double(currentTime.hour! * 3600000 /*milliseconds per hour*/)
-        let minsInMillis = Double(currentTime.minute! * 60000 /* milliseconds per minute*/)
-        let secsInMillis = Double(currentTime.second! * 1000 /*milliseconds per second*/)
+        let hoursInMillis = Double(currentTime.hour! * MILLISECONDS_PER_HOUR)
+        let minsInMillis = Double(currentTime.minute! * MILLISECONDS_PER_MINUTE)
+        let secsInMillis = Double(currentTime.second! * MILLISECONDS_PER_SECOND)
 
         var millisecondsSinceToday = hoursInMillis + minsInMillis + secsInMillis + Double((currentTime.nanosecond!/1000000) as Int)
 
         
         //convert current time in milliseconds to metric
-        currentMetricTime.hour = Int(millisecondsSinceToday / 8640000)
+        currentMetricTime.hour = Int(millisecondsSinceToday / Double(METRIC_MILLISECONDS_PER_HOUR))
          
-        millisecondsSinceToday -= Double(currentMetricTime.hour*8640000)
+        millisecondsSinceToday -= Double(currentMetricTime.hour*METRIC_MILLISECONDS_PER_HOUR)
          
-        currentMetricTime.minute = Int(millisecondsSinceToday / 86400)
+        currentMetricTime.minute = Int(millisecondsSinceToday / Double(METRIC_MILLISECONDS_PER_MINUTE))
         
-        millisecondsSinceToday -= Double(currentMetricTime.minute*86400)
+        millisecondsSinceToday -= Double(currentMetricTime.minute*METRIC_MILLISECONDS_PER_MINUTE)
          
-        currentMetricTime.second = Int(millisecondsSinceToday / 864)
+        currentMetricTime.second = Int(millisecondsSinceToday / Double(METRIC_MILLISECONDS_PER_SECOND))
         
-        millisecondsSinceToday -= Double(currentMetricTime.second*864)
+        millisecondsSinceToday -= Double(currentMetricTime.second*METRIC_MILLISECONDS_PER_SECOND)
         
         currentMetricTime.millisecond = Int(millisecondsSinceToday)
 
-        //print((currentTime.nanosecond!/1000000) as Int)
+        //print((currentTime.nanosecond!/MILLISECONDS_PER_SECOND000) as Int)
         return currentMetricTime
          
  
@@ -349,19 +378,19 @@ class MetricTime {
         
         
         if toMetric {
-            inputTimeMillis = (inputTime.hour * 3600000 /*milliseconds per hour*/) + (inputTime.minute * 60000 /* milliseconds per minute*/) + (inputTime.second * 1000 /*milliseconds per second*/)
+            inputTimeMillis = (inputTime.hour * MILLISECONDS_PER_HOUR) + (inputTime.minute * MILLISECONDS_PER_MINUTE) + (inputTime.second * MILLISECONDS_PER_SECOND)
         } else {
-            inputTimeMillis = (inputTime.hour * 8640000 /*metric milliseconds per hour*/) + (inputTime.minute * 86400 /* metric milliseconds per minute*/) + (inputTime.second * 864 /*milliseconds per second*/)
+            inputTimeMillis = (inputTime.hour * METRIC_MILLISECONDS_PER_HOUR) + (inputTime.minute * METRIC_MILLISECONDS_PER_MINUTE) + (inputTime.second * METRIC_MILLISECONDS_PER_SECOND)
         }
         
         
-        convertedTime.hour = Int(inputTimeMillis / 8640000)
-        inputTimeMillis -= (convertedTime.hour*8640000)
+        convertedTime.hour = Int(inputTimeMillis / METRIC_MILLISECONDS_PER_HOUR)
+        inputTimeMillis -= (convertedTime.hour*METRIC_MILLISECONDS_PER_HOUR)
         
-        convertedTime.minute = Int(inputTimeMillis / 86400)
-        inputTimeMillis -= (convertedTime.minute*86400)
+        convertedTime.minute = Int(inputTimeMillis / METRIC_MILLISECONDS_PER_MINUTE)
+        inputTimeMillis -= (convertedTime.minute*METRIC_MILLISECONDS_PER_MINUTE)
         
-        convertedTime.second = Int(inputTimeMillis / 864)
+        convertedTime.second = Int(inputTimeMillis / METRIC_MILLISECONDS_PER_SECOND)
         //screw milliseconds, convertions dont need to be THAT accurate do they?
         
         return convertedTime
