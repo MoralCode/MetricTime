@@ -302,14 +302,14 @@ class MetricTime {
         
         //example metric time: 5:25:16
         
-        var secondsAngle = (Double(metricTime.second)/100)// ADD MILLIS HERE // 16/100 = .16
-        var minutesAngle = (Double(metricTime.minute)/100 + secondsAngle/100)// 25/100 = .25; .16/100 = .0016; total: .2516
-        var hoursAngle = (Double(metricTime.hour)/10 + Double(metricTime.minute)/Double(MILLISECONDS_PER_SECOND)) // 5/10 = .5; .25/10 = .025; total: .525 //seconds are unneccesary
+        var secondsAngle = Double(metricTime.second)/100 // ADD MILLIS HERE // 16/100 = .16
+        var minutesAngle = Double(metricTime.minute)/100 + secondsAngle/100 // 25/100 = .25; .16/100 = .0016; total: .2516
+        var hoursAngle = Double(metricTime.hour)/10 + Double(metricTime.minute)/Double(MILLISECONDS_PER_SECOND) // 5/10 = .5; .25/10 = .025; total: .525 //seconds are insignificantly small
         
         //get the angle of the hands in degrees by multiplying the decimal/percentages by the total (360)
-        hoursAngle = hoursAngle*Double(DEGREES_IN_A_CIRCLE) //.52516 * 360
-        minutesAngle = minutesAngle*Double(DEGREES_IN_A_CIRCLE) //.2516 * 360
-        secondsAngle = secondsAngle*Double(DEGREES_IN_A_CIRCLE) //.16 * 360
+        hoursAngle = hoursAngle * Double(DEGREES_IN_A_CIRCLE) //.52516 * 360
+        minutesAngle = minutesAngle * Double(DEGREES_IN_A_CIRCLE) //.2516 * 360
+        secondsAngle = secondsAngle * Double(DEGREES_IN_A_CIRCLE) //.16 * 360
         
        //print(secondsAngle, minutesAngle, hoursAngle)
         
@@ -335,30 +335,30 @@ class MetricTime {
         var currentTime = (Calendar.current as NSCalendar).components([ .hour, .minute, .second, .nanosecond], from: Date())
         var currentMetricTime = (hour: 0, minute: 0, second: 0, millisecond: 0)
     
-        
-        let hoursInMillis = Double(currentTime.hour! * MILLISECONDS_PER_HOUR)
-        let minsInMillis = Double(currentTime.minute! * MILLISECONDS_PER_MINUTE)
-        let secsInMillis = Double(currentTime.second! * MILLISECONDS_PER_SECOND)
+        //convert each part of the time (h, m, s, ns) into milliseconds
+        let hoursInMillis = (currentTime.hour! * MILLISECONDS_PER_HOUR)
+        let minsInMillis = (currentTime.minute! * MILLISECONDS_PER_MINUTE)
+        let secsInMillis = (currentTime.second! * MILLISECONDS_PER_SECOND)
+        let nanosecondsInMillis = (currentTime.nanosecond!/1000000)
 
-        var millisecondsSinceToday = hoursInMillis + minsInMillis + secsInMillis + Double((currentTime.nanosecond!/1000000) as Int)
+        var currentTimeInMilliseconds = hoursInMillis + minsInMillis + secsInMillis + nanosecondsInMillis
 
         
         //convert current time in milliseconds to metric
-        currentMetricTime.hour = Int(millisecondsSinceToday / Double(METRIC_MILLISECONDS_PER_HOUR))
+        currentMetricTime.hour = currentTimeInMilliseconds / METRIC_MILLISECONDS_PER_HOUR
          
-        millisecondsSinceToday -= Double(currentMetricTime.hour*METRIC_MILLISECONDS_PER_HOUR)
+        currentTimeInMilliseconds -= currentMetricTime.hour * METRIC_MILLISECONDS_PER_HOUR
          
-        currentMetricTime.minute = Int(millisecondsSinceToday / Double(METRIC_MILLISECONDS_PER_MINUTE))
+        currentMetricTime.minute = currentTimeInMilliseconds / METRIC_MILLISECONDS_PER_MINUTE
         
-        millisecondsSinceToday -= Double(currentMetricTime.minute*METRIC_MILLISECONDS_PER_MINUTE)
+        currentTimeInMilliseconds -= currentMetricTime.minute * METRIC_MILLISECONDS_PER_MINUTE
          
-        currentMetricTime.second = Int(millisecondsSinceToday / Double(METRIC_MILLISECONDS_PER_SECOND))
+        currentMetricTime.second = currentTimeInMilliseconds / METRIC_MILLISECONDS_PER_SECOND
         
-        millisecondsSinceToday -= Double(currentMetricTime.second*METRIC_MILLISECONDS_PER_SECOND)
+        currentTimeInMilliseconds -= currentMetricTime.second * METRIC_MILLISECONDS_PER_SECOND
         
-        currentMetricTime.millisecond = Int(millisecondsSinceToday)
+        currentMetricTime.millisecond = currentTimeInMilliseconds
 
-        //print((currentTime.nanosecond!/MILLISECONDS_PER_SECOND000) as Int)
         return currentMetricTime
          
  
