@@ -25,7 +25,6 @@ class MetricTime {
     let METRIC_MILLISECONDS_PER_MINUTE = 864*100 //86,400
     let METRIC_MILLISECONDS_PER_SECOND = 864 //youre kidding me.
     
-    let DEGREES_IN_A_CIRCLE = 360
     let RADIANS_IN_A_CIRCLE = 2*Double.pi
     
     
@@ -107,25 +106,25 @@ class MetricTime {
         
         var desiredNumberOfPoints = 100
         var inset:CGFloat = 0
-        var adjustment:CGFloat = 0 //this allows you to change the (rotation) position of the output points to adjust the text rendering
+        var adjustmentInRadians:CGFloat = 0 //this allows you to change the (rotation) position of the output points to adjust the text rendering
 
     
         if forNumbers {
             desiredNumberOfPoints = 10
             inset = (clockView.bounds.width/2)/NUMBER_INSET
-            adjustment = -90 //same as 270
+            adjustmentInRadians = CGFloat(RADIANS_IN_A_CIRCLE) * CGFloat(-0.25) //one quarter of the circle
         }
         
         var counter = desiredNumberOfPoints //this must stay as is. dont remove the counter variable
-        let tickSpacing = degree2radian(CGFloat(DEGREES_IN_A_CIRCLE)/CGFloat(desiredNumberOfPoints))
+        let tickSpacing = CGFloat(RADIANS_IN_A_CIRCLE)/CGFloat(desiredNumberOfPoints)
         let desiredPointRadius = (clockView.bounds.width/2)-inset //the difference between this and the actual radius of the clock is the inset value
         
         var points = [CGPoint]()
         
         while points.count < desiredNumberOfPoints {
 
-            let x = clockView.bounds.midX - desiredPointRadius * cos(tickSpacing * CGFloat(counter) + degree2radian(adjustment))
-            let y = clockView.bounds.midY - desiredPointRadius * sin(tickSpacing * CGFloat(counter) + degree2radian(adjustment))
+            let x = clockView.bounds.midX - desiredPointRadius * cos(tickSpacing * CGFloat(counter) + adjustmentInRadians)
+            let y = clockView.bounds.midY - desiredPointRadius * sin(tickSpacing * CGFloat(counter) + adjustmentInRadians)
             points.append(CGPoint(x: x, y: y))
             counter -= 1;
         }
@@ -306,14 +305,14 @@ class MetricTime {
         var hoursAngle = Double(metricTime.hour)/10 + Double(metricTime.minute)/Double(MILLISECONDS_PER_SECOND) // 5/10 = .5; .25/10 = .025; total: .525 //seconds are insignificantly small
         
         //get the angle of the hands in degrees by multiplying the decimal/percentages by the total (360)
-        hoursAngle = hoursAngle * Double(DEGREES_IN_A_CIRCLE) //.52516 * 360
-        minutesAngle = minutesAngle * Double(DEGREES_IN_A_CIRCLE) //.2516 * 360
-        secondsAngle = secondsAngle * Double(DEGREES_IN_A_CIRCLE) //.16 * 360
+        hoursAngle = hoursAngle * Double(RADIANS_IN_A_CIRCLE) //.52516 * 360
+        minutesAngle = minutesAngle * Double(RADIANS_IN_A_CIRCLE) //.2516 * 360
+        secondsAngle = secondsAngle * Double(RADIANS_IN_A_CIRCLE) //.16 * 360
         
        //print(secondsAngle, minutesAngle, hoursAngle)
         
         
-        return (hourAngle: degree2radian(CGFloat(hoursAngle)), minuteAngle: degree2radian(CGFloat(minutesAngle)), secondAngle: degree2radian(CGFloat(secondsAngle)))
+        return (hourAngle: CGFloat(hoursAngle), minuteAngle: CGFloat(minutesAngle), secondAngle: CGFloat(secondsAngle))
     }
     
     func setHandAngles(handAngles: (hourAngle:CGFloat, minuteAngle:CGFloat, secondAngle:CGFloat)) {
@@ -396,10 +395,6 @@ class MetricTime {
     
 }
 
-func degree2radian(_ a:CGFloat)->CGFloat {
-    let b = CGFloat(Double.pi) * a/180
-    return b
-}
 
 class Clock: UIView {
     
@@ -419,7 +414,7 @@ class Clock: UIView {
         self.layer.addSublayer(hands.minuteHand)
         self.layer.addSublayer(hands.secondHand)
         self.layer.addSublayer(hands.center)
-
+        
         
     }
     
