@@ -65,12 +65,7 @@ class MetricTime {
 
     var lastCall:Date?
     
-  
 
-    
-    
-    
-    
     
     
     
@@ -101,6 +96,9 @@ class MetricTime {
             clockContext!.setLineWidth(4.0)
         }
     }
+    
+    
+    
     /// Calculates the x and y values for the specified number of points around the circle
     ///
     /// - parameter forNumbers: Boolean value that is used as a flag to indicate when calculating the points at which to render the numbers
@@ -125,9 +123,9 @@ class MetricTime {
         var points = [CGPoint]()
         
         while points.count < desiredNumberOfPoints {
-            //complex maths... modify at own risk...
-            let x = clockView.bounds.midX - desiredPointRadius * cos(tickSpacing * CGFloat(counter)+degree2radian(adjustment))
-            let y = clockView.bounds.midY - desiredPointRadius * sin(tickSpacing * CGFloat(counter)+degree2radian(adjustment))
+
+            let x = clockView.bounds.midX - desiredPointRadius * cos(tickSpacing * CGFloat(counter) + degree2radian(adjustment))
+            let y = clockView.bounds.midY - desiredPointRadius * sin(tickSpacing * CGFloat(counter) + degree2radian(adjustment))
             points.append(CGPoint(x: x, y: y))
             counter -= 1;
         }
@@ -143,13 +141,14 @@ class MetricTime {
         
         for point in points.enumerated() {
             
-            if point.offset % 10 == 0 {//if the "index" of the point is divisible by 10 w/o remainder
-                tickLength = 2/16
-            } else if point.offset % 5 == 0 {//if the "index" of the point is divisible by 5 w/o remainder
-                tickLength = 3/16
+            if point.offset % 10 == 0 {//if the "index" of the point is a multiple of 10
+                tickLength = 2/16 //draw medium tick mark
+            } else if point.offset % 5 == 0 {//if the "index" of the point is a multiple of 5
+                tickLength = 3/16 //draw long tick mark
             } else {
-                tickLength = 1/16
+                tickLength = 1/16 //draw short tick mark
             }
+            
             
             let tickEndPoint = (x: point.element.x + tickLength*(clockView.bounds.midX - point.element.x), y: point.element.y + tickLength*(clockView.bounds.midY - point.element.y))
             
@@ -172,8 +171,8 @@ class MetricTime {
         let numberPositions = getPointsOnCircle(forNumbers: true)
         
         // Flip text co-ordinate space, see: http://blog.spacemanlabs.com/2011/08/quick-tip-drawing-core-text-right-side-up/
-        clockContext?.translateBy(x: 0.0, y: clockView.bounds.height)
-        clockContext?.scaleBy(x: 1.0, y: -1.0)
+        clockContext?.translateBy(x: 0.0, y: clockView.bounds.height) //move down by its own height
+        clockContext?.scaleBy(x: 1.0, y: -1.0)//flip in the Y direction over its top axis (presumably)
         
         let textAttributes = [NSFontAttributeName:NUMBER_FONT!, NSForegroundColorAttributeName:CLOCK_TEXT_COLOR] as CFDictionary
         
@@ -318,7 +317,7 @@ class MetricTime {
     }
     
     func setHandAngles(handAngles: (hourAngle:CGFloat, minuteAngle:CGFloat, secondAngle:CGFloat)) {
-        let layers = self.clockView.layer.sublayers
+        let layers = self.getAnalogClock().layer.sublayers
         layers?[0].transform = CATransform3DMakeRotation(handAngles.hourAngle, 0, 0, 1)
         layers?[1].transform = CATransform3DMakeRotation(handAngles.minuteAngle, 0, 0, 1)
         layers?[2].transform = CATransform3DMakeRotation(handAngles.secondAngle, 0, 0, 1)
@@ -383,27 +382,17 @@ class MetricTime {
             inputTimeMillis = (inputTime.hour * METRIC_MILLISECONDS_PER_HOUR) + (inputTime.minute * METRIC_MILLISECONDS_PER_MINUTE) + (inputTime.second * METRIC_MILLISECONDS_PER_SECOND)
         }
         
-        
         convertedTime.hour = Int(inputTimeMillis / METRIC_MILLISECONDS_PER_HOUR)
-        inputTimeMillis -= (convertedTime.hour*METRIC_MILLISECONDS_PER_HOUR)
+        inputTimeMillis -= (convertedTime.hour * METRIC_MILLISECONDS_PER_HOUR)
         
         convertedTime.minute = Int(inputTimeMillis / METRIC_MILLISECONDS_PER_MINUTE)
-        inputTimeMillis -= (convertedTime.minute*METRIC_MILLISECONDS_PER_MINUTE)
+        inputTimeMillis -= (convertedTime.minute * METRIC_MILLISECONDS_PER_MINUTE)
         
         convertedTime.second = Int(inputTimeMillis / METRIC_MILLISECONDS_PER_SECOND)
         //screw milliseconds, convertions dont need to be THAT accurate do they?
         
         return convertedTime
     }
-    
-    
-    
-    
-
-    
-    
-
-    
     
 }
 
@@ -417,15 +406,9 @@ class Clock: UIView {
     override func draw(_ rect: CGRect) {
         
         //do things as soon as a new Clock object is created?????
-        //probably dont need?
-        let metricTime:MetricTime = MetricTime()//may cause some issues?
         
+        let metricTime:MetricTime = MetricTime()
         
-     //   let context = metricTime.getContext()
-       // let context = UIGraphicsGetCurrentContext()
-        
-       // context.addArc(center: CGPoint(x: rect.midX, y: rect.midY), radius: CGFloat(metricTime.clockRadius), startAngle: 0, endAngle: CGFloat(2*M_PI), clockwise: true)
-       // context.drawPath(using: CGPathDrawingMode.fillStroke);
         metricTime.drawClockCircle()
         metricTime.addTickMarks()
         metricTime.addNumbers()
