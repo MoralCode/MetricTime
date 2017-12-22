@@ -15,6 +15,7 @@
 		3AD7E3DD1C72961500502023 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3AD7E3DC1C72961500502023 /* Assets.xcassets */; };
 		3AD7E3E01C72961500502023 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AD7E3DE1C72961500502023 /* LaunchScreen.storyboard */; };
 		3AEAE5DA1DA3170E00A09E0A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AEAE5D91DA3170E00A09E0A /* MainViewController.swift */; };
+		50A2CB801FEC555600B8112B /* MetricClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A2CB7F1FEC555600B8112B /* MetricClock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		3AD7E3DF1C72961500502023 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3AD7E3E11C72961500502023 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3AEAE5D91DA3170E00A09E0A /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		50A2CB7F1FEC555600B8112B /* MetricClock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetricClock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				3AD7E3D51C72961500502023 /* AppDelegate.swift */,
 				3AEAE5D91DA3170E00A09E0A /* MainViewController.swift */,
 				3A88A4C61D9E23D600DD2951 /* MetricTime.swift */,
+				50A2CB7F1FEC555600B8112B /* MetricClock.swift */,
 				3A47BD631CCD5F9E0073D8E8 /* ConversionViewController.swift */,
 				3AD7E3D91C72961500502023 /* Main.storyboard */,
 				3AD7E3DC1C72961500502023 /* Assets.xcassets */,
@@ -148,6 +151,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A47BD641CCD5F9E0073D8E8 /* ConversionViewController.swift in Sources */,
+				50A2CB801FEC555600B8112B /* MetricClock.swift in Sources */,
 				3A88A4C71D9E23D600DD2951 /* MetricTime.swift in Sources */,
 				3AD7E3D61C72961500502023 /* AppDelegate.swift in Sources */,
 				3AEAE5DA1DA3170E00A09E0A /* MainViewController.swift in Sources */,
