@@ -32,24 +32,12 @@ class MainViewController: UIViewController, UIGestureRecognizerDelegate {
     var gesture: UILongPressGestureRecognizer = UILongPressGestureRecognizer()
     
     
-    let metricTime = MetricTime() //allows us to use the same instance of metricTime
+    let metricClock = MetricClock(size: 230, tick: false)
    
     
  
     func updateTime() {
-        
-        
-            
-        
-        
-        
-        let currentMetricTime = metricTime.getCurrentMetricTime()
-        
-        
-        //update clock
-        metricTime.updateHandsPosition(metricTime: (hour: currentMetricTime.hour, minute: currentMetricTime.minute, second: currentMetricTime.second))
-        
-        metricTimeDisplay?.text = String(format: "%01d : %02d : %02d", currentMetricTime.hour, currentMetricTime.minute, currentMetricTime.second)
+        metricTimeDisplay?.text = metricClock.updateTime()
     }
  
         
@@ -71,8 +59,6 @@ class MainViewController: UIViewController, UIGestureRecognizerDelegate {
         
         super.viewDidLoad()
         
-        let clock = metricTime.getAnalogClock()
-       
         //is this needed for the gesture recogniser to work when the user long-presses the clock face?
         view.isUserInteractionEnabled = true
         
@@ -80,20 +66,20 @@ class MainViewController: UIViewController, UIGestureRecognizerDelegate {
 
         
         //position clock view
-        self.view.addSubview(clock)
-        clock.translatesAutoresizingMaskIntoConstraints = false
-        
+
+        self.view.addSubview(metricClock)
+      
+        metricClock.translatesAutoresizingMaskIntoConstraints = false
+
         if #available(iOS 9.0, *) {
-            clock.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: 0.0).isActive = false
-            
-            clock.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 15.0).isActive = true
-            clock.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0.0).isActive = true
-            clock.widthAnchor.constraint(equalToConstant: 230.0).isActive = true
-            clock.heightAnchor.constraint(equalToConstant: 230.0).isActive = true
+            metricClock.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: 0.0).isActive = false
+            metricClock.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 15.0).isActive = true
+            metricClock.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0.0).isActive = true
+            metricClock.widthAnchor.constraint(equalToConstant: 230.0).isActive = true
+            metricClock.heightAnchor.constraint(equalToConstant: 230.0).isActive = true
         } else {
             //TODO: Fallback on earlier versions
         }
-
         
         /*
         It is better to use an CADisplayLink for timing related to animation. This is why you have an issue with dropping ticks/frames.
