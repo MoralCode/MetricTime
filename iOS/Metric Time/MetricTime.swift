@@ -77,27 +77,29 @@ class MetricTime {
     ///
     /// - parameter inputTime: The time to convert from in (hour: Int, minute: Int, second: Int) format
     /// - parameter toMetric: A boolean value that determines if thr functions should convert to metric or from metric. Defaults to true (AKA convert to metric)
-    /// - returns: The converted time in (hour: Int, minute: Int, second: Int) format
-    func convertTime(inputTime: (hour: Int, minute: Int, second: Int), toMetric:Bool = true) -> (hour: Int, minute: Int, second: Int) {
+    /// - returns: The converted time in (hour: Int, minute: Int, second: Int, millisecond: Int) format
+    func convertTime(inputTime: (hour: Int, minute: Int, second: Int, millisecond: Int), toMetric:Bool = true) -> (hour: Int, minute: Int, second: Int, millisecond: Int) {
         
         var inputTimeMillis = 0
-        var convertedTime = (hour: 0, minute: 0, second: 0)
+        var convertedTime = (hour: 0, minute: 0, second: 0, millisecond: 0)
         
         
         if toMetric {
+            //if converting to metric, then the input time is assumed to be in standard time system
+            //convert to milliseconds
             inputTimeMillis = (inputTime.hour * MILLISECONDS_PER_HOUR) + (inputTime.minute * MILLISECONDS_PER_MINUTE) + (inputTime.second * MILLISECONDS_PER_SECOND)
         } else {
             inputTimeMillis = (inputTime.hour * METRIC_MILLISECONDS_PER_HOUR) + (inputTime.minute * METRIC_MILLISECONDS_PER_MINUTE) + (inputTime.second * METRIC_MILLISECONDS_PER_SECOND)
         }
         
-        convertedTime.hour = Int(inputTimeMillis / METRIC_MILLISECONDS_PER_HOUR)
-        inputTimeMillis -= (convertedTime.hour * METRIC_MILLISECONDS_PER_HOUR)
+        convertedTime.hour = Int(inputTimeMillis) / METRIC_MILLISECONDS_PER_HOUR
+        inputTimeMillis = Int(inputTimeMillis) % METRIC_MILLISECONDS_PER_HOUR
         
-        convertedTime.minute = Int(inputTimeMillis / METRIC_MILLISECONDS_PER_MINUTE)
-        inputTimeMillis -= (convertedTime.minute * METRIC_MILLISECONDS_PER_MINUTE)
+        convertedTime.minute = Int(inputTimeMillis) / METRIC_MILLISECONDS_PER_MINUTE
+        inputTimeMillis = Int(inputTimeMillis) % METRIC_MILLISECONDS_PER_MINUTE
         
-        convertedTime.second = Int(inputTimeMillis / METRIC_MILLISECONDS_PER_SECOND)
-        //screw milliseconds, convertions dont need to be THAT accurate do they?
+        convertedTime.second = Int(inputTimeMillis) / METRIC_MILLISECONDS_PER_SECOND
+        convertedTime.millisecond = Int(inputTimeMillis) % METRIC_MILLISECONDS_PER_SECOND
         
         return convertedTime
     }
