@@ -104,6 +104,11 @@ class MetricTime {
         return convertedTime
     }
     
-
+    func convertTime(inputTime: (hour: Int, minute: Int, second: Int), toMetric:Bool = true) -> (hour: Int, minute: Int, second: Int) {
+        let result = convertTime(inputTime: (hour: inputTime.hour, minute: inputTime.minute, second: inputTime.second, millisecond: 0), toMetric: toMetric)
+        //is there a way to drop the milliseconds from the output without creating a variable?
+        return (hour: result.hour, minute: result.minute, second: result.second)
+        
+    }
     
 }
