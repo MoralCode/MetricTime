@@ -21,6 +21,8 @@ class MetricTime {
     let MILLISECONDS_PER_MINUTE = 1000*60 //60,000
     let MILLISECONDS_PER_SECOND = 1000 //really? do I have to comment the value of this?
     
+    let NANOSECONDS_PER_MILLISECOND = 1000000
+    
     let METRIC_MILLISECONDS_PER_HOUR = 864*100*100 //8,640,00
     let METRIC_MILLISECONDS_PER_MINUTE = 864*100 //86,400
     let METRIC_MILLISECONDS_PER_SECOND = 864 //youre kidding me.
@@ -38,38 +40,13 @@ class MetricTime {
     /// - returns: The current metric time in (hour: Int, minute: Int, second: Int) format
     func getCurrentMetricTime() -> (hour: Int, minute: Int, second: Int, millisecond: Int) {
     
-        
         var currentTime = (Calendar.current as NSCalendar).components([ .hour, .minute, .second, .nanosecond], from: Date())
-        var currentMetricTime = (hour: 0, minute: 0, second: 0, millisecond: 0)
-    
-        //convert each part of the time (h, m, s, ns) into milliseconds
-        let hoursInMillis = (currentTime.hour! * MILLISECONDS_PER_HOUR)
-        let minsInMillis = (currentTime.minute! * MILLISECONDS_PER_MINUTE)
-        let secsInMillis = (currentTime.second! * MILLISECONDS_PER_SECOND)
-        let nanosecondsInMillis = (currentTime.nanosecond!/1000000)
-
-        var currentTimeInMilliseconds = hoursInMillis + minsInMillis + secsInMillis + nanosecondsInMillis
-
         
-        //convert current time in milliseconds to metric
-        currentMetricTime.hour = currentTimeInMilliseconds / METRIC_MILLISECONDS_PER_HOUR
-         
-        currentTimeInMilliseconds -= currentMetricTime.hour * METRIC_MILLISECONDS_PER_HOUR
-         
-        currentMetricTime.minute = currentTimeInMilliseconds / METRIC_MILLISECONDS_PER_MINUTE
-        
-        currentTimeInMilliseconds -= currentMetricTime.minute * METRIC_MILLISECONDS_PER_MINUTE
-         
-        currentMetricTime.second = currentTimeInMilliseconds / METRIC_MILLISECONDS_PER_SECOND
-        
-        currentTimeInMilliseconds -= currentMetricTime.second * METRIC_MILLISECONDS_PER_SECOND
-        
-        currentMetricTime.millisecond = currentTimeInMilliseconds
-
-        return currentMetricTime
-         
- 
- 
+        return convertTime(inputTime: (hour: currentTime.hour!,
+                                       minute: currentTime.minute!,
+                                       second: currentTime.second!,
+                                       millisecond: (currentTime.nanosecond! / NANOSECONDS_PER_MILLISECOND)),
+                           toMetric: true)
     }
     
     
